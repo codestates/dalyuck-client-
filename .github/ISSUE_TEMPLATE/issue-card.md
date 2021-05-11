@@ -2,7 +2,7 @@
 name: Issue Card
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: issue card
 assignees: ''
 
 ---

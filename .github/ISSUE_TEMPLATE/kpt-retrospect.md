@@ -2,7 +2,7 @@
 name: KPT Retrospect
 about: Suggest an idea for this project
 title: "[KPT] 0주차 O요일"
-labels: ''
+labels: retrospect
 assignees: ''
 
 ---

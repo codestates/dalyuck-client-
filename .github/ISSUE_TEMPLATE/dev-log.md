@@ -2,7 +2,7 @@
 name: Dev Log
 about: Suggest an idea for this project
 title: "[Dev Log] Name / 2021-00-00"
-labels: ''
+labels: dev-log
 assignees: ''
 
 ---

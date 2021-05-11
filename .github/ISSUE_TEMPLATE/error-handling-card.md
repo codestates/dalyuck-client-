@@ -2,7 +2,7 @@
 name: Error Handling Card
 about: Suggest an idea for this project
 title: ''
-labels: ''
+labels: Error
 assignees: ''
 
 ---
