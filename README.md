@@ -1,46 +1,45 @@
-# Getting Started with Create React App
+# Dalyuck
+1. 달력보기(일별, 주간, 월간)
+2. 새 캘린더(일정, 할일) 만들기
+3. 일별, 주간, 월간 일정 만들기, 일정 검색 , 알람
+4. 다른사람의 캘린더 구독, 공유
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+# 🔍️  어떤 기술이 사용되었나요?
 
-In the project directory, you can run:
+## FRONT
+![](https://img.shields.io/badge/FRONT-REACT-9cf?style=for-the-badge&logo=react)  
+![](https://img.shields.io/badge/FRONT-REACT_HOOKS-9cf?style=for-the-badge&logo=react)   
+![](https://img.shields.io/badge/FRONT-REACT_ROUTER-CA4245?style=for-the-badge&logo=react-router)   
+![](https://img.shields.io/badge/FRONT-REDUX-764ABC?style=for-the-badge&logo=redux)  
+![](https://img.shields.io/badge/FRONT-axios-blueviolet?style=for-the-badge&logo=appveyor)         
+![](https://img.shields.io/badge/FRONT-typescript-FFDA44?style=for-the-badge&logo=typescript)
 
-### `npm start`
+## BACK
+![](https://img.shields.io/badge/BACK-nest_js-339933?style=for-the-badge&logo=nestjs)   
+![](https://img.shields.io/badge/BACK-typescript-FFDA44?style=for-the-badge&logo=typescript)   
+![](https://img.shields.io/badge/BACK-Sequelize-258FFA?style=for-the-badge&logo=appveyor)   
+![](https://img.shields.io/badge/BACK-MySQL-4479A1?style=for-the-badge&logo=mysql)   
+![](https://img.shields.io/badge/BACK-JWT-000000?style=for-the-badge&logo=json-web-tokens)   
+![](https://img.shields.io/badge/BACK-AMAZON_AWS-232F3E?style=for-the-badge&logo=amazon-aws)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+# 🔨 Architecture
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+### Client-Side flow chart
+![](https://i.imgur.com/0txULkv.jpg)
 
-### `npm test`
+### Server-Side flow chart
+![](https://i.imgur.com/Nc7EMNc.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+# 👥 우리를 소개합니다.
 
-### `npm run build`
+| 강정환 | Frontend |
+|:---:|:---:|
+| 한샘 | Frontend |
+| 이기범 | Backend |
+| 최재호 | Backend |
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+# 🧐 For project details
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+[checkout WIKI](https://github.com/codestates/dalyuck-client-/wiki)
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
