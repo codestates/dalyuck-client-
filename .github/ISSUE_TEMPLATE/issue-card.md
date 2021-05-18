@@ -1,7 +1,7 @@
 ---
 name: Issue Card
 about: Suggest an idea for this project
-title: ''
+title: "[Client / Server]"
 labels: issue card
 assignees: ''
 
