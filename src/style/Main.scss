@@ -1,0 +1,64 @@
+$hour-height: 48px;
+$grid-line: #dadce0 1px solid;
+
+.fontsetting{
+  color: #70757a;
+  font-size: 10px;
+}
+
+.hourBox {
+  position: relative;
+  height: $hour-height;
+  padding-right: 8px;
+  text-align: right;
+}
+.timeZone {
+  position: relative;
+  top: -6px;
+  display: block;
+}
+.hourBox:first-child>.timeZone{
+  display: none;
+}
+.timetable {
+  overflow-x: auto;
+  overflow-y: scroll;
+  display: flex;
+  align-items: flex-start;
+  flex: 1 1 auto;
+}
+.rowGridDayCon{
+  overflow: hidden;
+  align-items: stretch;
+  display: flex;
+  flex: 1 1 auto;
+}
+.rowGrid{
+  border-top: $grid-line;
+}
+.rowGridLine{
+  height: $hour-height;
+}
+.rowGrid ::after{
+  content: '';
+  border-bottom: $grid-line;
+  position: absolute;
+  width: 100%;
+  margin-top: -1px;
+  z-index: 3;
+  pointer-events: none;
+}
+
+.rowGridRight{
+  width: 8px;
+  border-right: $grid-line;
+}
+.dayContainer{
+  overflow : hidden;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 60%;
+}
+.yscaleTimetable{
+  display: flex;
+}
