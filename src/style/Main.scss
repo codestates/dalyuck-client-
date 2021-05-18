@@ -6,6 +6,8 @@ $grid-line: #dadce0 1px solid;
   font-size: 10px;
 }
 
+// YscaleTimetable.tsx
+
 .hourBox {
   position: relative;
   height: $hour-height;
@@ -22,7 +24,7 @@ $grid-line: #dadce0 1px solid;
 }
 .timetable {
   overflow-x: auto;
-  overflow-y: scroll;
+//   overflow-y: scroll;  스크롤이 드러나서 거추장스러움
   display: flex;
   align-items: flex-start;
   flex: 1 1 auto;
@@ -56,9 +58,167 @@ $grid-line: #dadce0 1px solid;
 .dayContainer{
   overflow : hidden;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   flex: 1 1 60%;
 }
 .yscaleTimetable{
   display: flex;
+}
+
+// MainCalenderHead.tsx
+
+.main-calender-head {
+    display: flex;
+    flex: none;
+  }
+  
+.head-left-blank {
+    flex: none;
+    margin-left: 1px;
+    width: 49px;
+  }
+  
+.one-day-info-con {
+    margin-left: -1px;
+    flex:1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+}
+.date-info-con {
+    flex: 1 1 auto;
+    display: flex;
+    overflow: hidden;
+    // overflow-x: scroll;     스크롤이 드러나서 거추장스러움
+}
+
+.info-left-blank {
+    width: 9px;
+}
+.date-info {
+    flex: 1 0 auto;
+    min-width: 81px;
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.date-info-text-box-con {
+    flex: none;
+    margin-right: 8px;
+}
+
+.date-info-text-box {
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+}
+
+.myuchil {
+    position: relative;
+    z-index: 2;
+    font-size: 26px;
+    letter-spacing: -2.6px;
+    text-indent: -2.6px;
+    font-variant: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    border-radius: 100%;
+    color: #3c4043;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    line-height: 46px;
+    height: 46px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -8px;
+    width: 46px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.yoil {
+    line-height: 32px;
+    position: relative;
+    z-index: 2;
+    color: #70757a;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .8px;
+    margin-left: 0;
+    margin-top: 8px;
+    text-indent: .8px;
+    text-transform: uppercase;
+}
+
+.info-rigth-box {
+    visibility: hidden;
+    flex:none;
+}
+
+.all-day-event-con {
+    position: relative;
+    font-size: 24px;
+    max-height: 3em;
+    overflow: hidden;
+    display: flex;
+}
+
+.all-day-event-con-1 {
+    display: flex;
+    vertical-align: top;
+    min-width: 100%;
+    position: relative;
+    overflow: hidden;
+    font-size: 24px;
+}
+.all-day-event-con-2 {
+    border-right: 1px solid transparent;
+    flex: 1 0 ;    // 주, 일 에따라서 min-width 가 달라지는데,,, 
+}
+.extand-grid-left {
+    border-left: #dadce0 1px solid;
+    bottom: 0;
+    height: 20px;
+    margin-left: -1px;
+    position: absolute;
+}
+// Day.tsx
+
+.day-con {
+    border-right: $grid-line;
+    position: relative;
+    padding-right: 12px;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-width: 81px;
+}
+.tody-time-line {
+    position: absolute;
+    z-index: 505;
+    border-top: #ea4335 solid 2px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+.today-time-dot {
+    background: #ea4335;
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    height: 12px;
+    margin-left: -6.5px;
+    margin-top: -5px;
+    width: 12px;
+    z-index: 505;
+}
+.day-con-1 {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+}
+.event-todo-con {
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
