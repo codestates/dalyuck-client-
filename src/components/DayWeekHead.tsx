@@ -1,18 +1,22 @@
+import { DateTime } from "luxon";
+
 interface DayInfoHead {
     yoil:string;
     day:number;
 }
 
 const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) 메인 달력에서 헤더  ex)월,13 표시하는곳
+    let isToday = day===DateTime.now().day
+
     return(
         <div className = "date-info">
             <div className = "date-info-text-box-con">
                 <div className = "extand-grid-left"/>
                 <h2 className = "date-info-text-box">
-                    <div className = "yoil">
+                    <div className = {"yoil"+(isToday ? ' today':'')}>
                         {yoil}
                     </div>
-                    <div className = "myuchil">
+                    <div className = {"myuchil"+(isToday ? ' today':'')}>
                         {day}
                     </div>
                 </h2>

@@ -14,8 +14,8 @@ const HourBox = ({time}:Time) => {
     timeSpan = '오후 '+(time-12).toString()+'시'
   }
     return (
-      <div className="hourBox">
-        <span className="timeZone fontsetting">{timeSpan}</span>
+      <div className="hour-box">
+        <span className="time-zone font-setting">{timeSpan}</span>
       </div>
     );
   };
@@ -24,7 +24,7 @@ const HourBox = ({time}:Time) => {
 
 const Yscale = () => {
   return (
-    <div>
+    <div className="hour-box-con">
       {
         times.map((time,i)=>{
           return <HourBox time={time}/>
@@ -36,19 +36,19 @@ const Yscale = () => {
 
 const Timetable = ({info}:any) => {
   return(
-      <div className="timetable">
-          <div className="rowGridDayCon">
-              <div className="rowGrid">
+      <div className="time-table">
+          <div className="row-grid-day-con">
+              <div className="row-grid">
                 {
                   times.map(()=>{
-                    return <div className="rowGridLine"/>   //* 세로줄 24개 
+                    return <div className="row-grid-line"/>   //* 세로줄 24개 
                   })
                 }
               </div>
-              <div className="rowGridRight">
+              <div className="row-grid-right">
 
               </div>
-              <div className="dayContainer">
+              <div className="day-container">
                 {
                   info.map((day:any)=>{
                     return <Day/>
@@ -62,7 +62,7 @@ const Timetable = ({info}:any) => {
 
 const BackgroundGrid = ({info}:any) =>{
   return (
-    <div className="yscaleTimetable">
+    <div className="yscale-timetable">
       <Yscale/>
       <Timetable info={info}/>
     </div>
