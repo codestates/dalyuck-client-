@@ -1,4 +1,5 @@
 import Day from "./Day"
+import { DateTime } from "luxon"; //
 
 type Time = {
   time:number;
@@ -18,7 +19,7 @@ const HourBox = ({time}:Time) => {
         <span className="time-zone font-setting">{timeSpan}</span>
       </div>
     );
-  };
+};
 
 
 
@@ -51,7 +52,8 @@ const Timetable = ({info}:any) => {
               <div className="day-container">
                 {
                   info.map((day:any)=>{
-                    return <Day/>
+                    let isToday = day.day===DateTime.now().day
+                    return <Day isToday={isToday}/>
                   })
                 }  
               </div>
