@@ -1,5 +1,4 @@
 import Day from "./Day"
-import { DateTime } from "luxon"; //
 
 type Time = {
   time:number;
@@ -52,8 +51,7 @@ const Timetable = ({info}:any) => {
               <div className="day-container">
                 {
                   info.map((day:any)=>{
-                    let isToday = day.day===DateTime.now().day
-                    return <Day isToday={isToday}/>
+                    return <Day dayNum={day.day}/>
                   })
                 }  
               </div>
