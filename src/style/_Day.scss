@@ -34,8 +34,50 @@
     right: 0;
     left: 0;
 }
-.event-todo-con {
-    position: relative;
-    height: 100%;
+.event-con {
+    position: absolute;
+    border-radius: 4px;
+    margin-left: -1px;
+    margin-top: 1px;
+    outline: none;
     width: 100%;
+    z-index: 100;
+}
+.event-text-con{
+    max-height: 100%;
+    overflow: hidden;
+    padding-left: 8px;
+    text-align: left;
+    user-select: none;
+}
+.event-text-title-con{
+    font-weight: 400;
+    letter-spacing: .4px;
+    padding-top: 4px;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+    overflow: hidden;
+}
+.event-text-title{
+    font-weight: 400;
+    letter-spacing: .4px;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+}
+.event-text-time{
+    max-width: 100%;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: .1px;
+    line-height: 15px;
+    overflow: hidden;
 }
