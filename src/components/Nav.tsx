@@ -1,4 +1,25 @@
+import { useSelector, useDispatch } from 'react-redux'
+import { RootState } from '../reducers/index';
+import { setBaseDate } from "../actions/index";
+import { DateTime } from 'luxon';
+
 const Nav = () => {
+  
+  const {base} = useSelector((state:RootState) => state.dateReducer);
+  const dispatch = useDispatch();
+
+  const todayHandler = () => {
+    const baseDate:string = DateTime.now().toISO()
+    dispatch(setBaseDate(baseDate))
+  }
+  const prevHandler = () => {
+    const baseDate:string = DateTime.fromISO(base.baseDate).minus({week:1}).toISO()
+    dispatch(setBaseDate(baseDate))
+  }
+  const nextHandler = () => {
+    const baseDate:string = DateTime.fromISO(base.baseDate).plus({week:1}).toISO()
+    dispatch(setBaseDate(baseDate))
+  }
     return(
         <div className="nav">
         <div className="nav-con">
@@ -20,9 +41,9 @@ const Nav = () => {
                 {/* 위치 버튼 3개 */}
                 <div className="navigator">
                   <div className="today-btn">
-                    <span className="today-btn-span">오늘</span>
+                    <span className="today-btn-span" onClick={() => { todayHandler()}}>오늘</span>
                   </div>
-                  <div className="previous-btn">
+                  <div className="previous-btn" onClick={() => { prevHandler()} }>
                     <div className="pre-next-btn-con">
                       <svg focusable="false" viewBox="0 0 24 24">
                         <path
@@ -32,7 +53,7 @@ const Nav = () => {
                       </svg>
                     </div>
                   </div>
-                  <div className="next-btn">
+                  <div className="next-btn" onClick={() => { nextHandler() }}>
                     <div className="pre-next-btn-con">
                       <svg focusable="false" viewBox="0 0 24 24">
                         <path

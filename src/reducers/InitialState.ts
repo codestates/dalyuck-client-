@@ -1,3 +1,5 @@
+import { DateTime } from 'luxon';
+
 export type State = {
   user: {};
 
@@ -83,3 +85,11 @@ export const initialState: State = {
     },
   ],
 };
+
+const today = DateTime.now().toISO()
+export const initialDate = {
+  "base" :{
+    "baseDate": today,
+    "basePeriod": 'week',
+  }
+}

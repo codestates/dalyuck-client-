@@ -5,6 +5,10 @@ export const SIGN_OUT = "SIGN_OUT" as const;
 export const USER_INFO = "USER_INFO" as const;
 export const GET_GOOGLE_TOKEN = "GET_GOOGLE_TOKEN" as const;
 
+// Date Action
+export const SET_BASEDATE = "SET_BASEDATE" as const;
+
+
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -54,6 +58,15 @@ export const getGoogleToken = (data: string) => {
     type: GET_GOOGLE_TOKEN,
     payload: {
       data,
+    },
+  };
+};
+
+export const setBaseDate= (baseDate:string) => {
+  return {
+    type: SET_BASEDATE,
+    payload: {
+      baseDate
     },
   };
 };

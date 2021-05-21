@@ -10,7 +10,6 @@ const timeToPixel = (time:DateTime):number=>{
 }
 
 const Redline = ({height}:any)=>{
-  console.log(height)
   return (
     <div>
       <div className = "tody-time-line" style ={{top: height + 'px'}}/>
