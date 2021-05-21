@@ -20,7 +20,8 @@ const Redline = ({height}:any)=>{
 
 }
 
-const Event = ({ event }: any) => {
+
+const Event = ({ event }:any ) => {
   const start = DateTime.fromISO(event.startTime);
   const end = DateTime.fromISO(event.endTime);
   const startPixel = timeToPixel(start);
