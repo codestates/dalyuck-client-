@@ -1,4 +1,5 @@
 import { DateTime } from 'luxon';
+const today = DateTime.now().toISO()
 
 export type State = {
   user: {};
@@ -41,6 +42,17 @@ export type State = {
       colour: string;
     }
   ];
+  // 캘린더 렌더링 할때 필요한 상태
+  base :{
+    baseDate: string,
+    basePeriod: string
+  },
+  // 일간 월간 선택할때 필요한 상태
+  selector:{
+    isOn: boolean,
+    leftPosition: number
+  }
+
 };
 
 export const initialState: State = {
@@ -84,12 +96,16 @@ export const initialState: State = {
       colour: "",
     },
   ],
+  // 캘린더 렌더링시 필요한 상태
+  base :{
+    baseDate: today,
+    basePeriod: 'week',
+  },
+
+  // 월간 주간 선택시 필요한 상태
+  selector:{
+    isOn: false,
+    leftPosition:900
+  }
 };
 
-const today = DateTime.now().toISO()
-export const initialDate = {
-  "base" :{
-    "baseDate": today,
-    "basePeriod": 'week',
-  }
-}

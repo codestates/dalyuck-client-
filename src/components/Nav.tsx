@@ -1,10 +1,13 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../reducers/index';
-import { setBaseDate } from "../actions/index";
+import { setBaseDate , selectPeriod} from "../actions/index";
 import { DateTime } from 'luxon';
+import { useRef } from 'react';   // 레퍼런스 훅스
+
 
 const Nav = () => {
-  
+
+  const componentRef = useRef<HTMLDivElement>(null);  //  ref타입 설정
   const {base} = useSelector((state:RootState) => state.dateReducer);
   const dispatch = useDispatch();
 
@@ -85,7 +88,14 @@ const Nav = () => {
                   </svg>
                 </div>
                 <div className="period-select">
-                  <div className="period-select-con">
+                  <div className="period-select-con" 
+                    ref={componentRef} 
+                    onClick={()=>{
+                      let x = componentRef.current?.getBoundingClientRect().x;
+                      console.log('click')
+                      dispatch(selectPeriod(true, x)
+                        )}}
+                  >
                     {/* 일간 주간 월간 선택 */}
                     <span className="period-string">주</span>
                     {/* <div className="period-select-btn"> */}

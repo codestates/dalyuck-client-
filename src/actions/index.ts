@@ -7,13 +7,15 @@ export const GET_GOOGLE_TOKEN = "GET_GOOGLE_TOKEN" as const;
 
 // Date Action
 export const SET_BASEDATE = "SET_BASEDATE" as const;
-
+export const SELECT_PERIOD = "SELECT_PERIOD" as const;
 
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
   | ReturnType<typeof userInfo>
-  | ReturnType<typeof getGoogleToken>;
+  | ReturnType<typeof getGoogleToken>
+  | ReturnType<typeof setBaseDate>
+  | ReturnType<typeof selectPeriod>;
 
 export interface User {
   token: string;
@@ -67,6 +69,16 @@ export const setBaseDate= (baseDate:string) => {
     type: SET_BASEDATE,
     payload: {
       baseDate
+    },
+  };
+};
+
+export const selectPeriod= (isOn=false, leftPosition=900) => {
+  return {
+    type: SELECT_PERIOD,
+    payload: {
+      isOn,
+      leftPosition
     },
   };
 };

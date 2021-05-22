@@ -1,9 +1,11 @@
 import {
+  SELECT_PERIOD,
     SET_BASEDATE,
   } from "../actions/index";
-  import { initialDate } from "./InitialState";
+ import { initialState, State } from "./InitialState";
+ import { Action } from "../actions";
   
-  const dateReducer = (state = initialDate, action:{type:string;payload:{baseDate:string}}) => {
+  const dateReducer = (state:State = initialState, action:Action):State => {
     switch (action.type) {
       case SET_BASEDATE:
         return Object.assign({}, state, {
@@ -13,6 +15,14 @@ import {
             ...action.payload
           }
 
+        });
+      case SELECT_PERIOD:
+        return Object.assign({}, state, {
+          ...state,
+          selector:{
+            ...state.selector,
+            ...action.payload
+          }
         });
       default:
         return state;
