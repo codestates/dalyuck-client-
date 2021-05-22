@@ -124,3 +124,8 @@
     color:white;
     background-color: $today-color;
 }
+
+.main-cal-blank{
+    overflow: scroll;
+    visibility: hidden;
+}

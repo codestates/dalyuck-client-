@@ -8,23 +8,37 @@ const MainCalendarDayWeek = () => {
 
     interface DayInfoHead {
         yoil:string;
-        day:number;
+        day:DateTime;
     }
     
     const yoilArr = ['월','화','수','목','금','토','일'];
     const {base} = useSelector( (state:RootState) => state.dateReducer)
     const baseDate = DateTime.fromISO(base.baseDate)
     const startOfWeek = baseDate.startOf('week').minus({day:1})   // 배이스 기준날의 시작 날짜 디폴트값은 오늘
-    const dayInfoArr:DayInfoHead[] = [];
+    let dayInfoArr:DayInfoHead[] = [];
 
-    
-    for(let i = 0 ; i<7 ; i++){                // 주의 첫 날을 기준으로 요일 정보를 가진 배열을 만든다. ex) [{'일',16},{'월',17},{'화',18}...]
-        let weekinfo = startOfWeek.plus({day:i})       
-        dayInfoArr.push({yoil:yoilArr[weekinfo.weekday-1], day: weekinfo.day})
+
+    switch(base.basePeriod){          // 일간 주간 월간에 따라서 랜더링 할때 필요한 배열 다르게
+        case 'day':
+            dayInfoArr = [{yoil:yoilArr[baseDate.weekday-1], day:baseDate}]
+            break
+
+        case 'week':
+            for(let i = 0 ; i<7 ; i++){                // 주의 첫 날을 기준으로 요일 정보를 가진 배열을 만든다. ex) [{'일','그 날 시간정보'},{'월',17},{'화',18}...]
+                let weekinfo = startOfWeek.plus({day:i})       
+                dayInfoArr.push({yoil:yoilArr[weekinfo.weekday-1], day: weekinfo})
+            }
+            break
+
+        case 'month':
+            console.log('월간은 다음에')
+            break
     }
+    
+
 
     return(
-        <div>
+        <div className="sidebar-calendar">
             <DayWeekHead info={dayInfoArr}/>
             <BackgroundGrid info={dayInfoArr}/>
         </div>

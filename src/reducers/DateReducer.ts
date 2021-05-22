@@ -8,7 +8,11 @@ import {
       case SET_BASEDATE:
         return Object.assign({}, state, {
           ...state,
-          base: {...action.payload}
+          base:{
+            ...state.base,
+            ...action.payload
+          }
+
         });
       default:
         return state;

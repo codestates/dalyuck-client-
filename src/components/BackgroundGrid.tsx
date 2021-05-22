@@ -1,4 +1,5 @@
 import Day from "./Day"
+import {DateTime} from 'luxon';
 
 type Time = {
   time:number;
@@ -41,7 +42,7 @@ const Timetable = ({info}:any) => {
               <div className="row-grid">
                 {
                   times.map(()=>{
-                    return <div className="row-grid-line"/>   //* 세로줄 24개 
+                    return <div className="row-grid-line"/>   //* 가로줄 24개 
                   })
                 }
               </div>
@@ -50,8 +51,8 @@ const Timetable = ({info}:any) => {
               </div>
               <div className="day-container">
                 {
-                  info.map((day:any)=>{
-                    return <Day dayNum={day.day}/>
+                  info.map(({day}:{day:DateTime})=>{
+                    return <Day day={day}/>
                   })
                 }  
               </div>
@@ -62,9 +63,11 @@ const Timetable = ({info}:any) => {
 
 const BackgroundGrid = ({info}:any) =>{
   return (
-    <div className="yscale-timetable">
-      <Yscale/>
-      <Timetable info={info}/>
+    <div className="scroll">
+      <div className="yscale-timetable">
+        <Yscale/>
+        <Timetable info={info}/>
+      </div>
     </div>
   )
 }

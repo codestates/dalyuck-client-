@@ -30,6 +30,7 @@
     align-items: stretch;
     display: flex;
     flex: 1 1 auto;
+    position: relative;
 }
 .row-grid{
     border-top: $grid-line;
@@ -59,7 +60,12 @@
 }
 .yscale-timetable{
     display: flex;
+    overflow:hidden;
 }
 .hour-box-con{
     min-width: 40px;
+}
+.scroll{
+    overflow-y: scroll;
+    height: 100%;
 }

@@ -28,11 +28,9 @@
     z-index: 505;
 }
 .day-con-1 {
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    right: 0;
-    left: 0;
+    position: relative;
+    height: 100%;
+    width: 100%;
 }
 .event-con {
     position: absolute;
@@ -60,6 +58,8 @@
     font-size: 12px;
     line-height: 15px;
     overflow: hidden;
+
+    padding-bottom: 4px;
 }
 .event-text-title{
     font-weight: 400;

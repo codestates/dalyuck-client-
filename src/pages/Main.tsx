@@ -3,7 +3,7 @@ import Nav from '../components/Nav';
 
 const Main = ()=>{
     return(
-        <div className="main">
+        <div className = "main" style={{height:100+'%'}}>
             <Nav/>
             <MainCalenderDayWeek/>
         </div>
