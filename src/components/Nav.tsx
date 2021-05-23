@@ -11,16 +11,39 @@ const Nav = () => {
   const {base} = useSelector((state:RootState) => state.dateReducer);
   const dispatch = useDispatch();
 
+  let date = base.baseDate;
+  let period:{};
+  let periodKor:string = '주'
+  let navText:string = DateTime.fromISO(date).toFormat("y년 M월")
+  switch (base.basePeriod){
+    case 'day':
+      period = {day:1}
+      periodKor = '일'
+      navText= DateTime.fromISO(date).toFormat("y년 M월 d일")
+      break
+    case 'week':
+      period = {week:1}
+      periodKor = '주'
+      navText= DateTime.fromISO(date).toFormat("y년 M월")
+    break
+    case 'month':
+      period = {month:1}
+      periodKor = '월'
+      navText= DateTime.fromISO(date).toFormat("y년 M월")
+    break
+  }
+  
+
   const todayHandler = () => {
     const baseDate:string = DateTime.now().toISO()
     dispatch(setBaseDate(baseDate))
   }
   const prevHandler = () => {
-    const baseDate:string = DateTime.fromISO(base.baseDate).minus({week:1}).toISO()
+    const baseDate:string = DateTime.fromISO(date).minus(period).toISO()
     dispatch(setBaseDate(baseDate))
   }
   const nextHandler = () => {
-    const baseDate:string = DateTime.fromISO(base.baseDate).plus({week:1}).toISO()
+    const baseDate:string = DateTime.fromISO(date).plus(period).toISO()
     dispatch(setBaseDate(baseDate))
   }
     return(
@@ -71,7 +94,7 @@ const Nav = () => {
               <div className="nav-string-con">
                 {/* 현재 탐색한 날짜 문자열 표시 */}
                 <div className="nav-string">
-                  <div className="years-month-string">2021년 5월</div>
+                  <div className="years-month-string">{navText}</div>
                 </div>
               </div>
             </div>
@@ -83,6 +106,7 @@ const Nav = () => {
                     focusable="false"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 24 24"
+                    style={{height:25}}
                   >
                     <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
                   </svg>
@@ -97,7 +121,7 @@ const Nav = () => {
                         )}}
                   >
                     {/* 일간 주간 월간 선택 */}
-                    <span className="period-string">주</span>
+                    <span className="period-string">{periodKor}</span>
                     {/* <div className="period-select-btn"> */}
                     <svg focusable="false" viewBox="0 0 24 24">
                       <path fill="currentColor" d="M7,10L12,15L17,10H7Z" />

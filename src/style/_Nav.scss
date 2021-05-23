@@ -78,6 +78,8 @@
     margin-left: 8px;
     width: 100%;
     align-items: center;
+
+    display: flex;
 }
 .navigator-con{
     display: inline-block;
@@ -129,12 +131,11 @@
     cursor: pointer;
     display: flex;
     flex-shrink: 0;
-    height: 48px;
+
     outline: none;
     overflow: hidden;
     position: relative;
     text-align: center;
-    width: 48px;
     z-index: 0;
     align-items: center
 }
@@ -166,25 +167,22 @@
     align-items: center
 }
 
-nav-string-con{
+.nav-string-con{
+    align-items: center;
     display: flex;
-
 }
 .nav-string{
-    display: inline-block;
-    line-height: 0;
-    margin-left: 8px;
-    margin-right: 2px;
-    overflow: hidden;
-    position: relative;
+    text-align: left;
+    color: black;
 }
-years-month-string{
-    clip: rect(1px,1px,1px,1px);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
+.years-month-string{
+    color: #3c4043;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    font-size: 22px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 28px;
     white-space: nowrap;
-    width: 1px;
 }
 .search-period-con{
     display: flex;
@@ -214,13 +212,15 @@ years-month-string{
     border: 0;
     border-radius: 50%;
     cursor: pointer;
-    display: inline-block;
+    display: flex;
     flex-shrink: 0;
     outline: none;
     overflow: hidden;
     position: relative;
     text-align: center;
     z-index: 0;
+
+    align-items: center;
 }
 
 .period-select{
@@ -315,6 +315,8 @@ years-month-string{
     white-space: nowrap;
     align-items: center;
     display: flex;
+
+    padding-left: 40px;
 }
 .profile {
     cursor: pointer;

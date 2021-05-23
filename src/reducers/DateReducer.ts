@@ -1,6 +1,7 @@
 import {
   SELECT_PERIOD,
-    SET_BASEDATE,
+  SET_BASEDATE,
+  SET_BASEPERIOD,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
  import { Action } from "../actions";
@@ -8,6 +9,15 @@ import {
   const dateReducer = (state:State = initialState, action:Action):State => {
     switch (action.type) {
       case SET_BASEDATE:
+        return Object.assign({}, state, {
+          ...state,
+          base:{
+            ...state.base,
+            ...action.payload
+          }
+
+        });
+      case SET_BASEPERIOD:
         return Object.assign({}, state, {
           ...state,
           base:{
