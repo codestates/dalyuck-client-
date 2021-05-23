@@ -35,7 +35,7 @@ const DayWeekHead = ({info}:any) => {
                     <div className = "info-left-blank"></div>
                     {
                         info.map(({yoil, day}:{yoil:string;day:DateTime;})=>{
-                            return  <DateInfo yoil={yoil} day={day}/>
+                            return  <DateInfo key={yoil} yoil={yoil} day={day}/>
                         })
                     }
                     <div className = "info-rigth-box"></div>

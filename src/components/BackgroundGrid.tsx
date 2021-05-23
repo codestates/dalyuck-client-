@@ -28,7 +28,7 @@ const Yscale = () => {
     <div className="hour-box-con">
       {
         times.map((time,i)=>{
-          return <HourBox time={time}/>
+          return <HourBox key={i} time={time}/>
         })
       }
     </div>
@@ -41,8 +41,8 @@ const Timetable = ({info}:any) => {
           <div className="row-grid-day-con">
               <div className="row-grid">
                 {
-                  times.map(()=>{
-                    return <div className="row-grid-line"/>   //* 가로줄 24개 
+                  times.map((i)=>{
+                    return <div key={i} className="row-grid-line"/>   //* 가로줄 24개 
                   })
                 }
               </div>
@@ -52,7 +52,7 @@ const Timetable = ({info}:any) => {
               <div className="day-container">
                 {
                   info.map(({day}:{day:DateTime})=>{
-                    return <Day day={day}/>
+                    return <Day key={day} day={day}/>
                   })
                 }  
               </div>

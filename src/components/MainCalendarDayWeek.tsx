@@ -14,7 +14,13 @@ const MainCalendarDayWeek = () => {
     const yoilArr = ['월','화','수','목','금','토','일'];
     const {base} = useSelector( (state:RootState) => state.dateReducer)
     const baseDate = DateTime.fromISO(base.baseDate)
-    const startOfWeek = baseDate.startOf('week').minus({day:1})   // 배이스 기준날의 시작 날짜 디폴트값은 오늘
+    let startOfWeek:DateTime;
+    if(baseDate.weekday===7){        // 기준 날이 일요일이면 주의 시작날은 일요일
+        startOfWeek = baseDate
+    }else{
+        startOfWeek = baseDate.startOf('week').minus({day:1})   // 일요일을 제외한날의 주 의 시작요일은 월요일이라 월요일 -1
+    }
+   
     let dayInfoArr:DayInfoHead[] = [];
 
 
