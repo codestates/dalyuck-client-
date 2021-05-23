@@ -2,7 +2,7 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import Modal from "./Modal";
 
 const axios: any = require("axios");
-axios.default.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 type SignupProps = {
   open?: boolean;
@@ -173,19 +173,18 @@ const Signup = (props: SignupProps) => {
         .then((body: any) => {
           if (body.status === 201) {
             handleCloseBtn();
-            setModalComment("회원가입이 완료되었습니다.");
+            setModalComment("회원가입이 완료되었습니다. 로그인 해주세요.");
             handleModalOpen();
-            return;
-          } else if (body.status === 401) {
-            refEmail.current?.focus();
-            setErrorMessage("사용중인 이메일입니다.");
-            return;
-          } else {
-            setErrorMessage("오류가 발생했습니다.");
             return;
           }
         })
-        .catch((err: any) => console.error(err));
+        .catch((err: any) => {
+          console.error(err);
+          if (err.response.status === 401) {
+            setErrorMessage("사용중인 이메일입니다.");
+            return;
+          }
+        });
     }
   };
 
