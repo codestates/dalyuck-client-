@@ -1,9 +1,9 @@
 // Action Types
-// User Action
+// User Actions
+
 export const SIGN_IN = "SIGN_IN" as const;
 export const SIGN_OUT = "SIGN_OUT" as const;
 export const USER_INFO = "USER_INFO" as const;
-export const GET_GOOGLE_TOKEN = "GET_GOOGLE_TOKEN" as const;
 
 // Date Action
 export const SET_BASEDATE = "SET_BASEDATE" as const;
@@ -14,31 +14,54 @@ export const SELECT_PERIOD = "SELECT_PERIOD" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
-  | ReturnType<typeof userInfo>
   | ReturnType<typeof getGoogleToken>
   | ReturnType<typeof setBaseDate>
   | ReturnType<typeof setBasePeriod>
-  | ReturnType<typeof selectPeriod>;
+  | ReturnType<typeof selectPeriod>
+  | ReturnType<typeof userInfo>;
 
-export interface User {
-  token: string;
-  email: string;
-  userName: string;
-  isLogin: boolean;
-  data: any;
+export interface UserInfo {
+  data: {
+    userName: string;
+    //calendar
+    calendar: [
+      {
+        calendarId: number;
+        calendarName: string;
+        colour: string;
+        //event
+        event: [
+          {
+            eventId: number;
+            startTime: any;
+            endTime: any;
+            eventName: string;
+            colour: string;
+            location: string;
+            description: string;
+            access: boolean;
+            notification: any[];
+          }
+        ];
+      }
+    ];
+    //toDoList
+    toDoList: [
+      {
+        toDoListId: number;
+        toDoListName: string;
+        colour: string;
+      }
+    ];
+  };
 }
 
 // Action Creators
 // User Action Creator
-export const signIn = (
-  data: any,
-  token?: string,
-  email?: string,
-  userName?: string
-) => {
+export const signIn = (data: UserInfo, token: string) => {
   return {
     type: SIGN_IN,
-    payload: { ...data, token, email, userName },
+    payload: { data, token },
   };
 };
 
@@ -48,7 +71,7 @@ export const signOut = () => {
   };
 };
 
-export const userInfo = (token: string, email: string, userName: string) => {
+export const userInfo = (email: string, userName: string) => {
   return {
     type: USER_INFO,
     payload: {
@@ -93,3 +116,4 @@ export const selectPeriod= (isOn=false, leftPosition=900) => {
     },
   };
 };
+

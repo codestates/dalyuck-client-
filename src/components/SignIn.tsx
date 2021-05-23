@@ -4,7 +4,7 @@ import { signIn } from "../actions";
 import "../style/User.scss";
 
 const axios: any = require("axios");
-axios.default.withCredentials = true;
+axios.defaults.withCredentials = true;
 
 type SigninProps = {
   open?: boolean;
@@ -81,24 +81,16 @@ const Signin = (props: SigninProps) => {
         }
       )
       .then((data: any) => {
-        if (data.data.id) {
-          dispatch(signIn(data.data));
+        const token = data.headers.authorization.split(" ")[1];
+        if (token) {
+          dispatch(signIn(data.data, token));
           handleCloseBtn();
-        } //else if (data.message === "exists password") {
-        //   refPassword.current?.focus();
-        //   setErrorMessage("비밀번호를 확인해주세요.");
-        // } else if (data.message === "exists user") {
-        //   refEmail.current?.focus();
-        //   setErrorMessage("해당 유저가 존재하지 않습니다.");
-        // } else if (data.message === "info") {
-        //   refEmail.current?.focus();
-        //   setErrorMessage("이메일과 비밀번호를 입력해주세요.");
-        // } else {
-        //   refEmail.current?.focus();
-        //   setErrorMessage("알수없는 오류가 발생했습니다.");
-        // }
+        }
       })
-      .catch((err: any) => console.error(err));
+      .catch((err: any) => {
+        console.error(err); //response.status(404)에러처리
+        setErrorMessage("해당 유저가 존재하지 않습니다.");
+      });
   };
 
   return (
