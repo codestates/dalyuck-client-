@@ -88,7 +88,7 @@ const Signin = (props: SigninProps) => {
         }
       })
       .catch((err: any) => {
-        console.error(err); //response.status(404)
+        console.error(err); //response.status(404)에러처리
         setErrorMessage("해당 유저가 존재하지 않습니다.");
       });
   };

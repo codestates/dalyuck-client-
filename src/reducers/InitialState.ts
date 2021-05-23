@@ -8,7 +8,7 @@ export type State = {
 
   data: {
     userName: string;
-    //calendar
+    //calendars
     calendar: [
       {
         calendarId: number;

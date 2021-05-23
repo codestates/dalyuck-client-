@@ -1,5 +1,6 @@
 // Action Types
-// User Action
+// User Actions
+
 export const SIGN_IN = "SIGN_IN" as const;
 export const SIGN_OUT = "SIGN_OUT" as const;
 export const USER_INFO = "USER_INFO" as const;

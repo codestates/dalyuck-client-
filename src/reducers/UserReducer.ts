@@ -9,7 +9,7 @@ const userReducer = (state: State = initialState, action: Action): State => {
         data: action.payload.data,
         token: action.payload.token,
       });
-
+    //아직
     case SIGN_OUT:
       return Object.assign({}, state, {
         token: "",
