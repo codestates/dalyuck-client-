@@ -49,6 +49,7 @@
     ]
   },
   "devDependencies": {
-    "@types/luxon": "^1.26.5"
+    "@types/luxon": "^1.26.5",
+    "csstype": "^3.0.8"
   }
 }

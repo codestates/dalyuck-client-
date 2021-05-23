@@ -1,6 +1,12 @@
 @import "variables";
-@import "BackgroundGrid","DayWeekHead","Day";
+@import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod";
 
+html{
+  height: 100%;
+}
+#root{
+  height: 100%;
+}
 body {
   font-size: 14px;
   text-rendering: geometricPrecision;
@@ -16,3 +22,7 @@ body, html {
   font-family: Roboto,"Noto Sans KR",Helvetica,Arial,sans-serif;
 }
 
+.sidebar-calendar{
+  border-top: $grid-line;
+  height: calc(100% - 64px);
+}

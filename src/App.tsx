@@ -1,14 +1,11 @@
 import React from 'react';
 import './App.css';
-
+import Main from './pages/Main';
+import './style/Main.scss';
 
 function App() {
   return (
-    <div>
-      <div>
-        hi
-      </div>
-    </div>
+    <Main/>
   );
 }
 

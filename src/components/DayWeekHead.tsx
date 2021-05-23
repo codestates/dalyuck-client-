@@ -2,11 +2,11 @@ import { DateTime } from "luxon";
 
 interface DayInfoHead {
     yoil:string;
-    day:number;
+    day:DateTime;
 }
 
 const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) 메인 달력에서 헤더  ex)월,13 표시하는곳
-    let isToday = day===DateTime.now().day
+    let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
 
     return(
         <div className = "date-info">
@@ -17,7 +17,7 @@ const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) �
                         {yoil}
                     </div>
                     <div className = {"myuchil"+(isToday ? ' today':'')}>
-                        {day}
+                        {day.day}
                     </div>
                 </h2>
             </div>
@@ -34,8 +34,8 @@ const DayWeekHead = ({info}:any) => {
                 <div className = "date-info-con">
                     <div className = "info-left-blank"></div>
                     {
-                        info.map((day:{yoil:string; day:number;})=>{
-                            return  <DateInfo yoil={day.yoil} day={day.day}/>
+                        info.map(({yoil, day}:{yoil:string;day:DateTime;})=>{
+                            return  <DateInfo key={yoil} yoil={yoil} day={day}/>
                         })
                     }
                     <div className = "info-rigth-box"></div>
@@ -51,6 +51,7 @@ const DayWeekHead = ({info}:any) => {
                     </div>
                 </div>
             </div>
+            <div className="main-cal-blank"/>
         </div>
     )
 }

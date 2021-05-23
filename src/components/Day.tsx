@@ -10,7 +10,6 @@ const timeToPixel = (time:DateTime):number=>{
 }
 
 const Redline = ({height}:any)=>{
-  console.log(height)
   return (
     <div>
       <div className = "tody-time-line" style ={{top: height + 'px'}}/>
@@ -20,7 +19,8 @@ const Redline = ({height}:any)=>{
 
 }
 
-const Event = ({ event }: any) => {
+
+const Event = ({ event }:any ) => {
   const start = DateTime.fromISO(event.startTime);
   const end = DateTime.fromISO(event.endTime);
   const startPixel = timeToPixel(start);
@@ -46,12 +46,12 @@ const Event = ({ event }: any) => {
   );
 };
 
-const Day = ({ dayNum }: any) => {
+const Day = ({ day }: any) => {
   const now = DateTime.now(); //  현재시간
   const height = timeToPixel(now);
-  const isToday = dayNum === now.day;
+  const isToday = day.toFormat("D") === now.toFormat("D");
   const dayEvent = events.filter((event) => {
-    return DateTime.fromISO(event.startTime).day === dayNum;
+    return DateTime.fromISO(event.startTime).toFormat("D") === day.toFormat("D");
   });
   return (
     <div className="day-con">
