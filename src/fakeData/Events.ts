@@ -24,3 +24,101 @@ export const events = [
 
     },
 ]
+interface Event {
+    startTime : string;
+    endTime: string;
+    eventName: string;
+    colour: string;
+    location: string;
+    description: string;
+    access: boolean;
+    notification: string[];
+};
+export type Calendar = {
+    calenderName:string;
+    colour: string;
+    event: Event[];
+}[];
+export const calendar = [
+    {
+      calenderName: "강정환",
+      colour: "rgb(97, 97, 97)",
+      event: [
+        {
+            startTime : "2021-05-24T13:00:00.000+09:00",
+            endTime: "2021-05-24T13:30:00.000+09:00",
+            eventName: "아침회의",
+            colour: "rgb(97, 97, 97)",
+            location: "서울시 인수동",
+            description: "아침 정기 회의",
+            access: true,
+            notification: [
+                "20201025_0940"
+            ]
+        },
+        {
+            startTime : "2021-05-24T13:00:00.000+09:00",
+            endTime: "2021-05-24T13:30:00.000+09:00",
+            eventName: "아침회의",
+            colour: "rgb(97, 97, 97)",
+            location: "서울시 인수동",
+            description: "아침 정기 회의",
+            access: true,
+            notification: [
+                "20201025_0940"
+            ]
+        },
+        {
+            startTime : "2021-05-25T13:00:00.000+09:00",
+            endTime: "2021-05-25T13:30:00.000+09:00",
+            eventName: "아침회의",
+            colour: "rgb(97, 97, 97)",
+            location: "서울시 인수동",
+            description: "아침 정기 회의",
+            access: true,
+            notification: [
+                "20201025_0940"
+            ]
+        }
+      ]
+    },
+    {
+        calenderName: "회의",
+        colour: "rgb(192, 202, 51)",
+        event: [
+          {
+            startTime : "2021-05-24T13:00:00.000+09:00",
+            endTime: "2021-05-24T13:30:00.000+09:00",
+              eventName: "아침회의",
+              colour: "rgb(192, 202, 51)",
+              location: "서울시 인수동",
+              description: "아침 정기 회의",
+              access: true,
+              notification: [
+                  "20201025_0940"
+              ]
+          },
+          {
+            startTime : "2021-05-27T13:00:00.000+09:00",
+            endTime: "2021-05-27T13:30:00.000+09:00",
+              eventName: "아침회의",
+              colour: "rgb(192, 202, 51)",
+              location: "서울시 인수동",
+              description: "아침 정기 회의",
+              access: true,
+              notification: [
+                  "20201025_0940"
+              ]
+          },
+          {
+            startTime : "2021-05-28T13:00:00.000+09:00",
+            endTime: "2021-05-28T13:30:00.000+09:00",
+              eventName: "아침회의",
+              colour: "rgb(192, 202, 51)",
+              location: "서울시 인수동",
+              description: "아침 정기 회의",
+
+          }
+        ]
+      }
+    ]
