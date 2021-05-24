@@ -26,3 +26,10 @@ body, html {
   border-top: $grid-line;
   height: calc(100% - 64px);
 }
+
+.today{
+  background-color: $today-color;
+  border-radius: 50%;
+  color: white;
+
+}

@@ -116,7 +116,6 @@ const Nav = () => {
                     ref={componentRef} 
                     onClick={()=>{
                       let x = componentRef.current?.getBoundingClientRect().x;
-                      console.log('click')
                       dispatch(selectPeriod(true, x)
                         )}}
                   >
