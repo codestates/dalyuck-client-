@@ -14,7 +14,6 @@ export const SELECT_PERIOD = "SELECT_PERIOD" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
-  | ReturnType<typeof getGoogleToken>
   | ReturnType<typeof setBaseDate>
   | ReturnType<typeof setBasePeriod>
   | ReturnType<typeof selectPeriod>
@@ -77,15 +76,6 @@ export const userInfo = (email: string, userName: string) => {
     payload: {
       email,
       userName,
-    },
-  };
-};
-
-export const getGoogleToken = (data: string) => {
-  return {
-    type: GET_GOOGLE_TOKEN,
-    payload: {
-      data,
     },
   };
 };

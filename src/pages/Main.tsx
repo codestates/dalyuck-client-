@@ -1,19 +1,26 @@
-import MainCalenderDayWeek from "../components/MainCalendarDayWeek";
+import MainCalendarDayWeek from "../components/MainCalendarDayWeek";
 import Nav from '../components/Nav';
 import { SelectorPeriod } from '../components/SelectorPeriod';
 import { useSelector } from 'react-redux'
 import { RootState } from '../reducers/index';
-
+import MaincalendarMonth  from "../components/MainCalendarMonth";
 const Main = ()=>{
 
-    const {selector} = useSelector((state:RootState) => state.dateReducer);
-
+    const {selector,base} = useSelector((state:RootState) => state.dateReducer);
+    
     let isOn = selector.isOn;
 
     return(
         <div className = "main" style={{height:100+'%'}}>
             <Nav/>
-            <MainCalenderDayWeek/>
+            {
+                base.basePeriod==='month' ? (
+                    <MaincalendarMonth/>
+                ):(
+                    <MainCalendarDayWeek/>
+                )
+            }
+            
             {
                 isOn?  (
                 <SelectorPeriod/>

@@ -9,40 +9,8 @@ export type State = {
 
   token: string;
 
-  googleToken: string;
 
-  data: {};
 
-  //calendar
-  calendar: [
-    {
-      calendarId: number;
-      calendarName: string;
-      colour: string;
-    }
-  ];
-  //event
-  event: [
-    {
-      eventId: number;
-      startTime: any;
-      endTime: any;
-      eventName: string;
-      colour: string;
-      location: string;
-      description: string;
-      access: boolean;
-      notification: [];
-    }
-  ];
-  //toDoList
-  toDoList: [
-    {
-      toDoListId: number;
-      toDoListName: string;
-      colour: string;
-    }
-  ];
   // 캘린더 렌더링 할때 필요한 상태
   base :{
     baseDate: string,
@@ -100,36 +68,6 @@ export const initialState: State = {
 
   token: "",
 
-  //calendar
-  calendar: [
-    {
-      calendarId: 0,
-      calendarName: "",
-      colour: "",
-    },
-  ],
-  //event
-  event: [
-    {
-      eventId: 0,
-      startTime: "",
-      endTime: "",
-      eventName: "",
-      colour: "",
-      location: "",
-      description: "",
-      access: true,
-      notification: [],
-    },
-  ],
-  //toDoList
-  toDoList: [
-    {
-      toDoListId: 0,
-      toDoListName: "",
-      colour: "",
-    },
-  ],
   // 캘린더 렌더링시 필요한 상태
   base :{
     baseDate: today,
@@ -140,7 +78,8 @@ export const initialState: State = {
   selector:{
     isOn: false,
     leftPosition:900
-  }
+  },
+  
   data: {
     userName: "",
     //calendar

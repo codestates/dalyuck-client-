@@ -1,0 +1,117 @@
+.calendar-month{
+    z-index: auto;
+    opacity: 1;
+    transform: none;
+    will-change: auto;
+  
+    position: relative;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+
+    height: 100%;
+  
+    &__inner{
+      border-left: #dadce0 1px solid;  // 그리드 색
+  
+      background-color: #fff;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      margin-left: 8px;
+    }
+    &__header{
+      margin: 0;
+      align-items: stretch;
+      display: flex;
+      flex: none;
+      height: 20px;
+    }
+}
+.month-columnheader{
+    border-right: #dadce0 1px solid;  // 그리드색
+    flex: 1 1 0%;
+    text-align: center;
+    font-family: Roboto,Arial,sans-serif;
+
+    outline: none;
+    &__span{
+    color: #70757a;
+    font-size: 11px;
+    font-weight: 500;
+    line-height: 20px;
+    }
+}
+
+.month-weeks{
+    margin: 0;
+    overflow: hidden;
+    flex: 1 1 0%;
+    display: flex;
+    flex-direction: column;
+
+    &__week{
+    position: relative;
+    overflow: hidden;
+    border-bottom: #dadce0 1px solid;
+    display: flex;
+    flex: 1 1 0%;
+    }
+    &__header{
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    display: flex;
+    }
+}
+
+.month-week__header-day{
+    font-size: 14px;
+    line-height: 30px;
+    border-right: #dadce0 1px solid;
+    color: #70757a;
+    flex: 1 1 0%;
+
+    &-inner{
+    width: 100%;
+    text-align: center;
+    }
+    &-inner-h2{
+    color: #3c4043;
+
+    margin-top: 8px;
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    letter-spacing: .3px;
+    display: inline-block;
+    text-align: center;
+    white-space: nowrap;
+    width: max-content;
+    min-width: 24px;
+    line-height: 24px;
+    }
+}
+.month-week__body{
+    margin-top: 30px;
+    flex: 1 1 0%;
+
+    &-inner{
+    height: 4em;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    font-size: 24px;
+    }
+}
+
+.week-event{
+    flex: 1 1 0%;
+    border-right: 1px solid transparent;
+
+    outline: none;
+}
+
