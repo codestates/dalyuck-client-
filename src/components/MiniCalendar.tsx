@@ -13,16 +13,17 @@ const MiniCalendarHeader = ({ day }: { day: string }) => {
   );
 };
 const MiniWeekDay = ({ day }: { day: DateTime }) => {
+  let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
+
   return (
     <span className="mini-week__day">
-      <div className="mini-week__day__text">{day.day}</div>
+      <div className={"mini-week__day__text"+ (isToday ? ' today':'')}>{day.day}</div>
     </span>
   );
 };
 
 const MiniWeek = (props:{headerDay:DateTime[]}) => {
   let headerDay=props.headerDay
-
   return (
     <div className="mini-week">
       {/* 1,2,3,4, 매핑... */}
@@ -34,14 +35,14 @@ const MiniWeek = (props:{headerDay:DateTime[]}) => {
 };
 export default function MiniCalendar() {
 
-  const {base} = useSelector( (state:RootState) => state.dateReducer )
+  let {base} = useSelector( (state:RootState) => state.dateReducer )
+  base = {...base,basePeriod:'month'}
   const weekInfoArr = makeDayInfoArr(base)
-
   return (
     <div className="mini">
       <div className="mini__inner">
         <div className="mini-nav">
-          <span className="mini-nav__span"> 2021년 5월 </span>
+          <span className="mini-nav__span"> {DateTime.fromISO(base.baseDate).toFormat("y년 M월")} </span>
           <div className="mini-nav__direction">
             <svg focusable="false" viewBox="0 0 24 24">
               <path
@@ -69,9 +70,9 @@ export default function MiniCalendar() {
           <div className="mini-calendar__body">
             {/* miniweek 매핑 ... */}
             {
-              weekInfoArr.map((week:any)=>{
+              weekInfoArr.map((week:any,i:number)=>{
                 return(
-                  <MiniWeek headerDay={week}/>
+                  <MiniWeek key={i} headerDay={week}/>
                 )
               })
             }

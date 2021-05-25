@@ -11,7 +11,7 @@ const MainCalendarDayWeek = () => {
 
 
     return(
-        <div className="sidebar-calendar">
+        <div className="main-calendar">
             <DayWeekHead info={dayInfoArr}/>
             <BackgroundGrid info={dayInfoArr}/>
         </div>

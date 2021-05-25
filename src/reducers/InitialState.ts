@@ -21,7 +21,8 @@ export type State = {
     isOn: boolean,
     leftPosition: number
   }
-
+  //
+  isSidebarOpen:boolean;
 
   data: {
     userName: string;
@@ -79,6 +80,9 @@ export const initialState: State = {
     isOn: false,
     leftPosition:900
   },
+
+  // 사이드바 접은 상태
+  isSidebarOpen:true,
   
   data: {
     userName: "",

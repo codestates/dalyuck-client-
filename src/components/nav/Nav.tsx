@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
 import { RootState } from '../../reducers/index';
-import { setBaseDate , selectPeriod} from "../../actions/index";
+import { setBaseDate , selectPeriod, setIsSidebarOpen} from "../../actions/index";
 import { DateTime } from 'luxon';
 import { useRef } from 'react';   // 레퍼런스 훅스
 
@@ -8,7 +8,7 @@ import { useRef } from 'react';   // 레퍼런스 훅스
 const Nav = () => {
 
   const componentRef = useRef<HTMLDivElement>(null);  //  ref타입 설정
-  const {base} = useSelector((state:RootState) => state.dateReducer);
+  const {base,isSidebarOpen} = useSelector((state:RootState) => state.dateReducer);
   const dispatch = useDispatch();
 
   let date = base.baseDate;
@@ -46,11 +46,14 @@ const Nav = () => {
     const baseDate:string = DateTime.fromISO(date).plus(period).toISO()
     dispatch(setBaseDate(baseDate))
   }
+  const handleSidebar = () => {
+    dispatch(setIsSidebarOpen(!isSidebarOpen))
+  }
     return(
         <div className="nav">
         <div className="nav-con">
           <div className="menu-logo-name-con">
-            <div className="menu-con">
+            <div className="menu-con" onClick={()=>(handleSidebar())}>
               {/* sidebar 접었다 폇다하는 버튼 */}
               <svg focusable="false" viewBox="0 0 24 24">
                 <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>

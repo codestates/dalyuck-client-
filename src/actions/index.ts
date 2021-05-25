@@ -9,7 +9,7 @@ export const USER_INFO = "USER_INFO" as const;
 export const SET_BASEDATE = "SET_BASEDATE" as const;
 export const SET_BASEPERIOD = "SET_BASEPERIOD" as const;
 export const SELECT_PERIOD = "SELECT_PERIOD" as const;
-
+export const IS_SIDEBAR_OPEN = "IS_SIDEBAR_OPEN" as const;
 
 export type Action =
   | ReturnType<typeof signIn>
@@ -17,7 +17,8 @@ export type Action =
   | ReturnType<typeof setBaseDate>
   | ReturnType<typeof setBasePeriod>
   | ReturnType<typeof selectPeriod>
-  | ReturnType<typeof userInfo>;
+  | ReturnType<typeof userInfo>
+  | ReturnType<typeof setIsSidebarOpen>;
 
 export interface UserInfo {
   data: {
@@ -106,4 +107,13 @@ export const selectPeriod= (isOn=false, leftPosition=900) => {
     },
   };
 };
+
+export const setIsSidebarOpen = (isSidebarOpen:boolean) => {
+  return{
+    type: IS_SIDEBAR_OPEN,
+    payload: {
+      isSidebarOpen
+    }
+  }
+}
 

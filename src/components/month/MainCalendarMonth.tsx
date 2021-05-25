@@ -92,7 +92,7 @@ export default function MaincalendarMonth() {
           {
             weekInfoArr.map((week:any)=>{
               return(
-                <MonthWeek headerDay={week}/>
+                <MonthWeek key={week[0].toString()} headerDay={week}/>
               )
             })
           }

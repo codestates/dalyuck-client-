@@ -70,6 +70,10 @@
     display: flex;
     flex-direction: column;
     justify-content: center;
+
+    &:hover {
+        background: darken(white, 10%)
+      }
 }
 .yoil {
     line-height: 32px;
