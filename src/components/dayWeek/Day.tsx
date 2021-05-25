@@ -1,5 +1,5 @@
 import { DateTime, Interval } from 'luxon';
-import {events} from '../fakeData/Events';
+import {events} from '../../fakeData/Events';
 const timeToPixel = (time:DateTime):number=>{
   const minute = time.minute;
   const hour = time.hour;

@@ -1,6 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux'
-import { RootState } from '../reducers/index';
-import { setBaseDate , selectPeriod} from "../actions/index";
+import { RootState } from '../../reducers/index';
+import { setBaseDate , selectPeriod} from "../../actions/index";
 import { DateTime } from 'luxon';
 import { useRef } from 'react';   // 레퍼런스 훅스
 

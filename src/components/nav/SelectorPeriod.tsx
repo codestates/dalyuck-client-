@@ -1,9 +1,9 @@
 import * as CSS from 'csstype';
 import { useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux'
-import { selectPeriod, setBasePeriod } from '../actions/index'
-import { RootState } from '../reducers/index';
-import { useOutSideClick } from '../functions/Calendar';
+import { selectPeriod, setBasePeriod } from '../../actions/index'
+import { RootState } from '../../reducers/index';
+import { useOutSideClick } from '../../functions/Calendar';
 
 
 type Select={

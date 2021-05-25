@@ -1,0 +1,122 @@
+.mini{
+    flex-grow: 0;
+    flex-shrink: 0;
+  
+    height: 224px;
+    padding-top: 0;
+    margin-top: -5px;
+  
+    padding: 8px 0;
+  
+    &__inner{
+      padding: 0 14px 16px 19px;
+      position: relative;
+    }
+  }
+  
+  .mini-nav{
+    height: 32px;
+    font-size: 12px;
+    font-weight: 400;
+    color: #3c4043;
+    display: flex;
+    align-items: center;
+    margin-left: 4px;
+    margin-right: 3px;
+  
+  
+    &__span{
+      box-flex: 1;
+      flex-grow: 1;
+      padding-left: 5px;
+      font-family: 'Google Sans',Roboto,Arial,sans-serif;
+      font-size: 14px;
+      font-weight: 500;
+      letter-spacing: .25px;
+      line-height: 20px;
+      color: #3c4043;
+    }
+    &__direction{
+      height: 24px;
+      width: 24px;
+  
+      margin-right: 6px;
+  
+      color: #5f6368;
+      fill: #5f6368;
+  
+      transition: background-color,opacity 100ms linear;
+      vertical-align: top;
+  
+      transition: background .3s;
+      border: 0;
+      border-radius: 50%;
+      cursor: pointer;
+      display: inline-block;
+      flex-shrink: 0;
+      outline: none;
+      overflow: hidden;
+      position: relative;
+      text-align: center;
+      z-index: 0;
+    }
+  }
+  
+  .mini-calendar{
+    display: table;
+    table-layout: fixed;
+    width: 100%;
+    text-align: center;
+  
+    &__header{
+      display: table-row;
+      height: 28px;
+  
+      &__span-inner{
+        outline: none;
+  
+        display: table-cell;
+        font-size: 10px;
+        font-weight: 500;
+        vertical-align: middle;
+        color: #70757a;
+      }
+      &__span{
+        font-size: 10px;
+        font-weight: 500;
+        color: #70757a;
+      }
+    }
+    &__body{
+      display: table-row-group;
+    }
+  }
+  
+  .mini-week{
+    display: table-row;
+    height: 28px;
+  
+    &__day{
+      outline: none;
+  
+      color: #3c4043;
+      display: table-cell;
+      font-size: 10px;
+      font-weight: 500;
+      vertical-align: middle;
+      cursor: pointer;
+      position: relative;
+  
+      &__text{
+      width: 24px;
+      height: 24px;
+      line-height: 24px;
+      margin: auto;
+      border-radius: 50%;
+      position: relative;
+      background-color: white;
+      transition: background-color 100ms linear;
+      }
+    }
+    
+  }

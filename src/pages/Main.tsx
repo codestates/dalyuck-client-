@@ -1,9 +1,9 @@
-import MainCalendarDayWeek from "../components/MainCalendarDayWeek";
-import Nav from '../components/Nav';
-import { SelectorPeriod } from '../components/SelectorPeriod';
+import MainCalendarDayWeek from "../components/dayWeek/MainCalendarDayWeek";
+import Nav from '../components/nav/Nav';
+import { SelectorPeriod } from '../components/nav/SelectorPeriod';
 import { useSelector } from 'react-redux'
 import { RootState } from '../reducers/index';
-import MaincalendarMonth  from "../components/MainCalendarMonth";
+import MaincalendarMonth  from "../components/month/MainCalendarMonth";
 const Main = ()=>{
 
     const {selector,base} = useSelector((state:RootState) => state.dateReducer);
