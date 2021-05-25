@@ -2,6 +2,8 @@ import { makeDayInfoArr } from '../functions/Calendar'
 import { useSelector } from 'react-redux';
 import { RootState } from '../reducers/index';
 import { DateTime } from 'luxon';
+import UnderDay from './UnderDay';
+import { calendar } from '../fakeData/Events'
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -29,8 +31,25 @@ const MonthWeekheaderDay = ({ day }: { day: DateTime }) => {
   );
 };
 
-const WeekEvent = () => {
-  return <div className="week-event">{/* 이벤트 할일 들어갈 곳 */}</div>;
+const WeekEvent = ({day, calendar}:any) => {
+
+  let dayEvents:any=[];
+  for(let i = 0 ; i<calendar.length ; i++){
+    let events = calendar[i].event;
+    let filteredEvents = events.filter((event:any) => {                    // 모든 캘린더에서 해당하는 날의 이밴트를 가져온다.
+      return DateTime.fromISO(event.startTime).toFormat("D") === day.toFormat("D");
+    });
+    dayEvents= [...dayEvents, ...filteredEvents];
+  }
+
+  return (
+    <div className="week-event">{/* 이벤트 할일 들어갈 곳 */}
+      {
+        dayEvents.map((dayEvent:any)=>{
+          return <UnderDay key={dayEvent}/>
+        })
+      }
+    </div>)
 };
 
 const MonthWeek = (props:{headerDay:DateTime[]}) => {
@@ -46,8 +65,8 @@ const MonthWeek = (props:{headerDay:DateTime[]}) => {
       </div>
       <div className="month-week__body">
         <div className="month-week__body-inner">
-          {headerDay.map((event, i) => {
-            return <WeekEvent key={i} />;
+          {headerDay.map((day, i) => {
+            return <WeekEvent key={i} day={day} calendar={calendar}/>;
           })}
         </div>
       </div>
