@@ -3,7 +3,7 @@
 
 import React, { useState } from 'react'
 
-// 새 캘린더 만들기 프레임 추가 #119
+// 새 캘린더 만들기 프레임 추가  #119
 // Server쪽에 보낼 캘린더 이름과 설명을 입력할 Input 컨트롤 코딩.
 
 function CreateCalendar() {
