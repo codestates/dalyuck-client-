@@ -1,0 +1,174 @@
+$main: #1a73e8;
+$dark: #191919;
+$mediumdark: rgba(0, 0, 0, 0.7);
+$light: #e8e8e8;
+
+@keyframes show-modal {
+  from {
+    opacity: 0.3;
+    margin-top: 50px;
+  }
+  to {
+    opacity: 1;
+    margin-top: 0;
+  }
+}
+
+// event
+.event {
+  display: none;
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0);
+}
+
+.show {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: show-modal 0.4s;
+
+  background-color: rgba(0, 0, 0, 0.7);
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.event__wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  border-radius: 5px;
+  width: 25rem;
+  height: 32rem;
+}
+
+.event__close__btn {
+  margin-left: 22rem;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  font-weight: 700;
+  font-size: 1rem;
+  &:hover {
+    color: $main;
+    transition: all ease 0.2s;
+  }
+}
+
+.event__submit__btn {
+  margin-top: 1.5rem;
+  margin-left: 18.5rem;
+  height: 2.5rem;
+  width: 5rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+  background-color: $main;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 500;
+  &:hover {
+    background-color: #2e9afe;
+    transition: all ease 0.3s;
+  }
+}
+
+.event__form {
+  padding: 0, 12px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin-top: 16px;
+}
+
+.attendants__input {
+  height: 1.2rem;
+  width: 19.5rem;
+  padding: 0.5rem;
+  font-size: 18px;
+  color: #5f6063;
+  border: none;
+  border-bottom: 1px solid #9b9b9c;
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid $main;
+    transition: all ease 0.3s;
+    border-radius: 3px;
+    background-color: #f1f3f4;
+  }
+}
+
+.title__input {
+  height: 1.2rem;
+  width: 19.5rem;
+  padding: 0.5rem;
+  border: none;
+  border-bottom: 1px solid #9b9b9c;
+  font-size: 20px;
+  color: #5f6063;
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid $main;
+    transition: all ease 0.3s;
+  }
+}
+
+.event__date__start {
+  width: 90%;
+  height: 25px;
+  margin-right: 20px;
+  text-align: center;
+}
+
+.event__date__end {
+  width: 100%;
+  height: 25px;
+  text-align: center;
+}
+
+.event__textarea__form {
+  padding: 0, 12px;
+  display: flex;
+  align-items: center;
+  width: 90%;
+  margin-top: 20px;
+  textarea {
+    resize: none;
+    background-color: #f1f3f4;
+    border: none;
+    font-size: 15px;
+    width: 90%;
+    height: 100px;
+    &:focus {
+      outline: none;
+      border: none;
+      transition: all ease 0.3s;
+    }
+  }
+}
+
+svg {
+  margin-right: 10px;
+  margin-left: -5px;
+}
+
+select {
+  width: 20%;
+  height: 150%;
+}
+
+option {
+  font-weight: 600;
+  border-radius: 3px;
+  font-size: 1.1rem;
+  color: $main;
+}
