@@ -1,5 +1,5 @@
 @import "variables";
-@import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod";
+@import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod","CalendarMonth","UnderDay";
 
 html{
   height: 100%;
@@ -25,4 +25,11 @@ body, html {
 .sidebar-calendar{
   border-top: $grid-line;
   height: calc(100% - 64px);
+}
+
+.today{
+  background-color: $today-color;
+  border-radius: 50%;
+  color: white;
+
 }

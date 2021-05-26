@@ -13,7 +13,7 @@ const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) �
             <div className = "date-info-text-box-con">
                 <div className = "extand-grid-left"/>
                 <h2 className = "date-info-text-box">
-                    <div className = {"yoil"+(isToday ? ' today':'')}>
+                    <div className = {"yoil"+(isToday ? ' yoiltoday':'')}>
                         {yoil}
                     </div>
                     <div className = {"myuchil"+(isToday ? ' today':'')}>
