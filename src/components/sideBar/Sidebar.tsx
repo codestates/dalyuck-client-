@@ -4,10 +4,10 @@ import MiniCalendar from "./MiniCalendar";
 import { useSelector } from 'react-redux'
 import { RootState } from '../../reducers/index';
 import { useState } from 'react';
-import { calendar as calendars } from "../../fakeData/Events";
+import { data  } from "../../fakeData/Events";
 
 export default function Sidebar() {
-
+  let calendars = data.calendar;   // 페이크 데이터
   const[isMyCalOpen, setIsMycalOpen] = useState(true);
   const[isOtherCalOpen, setIsOthercalOpen ] = useState(true);
 
@@ -43,6 +43,7 @@ export default function Sidebar() {
                 {/* 내, 다른 컴포넌트 */}
                 <SidebarCalendars myOrOther="my" setIsOpen={setIsMycalOpen} isOpen={isMyCalOpen} />
                 {
+     
                   calendars.map((calendar,i)=>{
                     return <CalendarList key={i} isOpen={isMyCalOpen} calendar={calendar}/>
                   })

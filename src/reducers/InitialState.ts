@@ -29,6 +29,14 @@ export type State = {
     calendarId:number,
     yAxis:number
   },
+  eventTodo:{
+    isEventClick:false,
+    position:[0,0],
+    eventId:number,
+    userId:number,
+    calendarId:number,
+    access:boolean
+  },
 
   data: {
     userName: string;
@@ -95,6 +103,16 @@ export const initialState: State = {
     isOptionClick:false,
     calendarId:0,
     yAxis:0
+  },
+
+  // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태 
+  eventTodo:{
+    isEventClick:false,
+    position:[0,0],
+    eventId:0,
+    userId:0,
+    calendarId:0,
+    access:false,
   },
 
   data: {
