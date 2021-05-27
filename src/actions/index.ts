@@ -10,11 +10,9 @@ export const SET_BASEDATE = "SET_BASEDATE" as const;
 export const SET_BASEPERIOD = "SET_BASEPERIOD" as const;
 export const SELECT_PERIOD = "SELECT_PERIOD" as const;
 
-
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
-  | ReturnType<typeof getGoogleToken>
   | ReturnType<typeof setBaseDate>
   | ReturnType<typeof setBasePeriod>
   | ReturnType<typeof selectPeriod>
@@ -81,39 +79,29 @@ export const userInfo = (email: string, userName: string) => {
   };
 };
 
-export const getGoogleToken = (data: string) => {
-  return {
-    type: GET_GOOGLE_TOKEN,
-    payload: {
-      data,
-    },
-  };
-};
-
-export const setBaseDate= (baseDate:string) => {
+export const setBaseDate = (baseDate: string) => {
   return {
     type: SET_BASEDATE,
     payload: {
-      baseDate
+      baseDate,
     },
   };
 };
-export const setBasePeriod= (basePeriod:string) => {
+export const setBasePeriod = (basePeriod: string) => {
   return {
     type: SET_BASEPERIOD,
     payload: {
-      basePeriod
+      basePeriod,
     },
   };
 };
 
-export const selectPeriod= (isOn=false, leftPosition=900) => {
+export const selectPeriod = (isOn = false, leftPosition = 900) => {
   return {
     type: SELECT_PERIOD,
     payload: {
       isOn,
-      leftPosition
+      leftPosition,
     },
   };
 };
-

@@ -1,5 +1,5 @@
-import { DateTime } from 'luxon';
-const today = DateTime.now().toISO()
+import { DateTime } from "luxon";
+const today = DateTime.now().toISO();
 
 export type State = {
   user: {
@@ -9,54 +9,20 @@ export type State = {
 
   token: string;
 
-  googleToken: string;
-
-  data: {};
-
-  //calendar
-  calendar: [
-    {
-      calendarId: number;
-      calendarName: string;
-      colour: string;
-    }
-  ];
-  //event
-  event: [
-    {
-      eventId: number;
-      startTime: any;
-      endTime: any;
-      eventName: string;
-      colour: string;
-      location: string;
-      description: string;
-      access: boolean;
-      notification: [];
-    }
-  ];
-  //toDoList
-  toDoList: [
-    {
-      toDoListId: number;
-      toDoListName: string;
-      colour: string;
-    }
-  ];
   // 캘린더 렌더링 할때 필요한 상태
-  base :{
-    baseDate: string,
-    basePeriod: string
-  },
+  base: {
+    baseDate: string;
+    basePeriod: string;
+  };
   // 일간 월간 선택할때 필요한 상태
-  selector:{
-    isOn: boolean,
-    leftPosition: number
-  }
-
+  selector: {
+    isOn: boolean;
+    leftPosition: number;
+  };
 
   data: {
     userName: string;
+    userId: number;
     //calendars
     calendar: [
       {
@@ -100,48 +66,19 @@ export const initialState: State = {
 
   token: "",
 
-  //calendar
-  calendar: [
-    {
-      calendarId: 0,
-      calendarName: "",
-      colour: "",
-    },
-  ],
-  //event
-  event: [
-    {
-      eventId: 0,
-      startTime: "",
-      endTime: "",
-      eventName: "",
-      colour: "",
-      location: "",
-      description: "",
-      access: true,
-      notification: [],
-    },
-  ],
-  //toDoList
-  toDoList: [
-    {
-      toDoListId: 0,
-      toDoListName: "",
-      colour: "",
-    },
-  ],
   // 캘린더 렌더링시 필요한 상태
-  base :{
+  base: {
     baseDate: today,
-    basePeriod: 'week',
+    basePeriod: "week",
   },
 
   // 월간 주간 선택시 필요한 상태
-  selector:{
+  selector: {
     isOn: false,
-    leftPosition:900
-  }
+    leftPosition: 900,
+  },
   data: {
+    userId: 0,
     userName: "",
     //calendar
     calendar: [
@@ -175,4 +112,3 @@ export const initialState: State = {
     ],
   },
 };
-

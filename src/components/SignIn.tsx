@@ -1,6 +1,8 @@
 import { useState, useEffect, useCallback, useRef, KeyboardEvent } from "react";
 import { useDispatch } from "react-redux";
 import { signIn } from "../actions";
+import Signup from "./SignUp";
+import Modal from "./Modal";
 import "../style/User.scss";
 
 const axios: any = require("axios");
@@ -15,6 +17,7 @@ type SigninProps = {
 
 const Signin = (props: SigninProps) => {
   const { open, close, handleGoogleSign, currentPage } = props;
+
   const dispatch = useDispatch();
   const refEmail = useRef<HTMLInputElement | null>(null);
   const refPassword = useRef<HTMLInputElement | null>(null);
@@ -22,6 +25,11 @@ const Signin = (props: SigninProps) => {
   const [inputEmail, setInputEmail] = useState<string>("");
   const [inputPassword, setInputPassword] = useState<string>("");
   const [errorMessage, setErrorMessage] = useState<string>("");
+
+  const [SignUpModalOpen, setSignUpModalOpen] = useState<boolean>(false);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [modalType, setModalType] = useState<string>("");
+  const [modalComment, setModalComment] = useState<string>("");
 
   useEffect(() => {
     refEmail.current?.focus();
@@ -71,20 +79,19 @@ const Signin = (props: SigninProps) => {
     }
     axios
       .post(
-        `http://localhost:3000/user/login/`,
+        `https://ec2-34-207-81-162.compute-1.amazonaws.com:3000/user/login/`,
         {
           email: inputEmail,
           password: inputPassword,
-        },
-        {
-          credentials: "include",
         }
       )
-      .then((data: any) => {
-        const token = data.headers.authorization.split(" ")[1];
+      .then((res: any) => {
+        const token = res.headers.authorization.split(" ")[1];
         if (token) {
-          dispatch(signIn(data.data, token));
+          dispatch(signIn(res.data, token));
           handleCloseBtn();
+          setModalComment("로그인 완료.");
+          handleModalOpen();
         }
       })
       .catch((err: any) => {
@@ -93,10 +100,34 @@ const Signin = (props: SigninProps) => {
       });
   };
 
+  const handleModalOpen = () => {
+    setOpenModal(true);
+  };
+
+  const handleModalClose = () => {
+    setOpenModal(false);
+  };
+
+  const closeSignUpModal = () => {
+    setSignUpModalOpen(false);
+  };
+
+  const handleSignupBtn = () => {
+    setSignUpModalOpen(true);
+    close();
+  };
+
   return (
-    <div className={`signin ${open ? "show" : ""}`}>
+    <>
+      <Modal
+        modalType="alertModal"
+        open={openModal}
+        close={handleModalClose}
+        comment={modalComment}
+      />
+      <Signup open={SignUpModalOpen} close={closeSignUpModal} />
       {open ? (
-        <>
+        <div className="signin show">
           <div className="signin__outsider" onClick={handleCloseBtn}></div>
           <div className="signin__wrapper">
             <button className="signin__close-btn" onClick={handleCloseBtn}>
@@ -141,7 +172,12 @@ const Signin = (props: SigninProps) => {
               >
                 로그인
               </button>
-              <button className="signin__form__submit-btn">회원가입</button>
+              <button
+                className="signin__form__submit-btn"
+                onClick={handleSignupBtn}
+              >
+                회원가입
+              </button>
               <button
                 className="signin__form__google-btn"
                 onClick={() => handleGoogleSign("/", "signin")}
@@ -150,11 +186,11 @@ const Signin = (props: SigninProps) => {
               </button>
             </div>
           </div>
-        </>
+        </div>
       ) : (
         <></>
       )}
-    </div>
+    </>
   );
 };
 
