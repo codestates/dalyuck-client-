@@ -1,5 +1,5 @@
-import { DateTime } from 'luxon';
-const today = DateTime.now().toISO()
+import { DateTime } from "luxon";
+const today = DateTime.now().toISO();
 
 export type State = {
   user: {
@@ -9,37 +9,36 @@ export type State = {
 
   token: string;
 
-
-
   // 캘린더 렌더링 할때 필요한 상태
-  base :{
-    baseDate: string,
-    basePeriod: string
-  },
+  base: {
+    baseDate: string;
+    basePeriod: string;
+  };
   // 일간 월간 선택할때 필요한 상태
-  selector:{
-    isOn: boolean,
-    leftPosition: number
-  }
+  selector: {
+    isOn: boolean;
+    leftPosition: number;
+  };
   //
-  isSidebarOpen:boolean;
+  isSidebarOpen: boolean;
 
-  colorOption:{
-    isOptionClick:false,
-    calendarId:number,
-    yAxis:number
-  },
-  eventTodo:{
-    isEventClick:false,
-    position:[0,0],
-    eventId:number,
-    userId:number,
-    calendarId:number,
-    access:boolean
-  },
+  colorOption: {
+    isOptionClick: false;
+    calendarId: number;
+    yAxis: number;
+  };
+  eventTodo: {
+    isEventClick: false;
+    position: [0, 0];
+    eventId: number;
+    userId: number;
+    calendarId: number;
+    access: boolean;
+  };
 
   data: {
     userName: string;
+    userId: number;
     //calendars
     calendar: [
       {
@@ -84,39 +83,40 @@ export const initialState: State = {
   token: "",
 
   // 캘린더 렌더링시 필요한 상태
-  base :{
+  base: {
     baseDate: today,
-    basePeriod: 'week',
+    basePeriod: "week",
   },
 
   // 월간 주간 선택시 필요한 상태
-  selector:{
+  selector: {
     isOn: false,
-    leftPosition:900
+    leftPosition: 900,
   },
 
   // 사이드바 접은 상태
-  isSidebarOpen:true,
-  
+  isSidebarOpen: true,
+
   // 캘린더 옵션 레이어 관련 상태
-  colorOption:{
-    isOptionClick:false,
-    calendarId:0,
-    yAxis:0
+  colorOption: {
+    isOptionClick: false,
+    calendarId: 0,
+    yAxis: 0,
   },
 
-  // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태 
-  eventTodo:{
-    isEventClick:false,
-    position:[0,0],
-    eventId:0,
-    userId:0,
-    calendarId:0,
-    access:false,
+  // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태
+  eventTodo: {
+    isEventClick: false,
+    position: [0, 0],
+    eventId: 0,
+    userId: 0,
+    calendarId: 0,
+    access: false,
   },
 
   data: {
     userName: "",
+    userId: 0,
     //calendar
     calendar: [
       {
@@ -149,4 +149,3 @@ export const initialState: State = {
     ],
   },
 };
-
