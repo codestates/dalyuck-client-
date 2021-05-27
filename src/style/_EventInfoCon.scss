@@ -1,0 +1,180 @@
+.event-option-icons{
+    fill: $icon-color;           // 아이콘 색
+    flex: none;
+    padding: 8px 6px 0 6px;
+    display: flex;
+    flex-flow: row-reverse;
+}
+.event-option-close{
+    margin-left: 8px;
+}
+
+.event-option-access{
+    display: flex;
+
+}
+.svg-icon-center{
+    height: 36px;
+    padding-left: 4px;
+    width: 48px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+.svg-icon-center .icon:hover{
+    background-color: darken($color: white, $amount: 10);
+}
+
+.event-info{
+    min-height: 32px;
+    margin-bottom: 12px;
+
+    width: 100%;
+    position: relative;
+    display: flex;
+    padding-right: 16px;
+    box-sizing: border-box;
+    align-items: center;
+    outline: none;
+
+    &-color{
+        max-height: 36px;
+
+        color: #5f6368;
+        padding-left: 28px;
+        width: 40px;
+
+        flex-grow: 0;
+        flex-shrink: 0;
+        align-items: center;
+
+        display: flex;
+        align-self: stretch;
+
+    &__inner{
+        opacity: 1;
+        color: #5f6368;
+        fill: #5f6368;
+
+        display: flex;
+
+        font-size: 20px;
+        pointer-events: none;
+
+        font-family: 'Material Icons Extended';
+        font-weight: normal;
+        font-style: normal;
+        line-height: 1;
+        letter-spacing: normal;
+        text-rendering: optimizeLegibility;
+        text-transform: none;
+        word-wrap: normal;
+        direction: ltr;
+        font-feature-settings: 'liga' 1;
+    }
+    &__shape{
+        background-color: rgb(121, 134, 203); // 이벤트 색 받아오기 인라인 스타일 
+
+        border-radius: 4px;
+        height: 14px;
+        width: 14px;
+        margin-left: 3px;
+        margin-top: 3px;
+    }
+    }
+}
+
+.event-info-text{
+    overflow: hidden;
+
+    font-family: Roboto,Arial,sans-serif;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: .2px;
+    line-height: 20px;
+    color: #3c4043;
+
+    padding-bottom: 6px;
+    padding-top: 6px;
+    box-flex: 1;
+    flex-grow: 1;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+
+    &__inner{
+        line-height: normal;
+        overflow: hidden;
+
+    }
+
+    &__subject{
+        line-height: 28px;
+
+        font-family: 'Google Sans',Roboto,Arial,sans-serif;
+        font-size: 22px;
+        font-weight: 400;
+        color: #3c4043;
+        max-height: 56px;
+        word-wrap: break-word;
+        overflow: hidden;
+
+    &-span{
+        font-size: 22px;
+        font-weight: 400;
+        color: #3c4043;
+        word-wrap: break-word;
+
+    }
+    }
+    &__time{
+        line-height: 18px;
+
+        font-family: Roboto,Arial,sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        letter-spacing: .2px;
+        color: #3c4043;
+
+        margin-top: 3px;
+
+        &-dot{
+
+        margin: 0 8px;
+        font-weight: 700;
+    }
+    // &-span{
+
+    // }
+    }
+}
+.event-info-con{
+    position: absolute;
+    z-index: 1000;
+    background-color: white;
+
+    width: 320px;
+    display: flex;
+    flex-direction: row;
+    align-items: stretch;
+    
+    box-shadow: 0 8px 10px 1px #e6e6e6, 0 3px 14px 2px #e6e6e6,
+    0 5px 5px -3px #e6e6e6;
+
+    border-radius: 10px;
+
+    transition: opacity 200ms ease-in-out;
+
+    &__inner{
+        width: 350px;
+    }
+    
+    &-body{
+        flex: 1 1 auto;
+        overflow-x: hidden;
+        overflow-y: auto;
+        padding-bottom: 16px;
+        padding-top: 0;
+    }
+}

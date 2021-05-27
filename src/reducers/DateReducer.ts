@@ -4,6 +4,7 @@ import {
   SET_BASEPERIOD,
   IS_SIDEBAR_OPEN,
   IS_OPTION_CLICK,
+  SET_EVENT_TODO,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
  import { Action } from "../actions";
@@ -46,6 +47,11 @@ import {
           ...state,
           ...action.payload
         });        
+      case SET_EVENT_TODO:
+        return Object.assign({}, state, {
+          ...state,
+          ...action.payload
+        });       
       default:
         return state;
     }
