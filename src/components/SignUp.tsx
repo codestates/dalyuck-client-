@@ -1,4 +1,6 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { signIn } from "../actions";
+import { useDispatch } from "react-redux";
 import Modal from "./Modal";
 
 const axios: any = require("axios");
@@ -12,6 +14,7 @@ type SignupProps = {
 const Signup = (props: SignupProps) => {
   const { open, close } = props;
 
+  const dispatch = useDispatch();
   const refEmail = useRef<HTMLInputElement | null>(null);
   const refUserName = useRef<HTMLInputElement | null>(null);
   const refPassword = useRef<HTMLInputElement | null>(null);
@@ -165,15 +168,20 @@ const Signup = (props: SignupProps) => {
   const handleSignUp = () => {
     if (handleCheckForm()) {
       axios
-        .post(`http://localhost:3000/user/signup`, {
-          email: inputEmail,
-          userName: inputUserName,
-          password: inputPassword,
-        })
-        .then((body: any) => {
-          if (body.status === 201) {
+        .post(
+          `https://ec2-34-207-81-162.compute-1.amazonaws.com:3000/user/signup`,
+          {
+            email: inputEmail,
+            userName: inputUserName,
+            password: inputPassword,
+          }
+        )
+        .then((res: any) => {
+          const token = res.headers.authorization.split(" ")[1];
+          if (res.status === 201) {
             handleCloseBtn();
-            setModalComment("회원가입이 완료되었습니다. 로그인 해주세요.");
+            dispatch(signIn(res.data, token));
+            setModalComment("회원가입이 완료되었습니다.");
             handleModalOpen();
             return;
           }
@@ -196,80 +204,78 @@ const Signup = (props: SignupProps) => {
         close={handleModalClose}
         comment={modalComment}
       />
-      <div className={`signup ${open ? "show" : ""}`}>
-        {open ? (
-          <>
-            <div className="signup__outsider" onClick={handleCloseBtn}></div>
-            <div className="signup__wrapper">
-              <button className="signup__close-btn" onClick={handleCloseBtn}>
-                &times;
+      {open ? (
+        <div className="signin show">
+          <div className="signup__outsider" onClick={handleCloseBtn}></div>
+          <div className="signup__wrapper">
+            <button className="signup__close-btn" onClick={handleCloseBtn}>
+              &times;
+            </button>
+            <div className="signup__form">
+              <div className="signup__form__title">회원가입</div>
+              <ul className="signup__form__list">
+                <li className="signup__form__list__item">
+                  <p className="label">E-mail</p>
+                  <input
+                    className="email"
+                    type="text"
+                    placeholder="사용하실 E-mail을 입력해주세요."
+                    value={inputEmail}
+                    onChange={handleChangeEmail}
+                    onKeyPress={handleMoveToUserName}
+                    ref={refEmail}
+                  />
+                </li>
+                <li className="signup__form__list__item">
+                  <p className="label">이름</p>
+                  <input
+                    className="username"
+                    type="text"
+                    placeholder="사용하실 이름을 입력해주세요."
+                    value={inputUserName}
+                    onChange={handleChangeUserName}
+                    onKeyPress={handleMoveTopassword}
+                    ref={refUserName}
+                  />
+                </li>
+                <li className="signup__form__list__item">
+                  <p className="label">비밀번호</p>
+                  <input
+                    className="password"
+                    type="password"
+                    placeholder="Password"
+                    value={inputPassword}
+                    onChange={handleChangePassword}
+                    onKeyPress={handleMoveTopasswordCheck}
+                    ref={refPassword}
+                  />
+                </li>
+                <li className="signup__form__list__item">
+                  <p className="label">비밀번호 확인</p>
+                  <input
+                    className="passwordcheck"
+                    type="password"
+                    placeholder="Password Check"
+                    value={inputPasswordCheck}
+                    onChange={handleChangePasswordCheck}
+                    onKeyPress={handleMoveToSignUp}
+                    ref={refPasswordCheck}
+                  />
+                </li>
+              </ul>
+              <p className="signup__form__error-message">{errorMessage}</p>
+              <button
+                className="signup__form__submit-btn"
+                onClick={handleSignUp}
+              >
+                회원가입
               </button>
-              <div className="signup__form">
-                <div className="signup__form__title">회원가입</div>
-                <ul className="signup__form__list">
-                  <li className="signup__form__list__item">
-                    <p className="label">E-mail</p>
-                    <input
-                      className="email"
-                      type="text"
-                      placeholder="사용하실 E-mail을 입력해주세요."
-                      value={inputEmail}
-                      onChange={handleChangeEmail}
-                      onKeyPress={handleMoveToUserName}
-                      ref={refEmail}
-                    />
-                  </li>
-                  <li className="signup__form__list__item">
-                    <p className="label">이름</p>
-                    <input
-                      className="username"
-                      type="text"
-                      placeholder="사용하실 이름을 입력해주세요."
-                      value={inputUserName}
-                      onChange={handleChangeUserName}
-                      onKeyPress={handleMoveTopassword}
-                      ref={refUserName}
-                    />
-                  </li>
-                  <li className="signup__form__list__item">
-                    <p className="label">비밀번호</p>
-                    <input
-                      className="password"
-                      type="password"
-                      placeholder="Password"
-                      value={inputPassword}
-                      onChange={handleChangePassword}
-                      onKeyPress={handleMoveTopasswordCheck}
-                      ref={refPassword}
-                    />
-                  </li>
-                  <li className="signup__form__list__item">
-                    <p className="label">비밀번호 확인</p>
-                    <input
-                      className="passwordcheck"
-                      type="password"
-                      placeholder="Password Check"
-                      value={inputPasswordCheck}
-                      onChange={handleChangePasswordCheck}
-                      onKeyPress={handleMoveToSignUp}
-                      ref={refPasswordCheck}
-                    />
-                  </li>
-                </ul>
-                <p className="signup__form__error-message">{errorMessage}</p>
-                <button
-                  className="signup__form__submit-btn"
-                  onClick={handleSignUp}
-                >
-                  회원가입
-                </button>
-              </div>
             </div>
-          </>
-        ) : (
-          <></>
-        )}
-      </div>
+          </div>
+        </div>
+      ) : (
+        <></>
+      )}
     </>
   );
 };
