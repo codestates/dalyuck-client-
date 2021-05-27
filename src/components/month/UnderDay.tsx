@@ -1,4 +1,4 @@
-export default function UnderDay() {
+export default function UnderDay() {   // 월간에 쓰이는 종일 아닌 몇시간 짜리 이벤트 
     return (
       <div className="under-day">
         <div className="under-day__inner">

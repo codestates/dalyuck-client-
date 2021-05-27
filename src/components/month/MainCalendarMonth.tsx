@@ -1,9 +1,9 @@
-import { makeDayInfoArr } from '../functions/Calendar'
+import { makeDayInfoArr } from '../../functions/Calendar'
 import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/index';
+import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
 import UnderDay from './UnderDay';
-import { calendar } from '../fakeData/Events'
+import { calendar } from '../../fakeData/Events'
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -92,7 +92,7 @@ export default function MaincalendarMonth() {
           {
             weekInfoArr.map((week:any)=>{
               return(
-                <MonthWeek headerDay={week}/>
+                <MonthWeek key={week[0].toString()} headerDay={week}/>
               )
             })
           }

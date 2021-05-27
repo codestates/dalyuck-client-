@@ -21,7 +21,14 @@ export type State = {
     isOn: boolean,
     leftPosition: number
   }
+  //
+  isSidebarOpen:boolean;
 
+  colorOption:{
+    isOptionClick:false,
+    calendarId:number,
+    yAxis:number
+  },
 
   data: {
     userName: string;
@@ -79,7 +86,17 @@ export const initialState: State = {
     isOn: false,
     leftPosition:900
   },
+
+  // 사이드바 접은 상태
+  isSidebarOpen:true,
   
+  // 캘린더 옵션 레이어 관련 상태
+  colorOption:{
+    isOptionClick:false,
+    calendarId:0,
+    yAxis:0
+  },
+
   data: {
     userName: "",
     //calendar

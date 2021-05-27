@@ -1,8 +1,8 @@
 import DayWeekHead from './DayWeekHead';
 import BackgroundGrid from './BackgroundGrid';
 import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/index';
-import { makeDayInfoArr } from '../functions/Calendar'
+import { RootState } from '../../reducers/index';
+import { makeDayInfoArr } from '../../functions/Calendar'
 
 const MainCalendarDayWeek = () => {
 
@@ -11,7 +11,7 @@ const MainCalendarDayWeek = () => {
 
 
     return(
-        <div className="sidebar-calendar">
+        <div className="main-calendar">
             <DayWeekHead info={dayInfoArr}/>
             <BackgroundGrid info={dayInfoArr}/>
         </div>

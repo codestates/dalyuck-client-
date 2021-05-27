@@ -41,8 +41,9 @@ export type Calendar = {
 }[];
 export const calendar = [
     {
+      calendarId:1,  
       calenderName: "강정환",
-      colour: "rgb(97, 97, 97)",
+      colour: "#7986CB",
       event: [
         {
             startTime : "2021-05-24T13:00:00.000+09:00",
@@ -83,6 +84,7 @@ export const calendar = [
       ]
     },
     {
+        calendarId:2,  
         calenderName: "회의",
         colour: "rgb(192, 202, 51)",
         event: [

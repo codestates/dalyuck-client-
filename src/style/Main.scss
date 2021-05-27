@@ -1,5 +1,7 @@
 @import "variables";
 @import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod","CalendarMonth","UnderDay";
+@import "MiniCalendar","SidebarCalendars","Sidebar","CalendarsList","CalendarOption","CreateEvent";
+
 
 html{
   height: 100%;
@@ -22,14 +24,37 @@ body, html {
   font-family: Roboto,"Noto Sans KR",Helvetica,Arial,sans-serif;
 }
 
-.sidebar-calendar{
-  border-top: $grid-line;
+.main-calendar{
   height: calc(100% - 64px);
+  flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-month{
+  height: calc(100% - 64px);
+  flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
 }
 
 .today{
   background-color: $today-color;
   border-radius: 50%;
   color: white;
+  &:hover {
+    background: darken($today-color, 10%) !important
+  }
+}
 
+.main-body{
+  border-top: $grid-line;
+  display: flex;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+}
+.base{
+  background-color: lighten($today-color, 10%);
+  color: white;
 }

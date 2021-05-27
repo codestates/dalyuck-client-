@@ -100,11 +100,13 @@
     flex: 1 1 0%;
 
     &-inner{
-    height: 4em;
+    // height: 4em;
     display: flex;
     position: relative;
     overflow: hidden;
     font-size: 24px;
+
+    height: 100%;
     }
 }
 

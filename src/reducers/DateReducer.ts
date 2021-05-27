@@ -2,6 +2,8 @@ import {
   SELECT_PERIOD,
   SET_BASEDATE,
   SET_BASEPERIOD,
+  IS_SIDEBAR_OPEN,
+  IS_OPTION_CLICK,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
  import { Action } from "../actions";
@@ -34,6 +36,16 @@ import {
             ...action.payload
           }
         });
+      case IS_SIDEBAR_OPEN:
+        return Object.assign({}, state, {
+          ...state,
+          ...action.payload
+        });
+      case IS_OPTION_CLICK:
+        return Object.assign({}, state, {
+          ...state,
+          ...action.payload
+        });        
       default:
         return state;
     }
