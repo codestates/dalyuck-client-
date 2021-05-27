@@ -119,9 +119,9 @@ const Nav = () => {
                     ref={componentRef} 
                     onClick={()=>{
                       let x = componentRef.current?.getBoundingClientRect().x;
-                      dispatch(selectPeriod(true, x)
-                        )}}
-                  >
+                      dispatch(selectPeriod(true, x))
+                    }
+                  }>
                     {/* 일간 주간 월간 선택 */}
                     <span className="period-string">{periodKor}</span>
                     {/* <div className="period-select-btn"> */}

@@ -1,7 +1,8 @@
-import { makeDayInfoArr } from '../functions/Calendar'
+import { makeDayInfoArr } from '../../functions/Calendar'
 import { useSelector } from 'react-redux';
-import { RootState } from '../reducers/index';
-import { DateTime } from 'luxon'
+import { RootState } from '../../reducers/index';
+import { DateTime } from 'luxon';
+import { useState, useEffect } from 'react';
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -13,11 +14,15 @@ const MiniCalendarHeader = ({ day }: { day: string }) => {
   );
 };
 const MiniWeekDay = ({ day }: { day: DateTime }) => {
-  let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
 
+  let {base} = useSelector( (state:RootState) => state.dateReducer )
+
+  let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
+  let isBase = DateTime.fromISO(base.baseDate).toFormat("D") === day.toFormat("D")
+  
   return (
     <span className="mini-week__day">
-      <div className={"mini-week__day__text"+ (isToday ? ' today':'')}>{day.day}</div>
+      <div className={"mini-week__day__text"+ ( isBase? ' base': "" ) + (isToday ? ' today':'')}>{day.day}</div>
     </span>
   );
 };
@@ -36,15 +41,37 @@ const MiniWeek = (props:{headerDay:DateTime[]}) => {
 export default function MiniCalendar() {
 
   let {base} = useSelector( (state:RootState) => state.dateReducer )
+
+  useEffect(()=>{
+    setMiniBase(base)
+   },[base])
+
   base = {...base,basePeriod:'month'}
-  const weekInfoArr = makeDayInfoArr(base)
+
+  const [miniBase, setMiniBase ] = useState(base)
+
+  let weekInfoArr = makeDayInfoArr(miniBase)
+
+  const prevMiniNavHandler = ()=>{
+    setMiniBase({...miniBase,
+      baseDate: DateTime.fromISO(miniBase.baseDate).minus({month:1}).toISO()
+    })
+    weekInfoArr = makeDayInfoArr(miniBase)
+  }
+  const nextMiniNavHandler = ()=>{
+    setMiniBase({...miniBase,
+      baseDate: DateTime.fromISO(miniBase.baseDate).plus({month:1}).toISO()
+    })
+    weekInfoArr = makeDayInfoArr(miniBase)
+  }
+
   return (
     <div className="mini">
       <div className="mini__inner">
         <div className="mini-nav">
-          <span className="mini-nav__span"> {DateTime.fromISO(base.baseDate).toFormat("y년 M월")} </span>
+          <span className="mini-nav__span"> {DateTime.fromISO(miniBase.baseDate).toFormat("y년 M월")} </span>
           <div className="mini-nav__direction">
-            <svg focusable="false" viewBox="0 0 24 24">
+            <svg focusable="false" viewBox="0 0 24 24" onClick={()=>{ prevMiniNavHandler() }}>
               <path
                 fill="currentColor"
                 d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
@@ -52,7 +79,7 @@ export default function MiniCalendar() {
             </svg>
           </div>
           <div className="mini-nav__direction">
-            <svg focusable="false" viewBox="0 0 24 24">
+            <svg focusable="false" viewBox="0 0 24 24" onClick={()=>{ nextMiniNavHandler() }}>
               <path
                 fill="currentColor"
                 d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"

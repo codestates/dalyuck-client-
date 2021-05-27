@@ -1,3 +1,5 @@
+@import "variables";
+
 .sidebar-calendars{
     width: 100%;
     margin: 0;
@@ -44,16 +46,20 @@
     font-weight: 500;
     letter-spacing: .25px;
     line-height: 20px;
-    color: #3c4043;
     text-transform: none;
     width: 100%;
 
     display: inline-block;
     margin: 0;
     }
+
+    &:hover {
+        background: darken(white, 10%)
+    }  
 }
 
 .calendars{
+    
     display: flex;
     height: 32px;
     justify-content: space-between;
@@ -62,7 +68,9 @@
     // &__text{
 
     // }
+
     &__close-open{
+        
     font-size: 22px;
     fill: #70757a;
     text-align: right;
@@ -72,4 +80,47 @@
     height: 24px;
     width: 24px;
     }
+
+
+}
+
+.add-calendar{
+    height: 24px;
+    width: 24px;
+
+    transition: background .3s;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 0;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    z-index: 0;
+
+    &__inner{
+        display: flex;
+        height: 100%;
+        width: 100%;
+
+        position: relative;
+
+        text-align: center;
+    }
+    &__span{
+        width: 100%;
+        
+        align-items: center;
+
+        display: flex;
+
+        justify-content: center;
+        margin: 0;
+    }
+    &:hover {
+        background: $today-color;
+        fill: white;
+    } 
 }

@@ -1,6 +1,7 @@
 @import "variables";
 @import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod","CalendarMonth","UnderDay";
-@import "MiniCalendar","SidebarCalendars","Sidebar","CalendarsList";
+@import "MiniCalendar","SidebarCalendars","Sidebar","CalendarsList","CalendarOption","CreateEvent";
+
 
 html{
   height: 100%;
@@ -52,4 +53,8 @@ body, html {
   width: 100%;
   box-sizing: border-box;
   height: 100%;
+}
+.base{
+  background-color: lighten($today-color, 10%);
+  color: white;
 }

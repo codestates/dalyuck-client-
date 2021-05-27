@@ -1,9 +1,9 @@
+@import "variables";
+
 .check-box{
     position: relative;
     
     &__inner{
-    border-color: #7986CB;
-    background-color: #7986CB;
 
     box-flex: 0;
     flex-grow: 0;
@@ -26,11 +26,9 @@
     align-items: center;
     }
     &__padding{
-    background-color: rgba(0,0,0,0.1);
 
     transform: scale(2.5);
     transition: opacity .15s ease;
-    background-color: rgba(0,0,0,0.2);
     border-radius: 100%;
     height: 18px;
     left: -9px;
@@ -44,7 +42,6 @@
     }
     &__mid{
     transform: scale(0);
-    transition: -webkit-transform .1s cubic-bezier(0.4,0,0.2,1);
     transition: transform .1s cubic-bezier(0.4,0,0.2,1);
     border-radius: 100%;
 
@@ -108,7 +105,7 @@
     display: block;
     
     &__inner{
-    height: 160px;       // 높이 인라인 스타일  캘린더 갯수에 따라서 , open close 에따라서 조정해야함
+    // height: 160px;       // 높이 인라인 스타일  캘린더 갯수에 따라서 , open close 에따라서 조정해야함
 
     overflow: hidden;
     position: relative;
@@ -132,6 +129,7 @@
     margin: 0;
     list-style: none;
     display: list-item;
+
     }
     &__li-inner{
     min-height: 32px;
@@ -187,4 +185,56 @@
     display: flex;
 
     align-self: stretch;
+}
+
+.option-delete{
+
+    overflow: auto;
+
+    flex-shrink: 0;
+    flex-grow: 0;
+    align-self: stretch;
+    height: 24px;
+    width: 56px;
+
+    margin-top: 3px;
+    &__inner{
+        display: flex;
+        align-self: center;
+        align-items: center;
+        overflow: hidden;
+
+        height: 100%;
+        width: 100%;
+        justify-content: space-between;
+    }
+
+}
+.icon{
+    height: 100%;
+    width: 24px;
+    position: relative;
+
+    transition: background .3s;
+    border: 0;
+    border-radius: 50%;
+    cursor: pointer;
+    display: inline-block;
+    flex-shrink: 0;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+    text-align: center;
+    z-index: 0;
+
+    &-svg{
+        height: 100%;
+        width: 100%;
+        
+        &:hover {
+            background: $today-color;
+            fill: white;
+        } 
+    }
+
 }
