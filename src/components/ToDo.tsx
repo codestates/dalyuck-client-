@@ -1,9 +1,9 @@
 import { useState } from "react";
-import "./_ToDo.scss";
+import "../style/_ToDo.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function App() {
+export default function Todo() {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   return (
     <div className="todo show">

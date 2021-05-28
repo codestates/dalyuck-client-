@@ -1,10 +1,12 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
 import { RootState } from "../../reducers/index";
+
 import {
   setBaseDate,
   selectPeriod,
   setIsSidebarOpen,
+  selectProfile,
   signOut,
 } from "../../actions/index";
 import { DateTime } from "luxon";
@@ -18,6 +20,7 @@ axios.defaults.withCredentials = true;
 
 const Nav = () => {
   const componentRef = useRef<HTMLDivElement>(null); //  ref타입 설정
+  const componentRef_profile = useRef<HTMLDivElement>(null); //  ref타입 설정
   const { base, isSidebarOpen } = useSelector(
     (state: RootState) => state.dateReducer
   );
@@ -73,29 +76,6 @@ const Nav = () => {
 
   const handleModalClose = () => {
     setOpenModal(false);
-  };
-
-  const handleSignOutBtn = () => {
-    axios
-      .post(
-        `https://ec2-34-207-81-162.compute-1.amazonaws.com:3000/user/logout/`,
-        {
-          userId: data.userId,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            credentials: "include",
-          },
-        }
-      )
-      .then((res: any) => {
-        dispatch(signOut());
-        setModalComment("로그아웃 완료.");
-        handleModalOpen();
-      })
-      .catch((err: any) => console.error(err));
   };
 
   const todayHandler = () => {
@@ -227,12 +207,38 @@ const Nav = () => {
             </div>
           </div>
         </div>
-        <button
-          className="navbar__btns__first"
-          onClick={token.length === 0 ? handleSignInBtn : handleSignOutBtn}
-        >
-          {token.length === 0 ? "로그인" : "로그아웃"}
-        </button>
+
+        {token.length === 0 ? (
+          <div className="profile-con">
+            <div className="profile" onClick={() => handleSignInBtn()}>
+              <svg viewBox="0 0 24 24">
+                <path
+                  fill="currentColor"
+                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
+                />
+              </svg>
+            </div>
+          </div>
+        ) : (
+          <div
+            className="profile-con"
+            ref={componentRef_profile}
+            onClick={() => {
+              let x = componentRef_profile.current?.getBoundingClientRect().x;
+              dispatch(selectProfile(true, x));
+            }}
+          >
+            <div className="profile">
+              <svg viewBox="0 0 24 24" className="profile-svg">
+                <path
+                  color="purple"
+                  fill="currentColor"
+                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
+                />
+              </svg>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
