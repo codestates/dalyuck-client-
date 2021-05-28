@@ -4,10 +4,10 @@ import { signIn } from "../actions";
 import Signup from "./SignUp";
 import Modal from "./Modal";
 import "../style/User.scss";
-
+import dotenv from 'dotenv';
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
-
+dotenv.config()
 type SigninProps = {
   open?: boolean;
   close: () => void;
@@ -79,7 +79,7 @@ const Signin = (props: SigninProps) => {
     }
     axios
       .post(
-        `https://ec2-34-207-81-162.compute-1.amazonaws.com:3000/user/login/`,
+        process.env.REACT_APP_API_URL+'/user/login/',
         {
           email: inputEmail,
           password: inputPassword,

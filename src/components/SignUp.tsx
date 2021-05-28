@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { signIn } from "../actions";
 import { useDispatch } from "react-redux";
 import Modal from "./Modal";
-
+import dotenv from 'dotenv';
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
-
+dotenv.config()
 type SignupProps = {
   open?: boolean;
   close: () => void;
@@ -169,7 +169,7 @@ const Signup = (props: SignupProps) => {
     if (handleCheckForm()) {
       axios
         .post(
-          `https://ec2-34-207-81-162.compute-1.amazonaws.com:3000/user/signup`,
+          process.env.REACT_APP_API_URL+'/user/signup',
           {
             email: inputEmail,
             userName: inputUserName,

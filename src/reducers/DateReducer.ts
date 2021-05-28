@@ -5,9 +5,11 @@ import {
   IS_SIDEBAR_OPEN,
   IS_OPTION_CLICK,
   SET_EVENT_TODO,
+  SET_CALENDAR,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
  import { Action } from "../actions";
+import { stat } from "fs";
   
   const dateReducer = (state:State = initialState, action:Action):State => {
     switch (action.type) {
@@ -51,7 +53,14 @@ import {
         return Object.assign({}, state, {
           ...state,
           ...action.payload
-        });       
+        });
+      // case SET_CALENDAR:
+      //   return Object.assign({}, state, {
+      //     ...state,
+      //     ...state.data,
+      //     ...state.data.calendar,
+      //     action.payload
+      //   });   
       default:
         return state;
     }

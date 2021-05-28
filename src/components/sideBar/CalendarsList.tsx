@@ -65,8 +65,6 @@ return (
 }
 export default function CalendarsList({isOpen, calendar}:{isOpen:boolean;calendar:any}) {
 
-
-
   return (
     <div className="calendars-list"  >
       <div className="calendars-list__inner" style={isOpen ? {height:32+'px'}:{height:0+"px"}}>

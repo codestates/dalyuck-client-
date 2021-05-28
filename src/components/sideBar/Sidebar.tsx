@@ -5,9 +5,13 @@ import { useSelector } from 'react-redux'
 import { RootState } from '../../reducers/index';
 import { useState } from 'react';
 import { data  } from "../../fakeData/Events";
+import { useHistory } from "react-router";
 
 export default function Sidebar() {
+  let history = useHistory();
+
   let calendars = data.calendar;   // 페이크 데이터
+  let otherCalendars = data.OtherCalendar;
   const[isMyCalOpen, setIsMycalOpen] = useState(true);
   const[isOtherCalOpen, setIsOthercalOpen ] = useState(true);
 
@@ -15,11 +19,25 @@ export default function Sidebar() {
 
   const  AddCalendar = ({isMine}:{isMine:string})=> {
 
+    let otherCalNum = Object.keys(otherCalendars).length
+    let otherTop = 39 +(otherCalNum*32);
+    isMyCalOpen ?  otherTop=39 +(otherCalNum*32) : otherTop = 39 ;
     let addTop:string = '';
-    isMine === 'mine'? addTop = '3px' : addTop = "10px" //10px 부분은 계산해서 other calendar
+    isMine === 'mine'? addTop = '3px' : addTop = `${otherTop}px` //10px 부분은 계산해서 other calendar
 
+    const redirecHandler = () => {
+      if(isMine === 'mine'){
+        history.push('/setting/createcalendar')
+      }
+      else{
+        history.push('/setting/requestsubcalendar')
+      }
+    }
     return (
-      <div className="add-calendar" style={ {position:'absolute' ,left:161 + 'px' ,top:addTop} }>
+      <div className="add-calendar" 
+        style={ {position:'absolute' ,left:161 + 'px' ,top:addTop} }
+        onClick = { () => { redirecHandler() } }
+      >
         <span className="add-calendar__inner">
           <div className="add-calendar__span">
             <svg viewBox="-3 -3 30 30">
@@ -51,11 +69,12 @@ export default function Sidebar() {
 
                 <AddCalendar isMine="mine"/>
                 <SidebarCalendars myOrOther="other" setIsOpen={setIsOthercalOpen} isOpen={isOtherCalOpen}/>
-                {/* {
-                  calendars.map(calendar=>{
-                    return <CalendarList isOpen={isMyCalOpen} calendar={calendar}/>
+                {
+                  otherCalendars.map(calendar=>{
+                    return <CalendarList isOpen={isOtherCalOpen} calendar={calendar}/>
                   })
-                } */}
+                }
+                <AddCalendar isMine="other"/>
               </div>
             </div>
           </div>

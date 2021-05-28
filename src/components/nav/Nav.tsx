@@ -11,10 +11,10 @@ import {
 } from "../../actions/index";
 import { DateTime } from "luxon";
 import { useRef, useState } from "react"; // 레퍼런스 훅스
-
+import dotenv from 'dotenv';
 import SignIn from "../SignIn";
 import Modal from "../Modal";
-
+dotenv.config()
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
 
