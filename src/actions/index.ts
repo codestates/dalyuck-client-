@@ -3,8 +3,7 @@
 
 export const SIGN_IN = "SIGN_IN" as const;
 export const SIGN_OUT = "SIGN_OUT" as const;
-export const USER_INFO = "USER_INFO" as const;
-
+export const SELECT_PROFILE = "SELECT_PROFILE" as const;
 // Date Action
 export const SET_BASEDATE = "SET_BASEDATE" as const;
 export const SET_BASEPERIOD = "SET_BASEPERIOD" as const;
@@ -16,10 +15,10 @@ export const SET_EVENT_TODO = "SET_EVENT_TODO" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
+  | ReturnType<typeof selectProfile>
   | ReturnType<typeof setBaseDate>
   | ReturnType<typeof setBasePeriod>
   | ReturnType<typeof selectPeriod>
-  | ReturnType<typeof userInfo>
   | ReturnType<typeof setIsSidebarOpen>
   | ReturnType<typeof isOptionClick>
   | ReturnType<typeof setEventTodo>;
@@ -75,78 +74,88 @@ export const signOut = () => {
   };
 };
 
-export const userInfo = (email: string, userName: string) => {
+export const selectProfile = (isOn = false, leftPosition = 900) => {
   return {
-    type: USER_INFO,
+    type: SELECT_PROFILE,
     payload: {
-      email,
-      userName,
+      isOn,
+      leftPosition,
     },
   };
 };
 
-export const setBaseDate= (baseDate:string) => {
+export const setBaseDate = (baseDate: string) => {
   return {
     type: SET_BASEDATE,
     payload: {
-      baseDate
+      baseDate,
     },
   };
 };
-export const setBasePeriod= (basePeriod:string) => {
+export const setBasePeriod = (basePeriod: string) => {
   return {
     type: SET_BASEPERIOD,
     payload: {
-      basePeriod
+      basePeriod,
     },
   };
 };
 
-export const selectPeriod= (isOn=false, leftPosition=900) => {
+export const selectPeriod = (isOn = false, leftPosition = 900) => {
   return {
     type: SELECT_PERIOD,
     payload: {
       isOn,
-      leftPosition
+      leftPosition,
     },
   };
 };
 
-export const setIsSidebarOpen = (isSidebarOpen:boolean) => {
-  return{
+export const setIsSidebarOpen = (isSidebarOpen: boolean) => {
+  return {
     type: IS_SIDEBAR_OPEN,
     payload: {
-      isSidebarOpen
-    }
-  }
-}
+      isSidebarOpen,
+    },
+  };
+};
 
-export const isOptionClick = (isOptionClick:boolean,calendarId:number,yAxis:number) => {
-  return{
+export const isOptionClick = (
+  isOptionClick: boolean,
+  calendarId: number,
+  yAxis: number
+) => {
+  return {
     type: IS_OPTION_CLICK,
     payload: {
-      colorOption:{
+      colorOption: {
         isOptionClick,
         calendarId,
-        yAxis
-      }
-    }
-  }
-}
+        yAxis,
+      },
+    },
+  };
+};
 
-export const setEventTodo = (isEventClick:boolean,position:number[],eventId:number,calendarId:number,userId:number,access:boolean) => {
-  return{
+export const setEventTodo = (
+  isEventClick: boolean,
+  position: number[],
+  eventId: number,
+  calendarId: number,
+  userId: number,
+  access: boolean
+) => {
+  return {
     type: SET_EVENT_TODO,
     payload: {
-      eventTodo:{
+      eventTodo: {
         isEventClick,
         position,
         eventId,
         userId,
         calendarId,
-        access
-      }
-    }
-  }
-}
-
+        access,
+      },
+    },
+  };
+};

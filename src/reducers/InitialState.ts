@@ -9,6 +9,12 @@ export type State = {
 
   token: string;
 
+  // 프로필 선택할때 필요한 상태
+  profile: {
+    isOn: boolean;
+    leftPosition: number;
+  };
+
   // 캘린더 렌더링 할때 필요한 상태
   base: {
     baseDate: string;
@@ -39,6 +45,7 @@ export type State = {
   data: {
     userName: string;
     userId: number;
+    email: string;
     //calendars
     calendar: [
       {
@@ -82,6 +89,12 @@ export const initialState: State = {
 
   token: "",
 
+  // 프로필 선택시 필요한 상태
+  profile: {
+    isOn: false,
+    leftPosition: 900,
+  },
+
   // 캘린더 렌더링시 필요한 상태
   base: {
     baseDate: today,
@@ -117,6 +130,7 @@ export const initialState: State = {
   data: {
     userName: "",
     userId: 0,
+    email: "",
     //calendar
     calendar: [
       {
