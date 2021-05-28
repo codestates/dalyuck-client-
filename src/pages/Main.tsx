@@ -3,6 +3,7 @@ import MainBody from '../components/MainBody';
 import { SelectorPeriod } from '../components/nav/SelectorPeriod';
 import { RootState } from '../reducers/index'
 import { useSelector } from 'react-redux';
+import { withRouter } from "react-router-dom";
 
 const Main = ()=>{
 
@@ -24,4 +25,4 @@ const Main = ()=>{
     )
 };
 
-export default Main;
+export default withRouter(Main);

@@ -1,7 +1,18 @@
+import * as req from '../functions/Axios';
+import { useSelector } from 'react-redux';
+import { RootState } from "../reducers/index";
 
 export default function CreateEvent() {
+
+    const store = useSelector( (state:RootState) => state.userReducer )
+    const testHanle = () =>{          // 악시오스 모듈 요청 테스트용 함수 중요한 함수 아님.
+      const res = req.createTodo('1',1,'제목',undefined)
+      console.log(res,'click')
+      console.log(store)
+    }
+
     return (
-      <div className="create-event">
+      <div className="create-event" onClick={()=>{testHanle()}}>
         <div className="create-event__inner">
           <div className="create-event__btn">
             <div className="create-event__btn-con">

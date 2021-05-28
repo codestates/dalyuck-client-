@@ -1,6 +1,6 @@
 // RequestSubCalendar.tsx : /src/pages/
 // branch121
-
+import { withRouter } from "react-router-dom";
 import React, { useState } from 'react'
 
 // 다른사람 캘린더를 본인 캘린더에 추가 #120
@@ -43,4 +43,4 @@ function RequestSubCalendarCalendar() {
     )
 }
 
-export default RequestSubCalendarCalendar
+export default withRouter(RequestSubCalendarCalendar)

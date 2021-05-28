@@ -6,9 +6,9 @@
   }
   
 .head-left-blank {
-    flex: none;
-    margin-left: 1px;
-    width: 49px;
+    flex: 1 1 auto;
+    max-width: 51px;
+    min-width: 51px;
   }
   
 .one-day-info-con {
@@ -28,7 +28,7 @@
 }
 
 .info-left-blank {
-    width: 9px;
+    min-width: 9px;
 }
 .date-info {
     flex: 1 0 auto;

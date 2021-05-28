@@ -1,7 +1,7 @@
 // UpdateCalendar.tsx : /src/pages/
 // branch120
 import React, { useState } from 'react'
-
+import { withRouter } from "react-router-dom";
 // 내 캘린더 이름과 설명을 수정하는 프레임 추가 #120
 // 기존의 캘린더의 설정(이름, 설명)을 변경하는 프레임 추가
 // Server쪽에 보낼 캘린더 이름과 설명을 입력할 Input 컨트롤 코딩.
@@ -54,4 +54,4 @@ function UpdateCalendar() {
     )
 }
 
-export default UpdateCalendar
+export default withRouter(UpdateCalendar)

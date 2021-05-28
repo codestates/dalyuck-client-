@@ -3,6 +3,7 @@ import { RootState } from '../reducers/index'
 import { useOutSideClick } from '../functions/Calendar';
 import { useRef } from 'react'
 import { isOptionClick } from '../actions';
+import { useHistory } from "react-router-dom";
 
 const colorArray = [
     ["#FF6633", "#FFB399", "#FF33FF", "#FFFF99", "#00B3E6", "#E6B333"],
@@ -34,8 +35,9 @@ const CalendarOptionColor = () => {
     </div>
     );
 };
-export default function CalendarOption() {
 
+export default function CalendarOption() {
+    let history = useHistory();
     const dispatch = useDispatch();
     const {colorOption} = useSelector((state:RootState) => state.dateReducer);
     const callback = ()=>{dispatch(isOptionClick(false,0,0))}
@@ -50,9 +52,11 @@ export default function CalendarOption() {
         <div className="calendar-option__inner">
         <span className="calendar-option__inner-2">
             <div className="calendar-option-name">
-            <div className="calendar-option-name__inner">
-                <div className="calendar-option-name__span">캘린더 이름 수정</div>
-            </div>
+                <div className="calendar-option-name__inner">
+                    <div className="calendar-option-name__span" onClick={()=>{history.push("/setting/updatecalendar"); console.log('click')}}>
+                        캘린더 이름 수정
+                    </div>
+                </div>
             </div>
         </span>
         <CalendarOptionColor />

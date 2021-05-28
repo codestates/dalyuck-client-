@@ -12,7 +12,7 @@ export const SELECT_PERIOD = "SELECT_PERIOD" as const;
 export const IS_SIDEBAR_OPEN = "IS_SIDEBAR_OPEN" as const;
 export const IS_OPTION_CLICK = "IS_OPTION_CLICK" as const;
 export const SET_EVENT_TODO = "SET_EVENT_TODO" as const;
-
+export const SET_CALENDAR = "SET_CALENDAR" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -22,8 +22,8 @@ export type Action =
   | ReturnType<typeof userInfo>
   | ReturnType<typeof setIsSidebarOpen>
   | ReturnType<typeof isOptionClick>
-  | ReturnType<typeof setEventTodo>;
-
+  | ReturnType<typeof setEventTodo>
+  | ReturnType<typeof setCalendar>;
 export interface UserInfo {
   data: {
     userName: string;
@@ -146,6 +146,15 @@ export const setEventTodo = (isEventClick:boolean,position:number[],eventId:numb
         calendarId,
         access
       }
+    }
+  }
+}
+
+export const setCalendar = (data:{calendarName:string;colour:string;description:string,id:number;userId:number}) => {
+  return{
+    type: IS_OPTION_CLICK,
+    payload: {
+      data
     }
   }
 }

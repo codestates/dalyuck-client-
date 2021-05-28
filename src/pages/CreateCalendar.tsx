@@ -1,6 +1,6 @@
 // CreateCalendar.tsx : /src/pages/
 // branch119
-
+import { withRouter } from "react-router-dom";
 import React, { useState } from 'react'
 
 // 새 캘린더 만들기 프레임 추가  #119
@@ -54,4 +54,4 @@ function CreateCalendar() {
     )
 }
 
-export default CreateCalendar
+export default withRouter(CreateCalendar)
