@@ -1,9 +1,9 @@
 import { useState } from "react";
-import "./EventModal.scss";
+import "../style/_EventModal.scss";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-export default function App() {
+export default function EventModal() {
   const [startDate, setStartDate] = useState<Date | null>(new Date());
   const [EndDate, setEndDate] = useState<Date | null>(new Date());
   return (
