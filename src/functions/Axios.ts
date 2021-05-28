@@ -36,7 +36,7 @@ const updateState = () =>{
 
 // [ 새 캘린더 만들기]
 
-export const createCalendar = async(calendarName:string,description:string)=>{  
+export const createCalendar = async(calendarName:string,description?:string)=>{  
     updateState()
     let result;
     try{

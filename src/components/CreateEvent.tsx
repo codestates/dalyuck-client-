@@ -6,7 +6,7 @@ export default function CreateEvent() {
 
     const store = useSelector( (state:RootState) => state.userReducer )
     const testHanle = () =>{          // 악시오스 모듈 요청 테스트용 함수 중요한 함수 아님.
-      const res = req.createTodo('1',1,'제목',undefined)
+      const res = req.createTodo('1',0,'이름');
       console.log(res,'click')
       console.log(store)
     }
