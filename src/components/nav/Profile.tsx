@@ -40,7 +40,7 @@ export const Profile = () => {
   const handleSignOutBtn = () => {
     axios
       .post(
-        `https://localhost:3000/user/logout/`,
+        process.env.REACT_APP_API_URL + `/user/logout/`,
         {
           userId: data.userId,
         },

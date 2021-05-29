@@ -1,13 +1,15 @@
 import { useState, useEffect, useCallback, useRef, KeyboardEvent } from "react";
 import { useDispatch } from "react-redux";
+import GoogleLogin from "react-google-login";
 import { signIn } from "../actions";
 import Signup from "./SignUp";
 import Modal from "./Modal";
 import "../style/User.scss";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
+import { convertCompilerOptionsFromJson } from "typescript";
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
-dotenv.config()
+dotenv.config();
 type SigninProps = {
   open?: boolean;
   close: () => void;
@@ -78,13 +80,10 @@ const Signin = (props: SigninProps) => {
       return;
     }
     axios
-      .post(
-        process.env.REACT_APP_API_URL+'/user/login/',
-        {
-          email: inputEmail,
-          password: inputPassword,
-        }
-      )
+      .post(process.env.REACT_APP_API_URL + "/user/login/", {
+        email: inputEmail,
+        password: inputPassword,
+      })
       .then((res: any) => {
         const token = res.headers.authorization.split(" ")[1];
         if (token) {
@@ -115,6 +114,40 @@ const Signin = (props: SigninProps) => {
   const handleSignupBtn = () => {
     setSignUpModalOpen(true);
     close();
+  };
+
+  const googleLogin = (res: any) => {
+    const googleToken = res.tokenObj.id_token;
+    const googleEmail = res.profileObj.email;
+    const googleName = res.profileObj.name;
+
+    axios
+      .post(
+        process.env.REACT_APP_API_URL + "/user/googleLogin/",
+        {
+          email: googleEmail,
+          name: googleName,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${googleToken}`,
+            "Content-Type": "application/json",
+            credentials: "include",
+          },
+        }
+      )
+      .then((res: any) => {
+        const token = res.headers.authorization.split(" ")[1];
+        if (token) {
+          dispatch(signIn(res.data, token));
+          handleCloseBtn();
+          setModalComment("로그인 완료.");
+          handleModalOpen();
+        }
+      })
+      .catch((err: any) => {
+        console.error(err); //response.status(404)에러처리
+      });
   };
 
   return (
@@ -178,12 +211,14 @@ const Signin = (props: SigninProps) => {
               >
                 회원가입
               </button>
-              <button
-                className="signin__form__google-btn"
-                onClick={() => handleGoogleSign("/", "signin")}
-              >
-                Google
-              </button>
+              <GoogleLogin
+                className="google-button"
+                clientId="680962805290-3npa5n9rorfjeutq233547rec6qc94he.apps.googleusercontent.com"
+                buttonText="Google Login"
+                onSuccess={googleLogin}
+                onFailure={googleLogin}
+                cookiePolicy={"single_host_origin"}
+              />
             </div>
           </div>
         </div>
