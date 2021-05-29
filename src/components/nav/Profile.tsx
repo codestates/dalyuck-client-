@@ -38,7 +38,7 @@ export const Profile = () => {
   };
 
   const handleSignOutBtn = () => {
-    console.log(process.env.REACT_APP_API_URL);
+    // console.log(process.env.REACT_APP_API_URL);
     axios
       .post(
         process.env.REACT_APP_API_URL + `/user/logout/`,
