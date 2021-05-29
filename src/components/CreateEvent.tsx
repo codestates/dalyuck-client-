@@ -1,18 +1,22 @@
-import * as req from '../functions/Axios';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../reducers/index";
+import { setMakeEventTodo }  from "../actions/index";
+import { DateTime } from 'luxon';
 
 export default function CreateEvent() {
 
-    const store = useSelector( (state:RootState) => state.userReducer )
-    const testHanle = () =>{          // 악시오스 모듈 요청 테스트용 함수 중요한 함수 아님.
-      const res = req.createTodo('1',0,'이름');
-      console.log(res,'click')
-      console.log(store)
+    const dispatch = useDispatch();
+    const dataStore = useSelector( (state:RootState) => state.dateReducer )
+
+    const baseDate = dataStore.base.baseDate
+    
+    const startTime = DateTime.now().hour+1;
+    const makeHandler = () =>{        // 만들기 버튼 누르면 상태 저장 
+      dispatch(setMakeEventTodo(true,baseDate,true,startTime,startTime+1))  
     }
 
     return (
-      <div className="create-event" onClick={()=>{testHanle()}}>
+      <div className="create-event" onClick={()=>{makeHandler()}}>
         <div className="create-event__inner">
           <div className="create-event__btn">
             <div className="create-event__btn-con">

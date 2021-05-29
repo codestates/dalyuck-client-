@@ -25,6 +25,11 @@ $light: #e8e8e8;
   left: 0;
   background-color: rgba(0, 0, 0, 0);
 }
+.event__header{
+  align-self: flex-end;
+  margin-right: 20px;
+  margin-top: 20px;
+}
 
 .show {
   display: flex;
@@ -50,7 +55,10 @@ $light: #e8e8e8;
   background-color: #fff;
   border-radius: 5px;
   width: 25rem;
-  height: 32rem;
+  z-index: 5;
+  box-shadow: 0 8px 10px 1px #e6e6e6, 0 3px 14px 2px #e6e6e6, 0 5px 5px -3px #e6e6e6;
+  z-index: 105;
+
 }
 
 .event__close__btn {
@@ -70,7 +78,7 @@ $light: #e8e8e8;
   margin-left: 18.5rem;
   height: 2.5rem;
   width: 5rem;
-  border-radius: 3px;
+  border-radius: 10px;
   margin-bottom: 0.5rem;
   background-color: $main;
   color: #fff;
@@ -88,11 +96,12 @@ $light: #e8e8e8;
   align-items: center;
   width: 90%;
   margin-top: 16px;
+  fill:#5f6368;
 }
 
 .attendants__input {
   height: 1.2rem;
-  width: 19.5rem;
+  width: 17.5rem;
   padding: 0.5rem;
   font-size: 18px;
   color: #5f6063;
@@ -109,7 +118,7 @@ $light: #e8e8e8;
 
 .title__input {
   height: 1.2rem;
-  width: 19.5rem;
+  width: 17.5rem;
   padding: 0.5rem;
   border: none;
   border-bottom: 1px solid #9b9b9c;
@@ -156,7 +165,7 @@ $light: #e8e8e8;
   }
 }
 
-svg {
+.event-svg {
   margin-right: 10px;
   margin-left: -5px;
 }
@@ -171,4 +180,86 @@ option {
   border-radius: 3px;
   font-size: 1.1rem;
   color: $main;
+}
+
+.event-todo-switch{
+  width: auto;
+  margin: 0 16px;
+  padding-left: 52px;
+  display: flex;
+  position: relative;
+  align-self: flex-start;
+}
+.switch{
+  font-family: 'Google Sans',Roboto,Arial,sans-serif;
+  font-size: 14px;
+  font-weight: 500;
+  letter-spacing: .25px;
+  line-height: 36px;
+  color: #5f6368;
+  box-flex: 0;
+  flex-grow: 0;
+  border-radius: 4px;
+  height: 36px;
+  padding: 0 8px;
+  min-width: 0;
+
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+
+  cursor: pointer;
+  &__span{
+    display: inline-block;
+    white-space: nowrap;
+  }
+}
+.switch-on{
+  background-color: #e8f0fe;
+  border: none;
+  color: #1a73e8;
+}
+
+.date-time-selector{
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-left: -5px;
+  margin-right: -8px;
+
+  line-height: 20px;
+  color: #5f6063;
+}
+.basetime-select{
+  padding-left: 8px;
+  padding-right: 8px;
+  letter-spacing: normal;
+
+  &__span{
+    position: relative;
+    cursor: pointer;
+    
+    &:hover{
+      text-decoration:underline;
+    }
+  }
+}  
+.time-select{
+  display: flex;
+  align-content: center;
+
+  &__inner{
+    padding-left: 8px;
+    padding-right: 8px;
+    letter-spacing: normal;
+  }
+  &__span{
+    position: relative;
+    cursor: pointer;
+
+    &:hover{
+      text-decoration:underline;
+    }
+  }
 }

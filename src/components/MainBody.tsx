@@ -6,10 +6,11 @@ import MainCalendarDayWeek from "../components/dayWeek/MainCalendarDayWeek";
 import CalendarOption from './CalendarOption';
 import CreateEvent from "../components/CreateEvent";
 import EventInfoCon from "./EvnetInfoCon";
+import MakeEventTodo from './MakeEventTodo';
 
 export default function MainBody(){
 
-    const {base,colorOption,eventTodo} = useSelector((state:RootState) => state.dateReducer);
+    const {base, colorOption, eventTodo, makeEventTodo} = useSelector((state:RootState) => state.dateReducer);
 
     return(
         <div className="main-body">
@@ -35,6 +36,14 @@ export default function MainBody(){
                 ):(
                     null
                 )
+            }
+            {
+                makeEventTodo.isMakeBtnClick ? (
+                    <MakeEventTodo/>
+                ):(
+                    null
+                )
+
             }
             <CreateEvent/>
         </div>

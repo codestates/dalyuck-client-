@@ -20,6 +20,16 @@ export type State = {
     baseDate: string;
     basePeriod: string;
   };
+
+  // 이벤트 만들기때 필요한 상태
+  makeEventTodo:{
+    isMakeBtnClick:boolean;
+    isFromSidebar:boolean;
+    selectDate: string;
+    selectStartTime: number;
+    selectEndtime:number;
+  }
+
   // 일간 월간 선택할때 필요한 상태
   selector: {
     isOn: boolean;
@@ -115,6 +125,15 @@ export const initialState: State = {
     isOptionClick: false,
     calendarId: 0,
     yAxis: 0,
+  },
+
+  // 만들기 레이어 관련 상태
+  makeEventTodo:{
+    isMakeBtnClick:false,
+    isFromSidebar:true,
+    selectDate: '',
+    selectStartTime: 0,
+    selectEndtime:0
   },
 
   // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태

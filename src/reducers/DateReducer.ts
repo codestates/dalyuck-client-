@@ -5,6 +5,7 @@ import {
   IS_SIDEBAR_OPEN,
   IS_OPTION_CLICK,
   SET_EVENT_TODO,
+  SET_MAKE_EVENT_TODO,
   SET_CALENDAR,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
@@ -54,6 +55,14 @@ import { stat } from "fs";
           ...state,
           ...action.payload
         });
+      case SET_MAKE_EVENT_TODO:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
       // case SET_CALENDAR:
       //   return Object.assign({}, state, {
       //     ...state,
