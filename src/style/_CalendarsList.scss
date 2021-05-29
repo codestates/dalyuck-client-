@@ -147,6 +147,12 @@
     align-items: center;
     outline: none;
     }
+    &:hover{
+        background-color: darken($color: white, $amount: 10);
+    }
+    &:hover .option-delete{
+        visibility: visible;
+    }
 }
 
 .calendar-label-name{
@@ -188,6 +194,7 @@
 }
 
 .option-delete{
+    visibility: hidden;
 
     overflow: auto;
 
