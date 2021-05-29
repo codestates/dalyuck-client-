@@ -38,6 +38,7 @@ export const Profile = () => {
   };
 
   const handleSignOutBtn = () => {
+    console.log(process.env.REACT_APP_API_URL);
     axios
       .post(
         process.env.REACT_APP_API_URL + `/user/logout/`,
@@ -47,8 +48,10 @@ export const Profile = () => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            "Content-Type": "application/json",
-            credentials: "include",
+            // 에러부분 시작.
+            // "Content-Type": "application/json", // Content-Type CORS위배
+            // credentials: "include", // 위쪽에 이미 credentials선언 true
+            // 에러부분 끝.
           },
         }
       )
