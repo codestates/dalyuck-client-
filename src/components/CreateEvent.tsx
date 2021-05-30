@@ -2,7 +2,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../reducers/index";
 import { setMakeEventTodo }  from "../actions/index";
 import { DateTime } from 'luxon';
-
+import { initStartTime, initEndTime } from '../reducers/InitialState';
 export default function CreateEvent() {
 
     const dispatch = useDispatch();
@@ -10,9 +10,8 @@ export default function CreateEvent() {
 
     const baseDate = dataStore.base.baseDate
     
-    const startTime = DateTime.now().hour+1;
     const makeHandler = () =>{        // 만들기 버튼 누르면 상태 저장 
-      dispatch(setMakeEventTodo(true,baseDate,true,startTime,startTime+1))  
+      dispatch(setMakeEventTodo(true, baseDate, true, initStartTime, initEndTime))  
     }
 
     return (

@@ -1,5 +1,7 @@
 import { DateTime } from "luxon";
 const today = DateTime.now().toISO();
+export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO();
+export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO();
 
 export type State = {
   user: {
@@ -26,8 +28,11 @@ export type State = {
     isMakeBtnClick:boolean;
     isFromSidebar:boolean;
     selectDate: string;
-    selectStartTime: number;
-    selectEndtime:number;
+    selectStartTime: string;
+    selectEndTime:string;
+    isSelectDateClick:boolean;
+    isStartTimeClick:boolean;
+    isEndTimeClick:boolean;
   }
 
   // 일간 월간 선택할때 필요한 상태
@@ -132,8 +137,11 @@ export const initialState: State = {
     isMakeBtnClick:false,
     isFromSidebar:true,
     selectDate: '',
-    selectStartTime: 0,
-    selectEndtime:0
+    selectStartTime: initStartTime,
+    selectEndTime:initEndTime,
+    isSelectDateClick:false,
+    isStartTimeClick:false,
+    isEndTimeClick:false
   },
 
   // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태

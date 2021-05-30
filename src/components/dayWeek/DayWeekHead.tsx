@@ -1,4 +1,6 @@
 import { DateTime } from "luxon";
+import { useDispatch } from "react-redux";
+import { setBaseDate, setBasePeriod } from "../../actions/index";
 
 interface DayInfoHead {
     yoil:string;
@@ -6,7 +8,14 @@ interface DayInfoHead {
 }
 
 const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) 메인 달력에서 헤더  ex)월,13 표시하는곳
+
+    const dispatch = useDispatch();
     let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
+
+    const baseHandler = () => {
+        dispatch(setBaseDate(day.toISO()))
+        dispatch(setBasePeriod('day'))
+    }
 
     return(
         <div className = "date-info">
@@ -16,7 +25,7 @@ const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) �
                     <div className = {"yoil"+(isToday ? ' yoiltoday':'')}>
                         {yoil}
                     </div>
-                    <div className = {"myuchil"+(isToday ? ' today':'')}>
+                    <div className = {"myuchil"+(isToday ? ' today':'')} onClick={()=>{baseHandler()}}>
                         {day.day}
                     </div>
                 </h2>

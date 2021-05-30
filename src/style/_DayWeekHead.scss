@@ -71,6 +71,7 @@
     flex-direction: column;
     justify-content: center;
 
+    cursor: pointer;
     &:hover {
         background: darken(white, 10%)
       }

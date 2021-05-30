@@ -1,6 +1,8 @@
 // Action Types
 // User Actions
 
+import { DateTime } from "luxon";
+
 export const SIGN_IN = "SIGN_IN" as const;
 export const SIGN_OUT = "SIGN_OUT" as const;
 export const SELECT_PROFILE = "SELECT_PROFILE" as const;
@@ -13,6 +15,12 @@ export const IS_OPTION_CLICK = "IS_OPTION_CLICK" as const;
 export const SET_EVENT_TODO = "SET_EVENT_TODO" as const;
 export const SET_CALENDAR = "SET_CALENDAR" as const;
 export const SET_MAKE_EVENT_TODO = "SET_MAKE_EVENT_TODO" as const;
+export const SET_IS_SELECT_DATE_CLICK = "SET_IS_SELECT_DATE_CLICK" as const;
+export const SET_START_TIME = "SET_START_TIME" as const;
+export const SET_END_TIME = "SET_END_TIME" as const;
+export const SET_IS_START_TIME_CLICK = "SET_IS_START_TIME_CLICK" as const;
+export const SET_IS_END_TIME_CLICK = "SET_IS_END_TIME_CLICK" as const;
+
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -24,6 +32,11 @@ export type Action =
   | ReturnType<typeof isOptionClick>
   | ReturnType<typeof setEventTodo>
   | ReturnType<typeof setMakeEventTodo>
+  | ReturnType<typeof setIsSelectDateClick>
+  | ReturnType<typeof setStartTime>
+  | ReturnType<typeof setEndTime>
+  | ReturnType<typeof setIsStartTimeClick>
+  | ReturnType<typeof setIsEndTimeClick>
   | ReturnType<typeof setCalendar>;
 export interface UserInfo {
   data: {
@@ -166,8 +179,8 @@ export const setMakeEventTodo = (
   isMakeBtnClick:boolean,
   selectDate: string,
   isFromSidebar:boolean,
-  selectStartTime: number,
-  selectEndtime:number,
+  selectStartTime: string,
+  selectEndtime:string,
 ) => {
   return {
     type: SET_MAKE_EVENT_TODO,
@@ -189,4 +202,44 @@ export const setCalendar = (data:{calendarName:string;colour:string;description:
   }
 }
 
+export const setIsSelectDateClick = (isSelectDateClick:boolean) => {
+  return{
+    type: SET_IS_SELECT_DATE_CLICK,
+    payload: {
+      isSelectDateClick
+    }
+  }
+}
+export const setStartTime= (selectStartTime:string) => {
+  return{
+    type: SET_START_TIME,
+    payload: {
+      selectStartTime,
+    }
+  }
+}
+export const setEndTime= (selectEndTime:string) => {
+  return{
+    type: SET_END_TIME,
+    payload: {
+      selectEndTime,
+    }
+  }
+}
+export const setIsStartTimeClick= (isStartTimeClick:boolean) => {
+  return{
+    type: SET_IS_START_TIME_CLICK,
+    payload: {
+      isStartTimeClick
+    }
+  }
+}
+export const setIsEndTimeClick= (isEndTimeClick:boolean) => {
+  return{
+    type: SET_IS_END_TIME_CLICK,
+    payload: {
+      isEndTimeClick
+    }
+  }
+}
 

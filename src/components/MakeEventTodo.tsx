@@ -1,11 +1,14 @@
-import React,{ useState } from 'react';
+import { useState,useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/index';
 import * as CSS from 'csstype';
 import { useRef } from 'react'
 import { useOutSideClick } from '../functions/Calendar';
-import { setMakeEventTodo } from '../actions/index';
-
+import { setMakeEventTodo, setIsSelectDateClick, setStartTime, setIsStartTimeClick, setIsEndTimeClick } from '../actions/index';
+import { DateTime } from 'luxon';
+import  MiniCalendar  from './sideBar/MiniCalendar';
+import SelectorTime from './selectorTime';
+import { initStartTime, initEndTime } from '../reducers/InitialState';
 const EventTodoSwitch = ({isEvent, switchHandler}:{isEvent:boolean;switchHandler:Function}) => {
   return (
     <div className="event-todo-switch" onClick={()=>{switchHandler(!isEvent)}}>
@@ -23,20 +26,98 @@ const EventTodoSwitch = ({isEvent, switchHandler}:{isEvent:boolean;switchHandler
   );
 };
 const DateTimeSelector = () => {
+
+  const { makeEventTodo,base } = useSelector((state:RootState)=>state.dateReducer)
+  const { selectStartTime, selectEndTime, isSelectDateClick, isStartTimeClick, isEndTimeClick} = makeEventTodo;
+  const [ dateSpan, setDateSpan ] = useState( DateTime.fromISO(base.baseDate).toFormat("M월 d일") );
+  const dispatch = useDispatch();
+
+  useEffect(()=>{         
+    setDateSpan(DateTime.fromISO(base.baseDate).toFormat("M월 d일"));
+  },[base])
+
+  const startTimeRef = useRef(null);
+  const endTimeRef = useRef(null);
+  const startCallback = ()=>{dispatch(setIsStartTimeClick(false))};
+  const endCallback = ()=>{dispatch(setIsEndTimeClick(false))};
+  useOutSideClick(startTimeRef, startCallback);
+  useOutSideClick(endTimeRef, endCallback);
+
+  const miniCss:CSS.Properties = {
+    position: 'absolute',
+    backgroundColor: 'white',
+    left: '52px',
+    right: '137px',
+    top: '221px',
+    border: '#dadce0 1px solid',
+    borderRadius: '10px'
+    // boxShadow: '0 8px 10px 1px #e6e6e6 0 3px 14px 2px #e6e6e 0 5px 5px -3px #e6e6e6',
+  }
+
+  const startTimeCss:CSS.Properties = {
+    position: 'absolute',
+    left: '100px',
+    top: '212px'
+  }
+  const endTimeCss:CSS.Properties = {
+    position: 'absolute',
+    left: '184px',
+    top: '212px'
+  }
+
+  const startTimeHandler = () => {
+    dispatch(setIsStartTimeClick(true))
+  }
+  const endTimeHandler = () => {
+    dispatch(setIsEndTimeClick(true))
+  }
+  const makeTimeText = (date:string):string => {
+
+    let timeSpan = "";
+    if (DateTime.fromISO(date).hour < 12) {
+      timeSpan = DateTime.fromISO(date).toFormat("오전 h:mm");
+    } else {
+      timeSpan = DateTime.fromISO(date).toFormat("오전 h:mm");
+    }
+    return timeSpan
+  }
+  
+  
   return (
     <div className={"date-time-selector"} >
-      <div className="basetime-select">
-        <span className="basetime-select__span">6월 6일(일요일)</span>
+      <div className="basetime-select" onClick={()=>{ dispatch( setIsSelectDateClick(true) ) }}>
+        <span className="basetime-select__span">{dateSpan}</span>
       </div>
       <div className="time-select">
-        <div className="time-select__inner">
-          <span className="time-select__span">오전 9:00</span>
+        <div className="time-select__inner" onClick={()=>{startTimeHandler()}}>
+          <span className="time-select__span">{makeTimeText(selectStartTime)}</span>
         </div>
         <span>-</span>
-        <div className="time-select__inner">
-          <span className="time-select__span">오전 10:00</span>
+        <div className="time-select__inner"onClick={()=>{endTimeHandler()}}>
+          <span className="time-select__span">{makeTimeText(selectEndTime)}</span>
         </div>
       </div>
+      {
+        isSelectDateClick ? (
+          <div style={miniCss}> <MiniCalendar/> </div>
+        ):(
+          null
+        )
+      }
+      {
+        isStartTimeClick ? (
+          <div style={startTimeCss} ref={startTimeRef}> <SelectorTime isStart={"start"}/> </div>
+        ):(
+          null
+        )
+      }
+      {
+        isEndTimeClick ? (
+          <div style={endTimeCss} ref={endTimeRef}> <SelectorTime isStart={"End"}/> </div>
+        ):(
+          null
+        )
+      }
     </div>
   );
 };
@@ -60,17 +141,15 @@ export default function MakeEventTodo() {
 
   const selectRef = useRef(null);
   const dispatch = useDispatch();
-  const callback = ()=>{dispatch(setMakeEventTodo(false,'',true,0,0))};
+  const callback = ()=>{dispatch(setMakeEventTodo(false, '', true, initStartTime, initEndTime ))};
   useOutSideClick(selectRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
-
-  const { makeEventTodo } = useSelector((state:RootState)=>state.dateReducer);
-  const { isFromSidebar } = makeEventTodo;
 
   const position: CSS.Properties={   
     position: 'absolute',
     left: '409px',
     top: '173px'
   };
+  
 
   const switchHandler = (e:boolean)=>{
     setIsEvent(e)
@@ -78,7 +157,7 @@ export default function MakeEventTodo() {
 
   return (
     <div className="event__wrapper" style={position} ref={selectRef}>
-      <div className="event__header" onClick={()=>{dispatch(setMakeEventTodo(false,'',true,0,0))}}>
+      <div className="event__header" onClick={()=>{dispatch(setMakeEventTodo(false,'',true,initStartTime, initEndTime))}}>
         <button className="event__close__btn">&times;</button>
       </div>
       <div className="event__form" style={{ height: 60 + "px" }}>

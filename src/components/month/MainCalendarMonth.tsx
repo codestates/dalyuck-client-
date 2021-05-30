@@ -1,9 +1,10 @@
 import { makeDayInfoArr } from '../../functions/Calendar'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
 import UnderDay from './UnderDay';
 import { data } from '../../fakeData/Events'
+import { setBaseDate, setBasePeriod } from '../../actions/index';
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -18,14 +19,21 @@ const MonthColumnheader = ({ day }: { day: string }) => {
 
 const MonthWeekheaderDay = ({ day }: { day: DateTime }) => {
 
+  const dispatch = useDispatch();
+
   let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
   let dayNum:number|string = day.day
   if( day.day === 1 ) dayNum = day.toFormat("M월 d일");
 
+  const baseHandler = () => {
+    dispatch(setBaseDate(day.toISO()))
+    dispatch(setBasePeriod('day'))
+  }
+
   return (
     <div className="month-week__header-day">
       <div className="month-week__header-day-inner" >
-        <h2 className={"month-week__header-day-inner-h2"+ (isToday ? ' today':'')}>{dayNum}</h2>
+        <h2 className={"month-week__header-day-inner-h2"+ (isToday ? ' today':'')} onClick={()=>{baseHandler()}}>{dayNum}</h2>
       </div>
     </div>
   );
