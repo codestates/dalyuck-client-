@@ -122,20 +122,11 @@ const Signin = (props: SigninProps) => {
     const googleName = res.profileObj.name;
 
     axios
-      .post(
-        process.env.REACT_APP_API_URL + "/user/googleLogin/",
-        {
-          email: googleEmail,
-          name: googleName,
-        },
-        {
-          headers: {
-            authorization: `Bearer ${googleToken}`,
-            "Content-Type": "application/json",
-            credentials: "include",
-          },
-        }
-      )
+      .post(process.env.REACT_APP_API_URL + "/user/oauth/google", {
+        idToken: googleToken,
+        userName: googleName,
+        email: googleEmail,
+      })
       .then((res: any) => {
         const token = res.headers.authorization.split(" ")[1];
         if (token) {
