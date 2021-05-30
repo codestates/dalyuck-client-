@@ -5,7 +5,6 @@ import { selectPeriod, setBasePeriod } from '../../actions/index'
 import { RootState } from '../../reducers/index';
 import { useOutSideClick } from '../../functions/Calendar';
 
-
 type Select={
     kor:string;
     eng:string;

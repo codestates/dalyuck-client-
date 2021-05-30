@@ -1,9 +1,9 @@
 import { makeDayInfoArr } from '../../functions/Calendar'
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
 import { useState, useEffect } from 'react';
-
+import { setBaseDate, setIsSelectDateClick } from "../../actions/index";
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
 const MiniCalendarHeader = ({ day }: { day: string }) => {
@@ -13,15 +13,20 @@ const MiniCalendarHeader = ({ day }: { day: string }) => {
     </span>
   );
 };
+
 const MiniWeekDay = ({ day }: { day: DateTime }) => {
 
-  let {base} = useSelector( (state:RootState) => state.dateReducer )
-
+  const dispatch = useDispatch();
+  let {base, makeEventTodo} = useSelector( (state:RootState) => state.dateReducer )
   let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
   let isBase = DateTime.fromISO(base.baseDate).toFormat("D") === day.toFormat("D")
   
+  const baseHandler = () => {
+    dispatch(setBaseDate(day.toISO()))
+    if( makeEventTodo.isMakeBtnClick && makeEventTodo.isSelectDateClick) dispatch(setIsSelectDateClick(false));
+  }
   return (
-    <span className="mini-week__day">
+    <span className="mini-week__day" onClick={()=>{baseHandler()}}>
       <div className={"mini-week__day__text"+ ( isBase? ' base': "" ) + (isToday ? ' today':'')}>{day.day}</div>
     </span>
   );

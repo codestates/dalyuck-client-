@@ -23,7 +23,7 @@ export default function Sidebar() {
     let otherTop = 39 +(otherCalNum*32);
     isMyCalOpen ?  otherTop=39 +(otherCalNum*32) : otherTop = 39 ;
     let addTop:string = '';
-    isMine === 'mine'? addTop = '3px' : addTop = `${otherTop}px` //10px 부분은 계산해서 other calendar
+    isMine === 'mine'? addTop = '5px' : addTop = `${otherTop}px` //10px 부분은 계산해서 other calendar
 
     const redirecHandler = () => {
       if(isMine === 'mine'){

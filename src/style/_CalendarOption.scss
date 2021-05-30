@@ -6,6 +6,7 @@
 }
 .option-colors{
     white-space: nowrap;
+    display: flex;
 }
 .option-color-con{
     border-radius: 50%;
@@ -17,8 +18,16 @@
     margin: 3px;
     cursor: pointer;
     position: relative;
+    &:hover{
+        height: 20px;
+        width: 20px;
+    }
 }
-
+.option-colors__inner{
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+}
 .calendar-option{
     position: absolute;
     max-width: 192px;

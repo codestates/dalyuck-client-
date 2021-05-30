@@ -5,6 +5,12 @@ import {
   IS_SIDEBAR_OPEN,
   IS_OPTION_CLICK,
   SET_EVENT_TODO,
+  SET_MAKE_EVENT_TODO,
+  SET_IS_SELECT_DATE_CLICK,
+  SET_START_TIME,
+  SET_END_TIME,
+  SET_IS_START_TIME_CLICK,
+  SET_IS_END_TIME_CLICK,
   SET_CALENDAR,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
@@ -54,6 +60,54 @@ import { stat } from "fs";
           ...state,
           ...action.payload
         });
+      case SET_MAKE_EVENT_TODO:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_IS_SELECT_DATE_CLICK:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_START_TIME:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_END_TIME:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_IS_START_TIME_CLICK:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_IS_END_TIME_CLICK:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
       // case SET_CALENDAR:
       //   return Object.assign({}, state, {
       //     ...state,
