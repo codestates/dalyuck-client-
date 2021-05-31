@@ -197,7 +197,9 @@ export const setCalendar = (data:any) => {
   return{
     type: SET_CALENDAR,
     payload: {
-      data
+      data:{
+        ...data
+      }
     }
   }
 }
