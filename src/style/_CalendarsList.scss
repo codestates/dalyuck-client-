@@ -1,14 +1,13 @@
 @import "variables";
 
-.check-box{
-    position: relative;
-    
-    &__inner{
+.check-box {
+  position: relative;
 
+  &__inner {
     box-flex: 0;
     flex-grow: 0;
-    transition: border-color .2s cubic-bezier(0.4,0,0.2,1);
-    border: 9px solid rgba(0,0,0,0.54);
+    transition: border-color 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    border: 9px solid rgba(0, 0, 0, 0.54);
     border-radius: 3px;
     box-sizing: content-box;
     cursor: pointer;
@@ -24,34 +23,33 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    }
-    &__padding{
-
+  }
+  &__padding {
     transform: scale(2.5);
-    transition: opacity .15s ease;
+    transition: opacity 0.15s ease;
     border-radius: 100%;
     height: 18px;
     left: -9px;
     opacity: 0;
-    outline: .1px solid transparent;
+    outline: 0.1px solid transparent;
     pointer-events: none;
     position: absolute;
     top: -9px;
     width: 18px;
     z-index: -1;
-    }
-    &__mid{
+  }
+  &__mid {
     transform: scale(0);
-    transition: transform .1s cubic-bezier(0.4,0,0.2,1);
+    transition: transform 0.1s cubic-bezier(0.4, 0, 0.2, 1);
     border-radius: 100%;
 
     border: 7px solid white;
     left: -7px;
     position: absolute;
     top: -7px;
-    }
-    &__bot{
-    clip: rect(0,18px,18px,0);
+  }
+  &__bot {
+    clip: rect(0, 18px, 18px, 0);
 
     animation: none;
 
@@ -62,30 +60,28 @@
     width: 18px;
 
     height: 18px;
-    }
-
+  }
 }
-.check-box-shape{
+.check-box-shape {
+  left: 10px;
+  transform: rotate(-45deg);
+  transform-origin: 0;
+  top: 7px;
 
-    left: 10px;
-    transform: rotate(-45deg);
-    transform-origin: 0;
-    top: 7px;
+  height: 100%;
+  pointer-events: none;
+  position: absolute;
+  width: 100%;
 
-    height: 100%;
-    pointer-events: none;
-    position: absolute;
-    width: 100%;
-
-    &__1{
+  &__1 {
     border: 1px solid #fff;
     height: 5px;
     left: 0;
     position: absolute;
 
     pointer-events: none;
-    }
-    &__2{
+  }
+  &__2 {
     width: 9px;
 
     border: 1px solid #fff;
@@ -94,17 +90,17 @@
     top: 5px;
 
     pointer-events: none;
-    }
+  }
 }
-.isChecked{
-    padding: 7px;
-    background-color: white;
+.isChecked {
+  padding: 7px;
+  background-color: white;
 }
 
-.calendars-list{
-    display: block;
-    
-    &__inner{
+.calendars-list {
+  display: block;
+
+  &__inner {
     // height: 160px;       // 높이 인라인 스타일  캘린더 갯수에 따라서 , open close 에따라서 조정해야함
 
     overflow: hidden;
@@ -112,26 +108,25 @@
 
     padding: 0;
     margin: 0;
-    }
+  }
 }
 
-.calendar-label{
-    transform: translateY(0px);
-    height: 32px;
+.calendar-label {
+  transform: translateY(0px);
+  height: 32px;
 
-    left: 0;
-    position: absolute;
-    top: 0;
-    right: 0;
+  left: 0;
+  position: absolute;
+  top: 0;
+  right: 0;
 
-    &__li{
+  &__li {
     padding: 0;
     margin: 0;
     list-style: none;
     display: list-item;
-
-    }
-    &__li-inner{
+  }
+  &__li-inner {
     min-height: 32px;
 
     transition: background-color 100ms linear;
@@ -146,103 +141,107 @@
     box-sizing: border-box;
     align-items: center;
     outline: none;
-    }
-    &:hover{
-        background-color: darken($color: white, $amount: 10);
-    }
-    &:hover .option-delete{
-        visibility: visible;
-    }
+  }
+  &:hover {
+    background-color: darken($color: white, $amount: 10);
+  }
+  &:hover .option-delete {
+    visibility: visible;
+  }
 }
 
-.calendar-label-name{
-    cursor: pointer;
-    text-align: left;
+.calendar-label-name {
+  cursor: pointer;
+  text-align: left;
 
-    display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  display: block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 
-    color: #3c4043;
-    font-size: 14px;
-    font-weight: 400;
-    line-height: 16px;
-    padding-bottom: 6px;
-    padding-top: 6px;
-    flex-grow: 1;
-    align-items: center;
-    flex-wrap: wrap;
+  color: #3c4043;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 16px;
+  padding-bottom: 6px;
+  padding-top: 6px;
+  flex-grow: 1;
+  align-items: center;
+  flex-wrap: wrap;
 
-    // &__span{
+  // &__span{
 
-    // }
+  // }
 }
 
-.check-box-con{
-    padding-left: 24px;
-    width: 28px;
+.check-box-con {
+  padding-left: 24px;
+  width: 28px;
 
-    max-height: 40px;
-    flex-grow: 0;
-    flex-shrink: 0;
-    align-items: center;
+  max-height: 40px;
+  flex-grow: 0;
+  flex-shrink: 0;
+  align-items: center;
 
+  display: flex;
+
+  align-self: stretch;
+}
+
+.option-delete {
+  visibility: hidden;
+
+  overflow: auto;
+
+  flex-shrink: 0;
+  flex-grow: 0;
+  align-self: stretch;
+  height: 24px;
+  width: 56px;
+
+  margin-top: 3px;
+  &__inner {
     display: flex;
-
-    align-self: stretch;
-}
-
-.option-delete{
-    visibility: hidden;
-
-    overflow: auto;
-
-    flex-shrink: 0;
-    flex-grow: 0;
-    align-self: stretch;
-    height: 24px;
-    width: 56px;
-
-    margin-top: 3px;
-    &__inner{
-        display: flex;
-        align-self: center;
-        align-items: center;
-        overflow: hidden;
-
-        height: 100%;
-        width: 100%;
-        justify-content: space-between;
-    }
-
-}
-.icon{
-    fill:$icon-color;
-    height: 24px;
-    width: 24px;
-    position: relative;
-
-    transition: background .3s;
-    border: 0;
-    border-radius: 50%;
-    cursor: pointer;
-    display: inline-block;
-    flex-shrink: 0;
-    outline: none;
+    align-self: center;
+    align-items: center;
     overflow: hidden;
-    position: relative;
-    text-align: center;
-    z-index: 0;
 
-    &-svg{
-        height: 100%;
-        width: 100%;
-        
-        &:hover {
-            background: $today-color;
-            fill: white;
-        } 
+    height: 100%;
+    width: 100%;
+    justify-content: space-between;
+  }
+}
+.icon {
+  fill: $icon-color;
+  height: 24px;
+  width: 24px;
+  position: relative;
+
+  transition: background 0.3s;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  display: inline-block;
+  flex-shrink: 0;
+  outline: none;
+  overflow: hidden;
+  position: relative;
+  text-align: center;
+  z-index: 0;
+
+  &-svg {
+    height: 100%;
+    width: 100%;
+
+    &:hover {
+      background: $today-color;
+      fill: white;
     }
+  }
+}
 
+.swal2-title {
+  font-size: 20px;
+  box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.21);
+  margin-bottom: 10px;
 }
