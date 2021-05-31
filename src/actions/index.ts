@@ -1,8 +1,5 @@
 // Action Types
 // User Actions
-
-import { DateTime } from "luxon";
-
 export const SIGN_IN = "SIGN_IN" as const;
 export const SIGN_OUT = "SIGN_OUT" as const;
 export const SELECT_PROFILE = "SELECT_PROFILE" as const;
@@ -20,7 +17,8 @@ export const SET_START_TIME = "SET_START_TIME" as const;
 export const SET_END_TIME = "SET_END_TIME" as const;
 export const SET_IS_START_TIME_CLICK = "SET_IS_START_TIME_CLICK" as const;
 export const SET_IS_END_TIME_CLICK = "SET_IS_END_TIME_CLICK" as const;
-
+export const SET_END_DATE = "SET_END_DATE" as const;
+export const SET_IS_END_DATE_CLICK = "SET_IS_END_DATE_CLICK" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -37,6 +35,8 @@ export type Action =
   | ReturnType<typeof setEndTime>
   | ReturnType<typeof setIsStartTimeClick>
   | ReturnType<typeof setIsEndTimeClick>
+  | ReturnType<typeof setEndDate>
+  | ReturnType<typeof setIsEndDateClick>
   | ReturnType<typeof setCalendar>;
 export interface UserInfo {
   data: {
@@ -193,11 +193,13 @@ export const setMakeEventTodo = (
     },
   };
 };
-export const setCalendar = (data:{calendarName:string;colour:string;description:string,id:number;userId:number}) => {
+export const setCalendar = (data:any) => {
   return{
-    type: IS_OPTION_CLICK,
+    type: SET_CALENDAR,
     payload: {
-      data
+      data:{
+        ...data
+      }
     }
   }
 }
@@ -239,6 +241,22 @@ export const setIsEndTimeClick= (isEndTimeClick:boolean) => {
     type: SET_IS_END_TIME_CLICK,
     payload: {
       isEndTimeClick
+    }
+  }
+}
+export const setEndDate= (selectEndDate:string) => {
+  return{
+    type: SET_END_DATE,
+    payload: {
+      selectEndDate
+    }
+  }
+}
+export const setIsEndDateClick= (isEndDateClick:boolean) => {
+  return{
+    type: SET_IS_END_DATE_CLICK,
+    payload: {
+      isEndDateClick
     }
   }
 }

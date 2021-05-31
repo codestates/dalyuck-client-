@@ -3,23 +3,28 @@ import SidebarCalendars from "./SidebarCalendars";
 import MiniCalendar from "./MiniCalendar";
 import { useSelector } from 'react-redux'
 import { RootState } from '../../reducers/index';
-import { useState } from 'react';
-import { data  } from "../../fakeData/Events";
+import { useEffect, useState } from 'react';
+import { fakedata  } from "../../fakeData/Events";
 import { useHistory } from "react-router";
 
 export default function Sidebar() {
   let history = useHistory();
 
-  let calendars = data.calendar;   // 페이크 데이터
-  let otherCalendars = data.OtherCalendar;
+  const { data } = useSelector((state:RootState)=>state.userReducer);
+  let [cal, setcal] = useState(data) 
+  useEffect(()=>{
+    setcal(data)
+  },[data])
+  let calendars = cal.calendar;   // 페이크 데이터
+  let otherCalendars = fakedata.OtherCalendar;
   const[isMyCalOpen, setIsMycalOpen] = useState(true);
   const[isOtherCalOpen, setIsOthercalOpen ] = useState(true);
 
-  const {isSidebarOpen} = useSelector((state:RootState) => state.dateReducer);
+  const {isSidebarOpen} = useSelector((state:RootState) => state.userReducer);
 
   const  AddCalendar = ({isMine}:{isMine:string})=> {
 
-    let otherCalNum = Object.keys(otherCalendars).length
+    let otherCalNum = Object.keys(calendars).length
     let otherTop = 39 +(otherCalNum*32);
     isMyCalOpen ?  otherTop=39 +(otherCalNum*32) : otherTop = 39 ;
     let addTop:string = '';
@@ -55,24 +60,31 @@ export default function Sidebar() {
           <div className="sidebar__inner-blank"></div>
           <div className="sidebar-body">
             {/* 미니달력 */}
-                <MiniCalendar/>
+                <MiniCalendar from={'side'}/>
             <div className="sidebar-body-calendar-list">
               <div className="sidebar-body-calendar-list__inner">
                 {/* 내, 다른 컴포넌트 */}
                 <SidebarCalendars myOrOther="my" setIsOpen={setIsMycalOpen} isOpen={isMyCalOpen} />
                 {
-     
-                  calendars.map((calendar,i)=>{
-                    return <CalendarList key={i} isOpen={isMyCalOpen} calendar={calendar}/>
-                  })
+                  calendars ? (
+                    calendars.map((calendar,i)=>{
+                      return <CalendarList key={i} isOpen={isMyCalOpen} calendar={calendar}/>
+                    })
+                  ):(
+                    null
+                  )
                 }
 
                 <AddCalendar isMine="mine"/>
                 <SidebarCalendars myOrOther="other" setIsOpen={setIsOthercalOpen} isOpen={isOtherCalOpen}/>
                 {
-                  otherCalendars.map(calendar=>{
-                    return <CalendarList isOpen={isOtherCalOpen} calendar={calendar}/>
+                  otherCalendars ? (
+                    otherCalendars.map((calendar,i)=>{
+                    return <CalendarList key={i} isOpen={isOtherCalOpen} calendar={calendar}/>
                   })
+                  ):(
+                    null
+                  )
                 }
                 <AddCalendar isMine="other"/>
               </div>

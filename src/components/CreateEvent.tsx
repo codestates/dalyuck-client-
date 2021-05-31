@@ -1,12 +1,11 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../reducers/index";
 import { setMakeEventTodo }  from "../actions/index";
-import { DateTime } from 'luxon';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
 export default function CreateEvent() {
 
     const dispatch = useDispatch();
-    const dataStore = useSelector( (state:RootState) => state.dateReducer )
+    const dataStore = useSelector( (state:RootState) => state.userReducer )
 
     const baseDate = dataStore.base.baseDate
     

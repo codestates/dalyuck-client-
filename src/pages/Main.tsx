@@ -10,7 +10,7 @@ import { Profile } from "../components/nav/Profile";
 
 
 const Main = () => {
-  const { selector } = useSelector((state: RootState) => state.dateReducer);
+  const { selector } = useSelector((state: RootState) => state.userReducer);
   let isOn = selector.isOn;
   const { profile } = useSelector((state: RootState) => state.userReducer);
   let IsOnProFile = profile.isOn;

@@ -22,7 +22,7 @@ const Nav = () => {
   const componentRef = useRef<HTMLDivElement>(null); //  ref타입 설정
   const componentRef_profile = useRef<HTMLDivElement>(null); //  ref타입 설정
   const { base, isSidebarOpen } = useSelector(
-    (state: RootState) => state.dateReducer
+    (state: RootState) => state.userReducer
   );
   const state = useSelector((state: RootState) => state);
   const {

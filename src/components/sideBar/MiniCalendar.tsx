@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
 import { useState, useEffect } from 'react';
-import { setBaseDate, setIsSelectDateClick } from "../../actions/index";
+import { setBaseDate, setIsSelectDateClick, setEndDate } from "../../actions/index";
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
 const MiniCalendarHeader = ({ day }: { day: string }) => {
@@ -14,16 +14,21 @@ const MiniCalendarHeader = ({ day }: { day: string }) => {
   );
 };
 
-const MiniWeekDay = ({ day }: { day: DateTime }) => {
+const MiniWeekDay = ({ day, from }: { day: DateTime;from:string }) => {
 
   const dispatch = useDispatch();
-  let {base, makeEventTodo} = useSelector( (state:RootState) => state.dateReducer )
+  let {base} = useSelector( (state:RootState) => state.userReducer )
   let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
   let isBase = DateTime.fromISO(base.baseDate).toFormat("D") === day.toFormat("D")
   
   const baseHandler = () => {
-    dispatch(setBaseDate(day.toISO()))
-    if( makeEventTodo.isMakeBtnClick && makeEventTodo.isSelectDateClick) dispatch(setIsSelectDateClick(false));
+
+    if( from === 'start' || from === 'side'){
+      dispatch(setBaseDate(day.toISO()))
+    }else{
+      dispatch(setEndDate(day.toISO()))
+    }
+    dispatch(setIsSelectDateClick(false));
   }
   return (
     <span className="mini-week__day" onClick={()=>{baseHandler()}}>
@@ -32,20 +37,19 @@ const MiniWeekDay = ({ day }: { day: DateTime }) => {
   );
 };
 
-const MiniWeek = (props:{headerDay:DateTime[]}) => {
-  let headerDay=props.headerDay
+const MiniWeek = ({headerDay,from}:{headerDay:DateTime[],from:string}) => {
   return (
     <div className="mini-week">
       {/* 1,2,3,4, 매핑... */}
       {headerDay.map((day) => {
-        return <MiniWeekDay key={day.day} day={day} />;
+        return <MiniWeekDay key={day.day} day={day} from={from} />;
       })}
     </div>
   );
 };
-export default function MiniCalendar() {
+export default function MiniCalendar({from}:{from:string}) {
 
-  let {base} = useSelector( (state:RootState) => state.dateReducer )
+  let {base} = useSelector( (state:RootState) => state.userReducer )
 
   useEffect(()=>{
     setMiniBase(base)
@@ -104,7 +108,7 @@ export default function MiniCalendar() {
             {
               weekInfoArr.map((week:any,i:number)=>{
                 return(
-                  <MiniWeek key={i} headerDay={week}/>
+                  <MiniWeek key={i} headerDay={week} from={from}/>
                 )
               })
             }

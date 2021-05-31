@@ -15,18 +15,18 @@ export type Calendar = {
     event: Event[];
 }[];
 
-export const data = {
+export const fakedata = {
     userId : 1,
     calendar : [
     {
       calendarId:1,  
-      calenderName: "강정환",
+      calendarName: "강정환",
       colour: "#7986CB",
       event: [
         {
             eventId: 1,
             startTime : "2021-05-24T13:00:00.000+09:00",
-            endTime: "2021-05-24T13:30:00.000+09:00",
+            endTime: "2021-05-25T13:30:00.000+09:00",
             eventName: "아침회의",
             colour: "rgb(97, 97, 97)",
             location: "서울시 인수동",
@@ -66,7 +66,7 @@ export const data = {
     },
     {
         calendarId:2,  
-        calenderName: "회의",
+        calendarName: "회의",
         colour: "rgb(192, 202, 51)",
         event: [
           {
@@ -119,7 +119,7 @@ export const data = {
     OtherCalendar : [
     {
         calendarId:1,  
-        calenderName: "대한민국 휴일",
+        calendarName: "대한민국 휴일",
         colour: "#F09300",
         event: [
         {
@@ -165,7 +165,7 @@ export const data = {
     },
     {
         calendarId:2,  
-        calenderName: "Full Time Immersive 27기",
+        calendarName: "Full Time Immersive 27기",
         colour: "#616161",
         event: [
             {

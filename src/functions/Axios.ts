@@ -13,8 +13,8 @@ let basicAxios = axios.create({
     baseURL: process.env.REACT_APP_API_URL,
     headers: {
         authorization: `Bearer ${userState.token}`,
-        "Content-Type": "application/json",
-        credentials: "include"
+        // "Content-Type": "application/json",
+        // credentials: "include"
     },
 })
 
@@ -28,8 +28,8 @@ const updateState = () =>{
         baseURL: process.env.REACT_APP_API_URL,
         headers: {
             authorization: `Bearer ${userState.token}`,
-            "Content-Type": "application/json",
-            credentials: "include"
+            // "Content-Type": "application/json",
+            // credentials: "include"
         },
     })
 }
@@ -45,8 +45,10 @@ export const createCalendar = async(calendarName:string,description?:string)=>{
             description,
             userId:userState.data.userId
         }).then(res=>{
-            console.log(res.data)
-        })
+            return getCalendar()
+        }).then(res=>
+            store.dispatch(action.setCalendar(res))
+        )
     }catch (error){
         if(axios.isAxiosError(error)){
             console.log('axios error')
@@ -55,6 +57,25 @@ export const createCalendar = async(calendarName:string,description?:string)=>{
             console.log('unExpected error')
         }
     }
+    return result
+}
+
+// 캘린더 겟요청
+export const getCalendar = async()=>{  
+    updateState()
+    let result;
+
+    result = await basicAxios.get(`/calendar/${userState.data.userId}`)
+    .then(res=>{
+        return res.data
+    }).catch(error=>{
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    })
     return result
 }
 

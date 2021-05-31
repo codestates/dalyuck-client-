@@ -32,7 +32,7 @@ export const SelectorPeriod = () =>{
 
     useOutSideClick(selectRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
-    const {selector} = useSelector((state:RootState) => state.dateReducer);
+    const {selector} = useSelector((state:RootState) => state.userReducer);
 
     let left = selector.leftPosition 
 

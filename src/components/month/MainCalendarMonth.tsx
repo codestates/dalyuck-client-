@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
 import UnderDay from './UnderDay';
-import { data } from '../../fakeData/Events'
+import { fakedata } from '../../fakeData/Events'
 import { setBaseDate, setBasePeriod } from '../../actions/index';
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
@@ -61,7 +61,7 @@ const WeekEvent = ({day, calendar}:any) => {
 };
 
 const MonthWeek = (props:{headerDay:DateTime[]}) => {
-  let calendar = data.calendar;          //  페이크 데이터 
+  let calendar = fakedata.calendar;          //  페이크 데이터 
   let headerDay=props.headerDay
   return (
     <div className="month-weeks__week">
@@ -86,7 +86,7 @@ const MonthWeek = (props:{headerDay:DateTime[]}) => {
 export default function MaincalendarMonth() {
 
 
-  const {base} = useSelector( (state:RootState) => state.dateReducer )
+  const {base} = useSelector( (state:RootState) => state.userReducer )
   const weekInfoArr = makeDayInfoArr(base)
 
   return (
