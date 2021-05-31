@@ -67,5 +67,5 @@
 }
 .scroll{
     overflow-y: scroll;
-    height: 100%;
+    height: calc(100% - 90px);
 }

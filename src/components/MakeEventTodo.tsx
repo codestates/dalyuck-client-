@@ -4,11 +4,37 @@ import { RootState } from '../reducers/index';
 import * as CSS from 'csstype';
 import { useRef } from 'react'
 import { useOutSideClick } from '../functions/Calendar';
-import { setMakeEventTodo, setIsSelectDateClick, setStartTime, setIsStartTimeClick, setIsEndTimeClick } from '../actions/index';
+import { setMakeEventTodo, setIsSelectDateClick, setIsStartTimeClick, setIsEndTimeClick } from '../actions/index';
 import { DateTime } from 'luxon';
 import  MiniCalendar  from './sideBar/MiniCalendar';
 import SelectorTime from './selectorTime';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
+
+const CheckBox = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
+
+  return (
+    <div className="check-box" style={{left:28}} onClick={()=>{setIsAllday(!isAllday)}}>
+      <div className="check-box__inner" > 
+        <div className="check-box__padding"></div>
+        <div className="check-box__mid"></div>
+        {
+          isAllday ? (
+            null
+          ):(
+            <div className="isChecked"/>
+          )
+        }
+        <div className="check-box__bot">
+          <div className="check-box-shape">
+            <div className="check-box-shape__1"></div>
+            <div className="check-box-shape__2"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const EventTodoSwitch = ({isEvent, switchHandler}:{isEvent:boolean;switchHandler:Function}) => {
   return (
     <div className="event-todo-switch" onClick={()=>{switchHandler(!isEvent)}}>
@@ -25,16 +51,20 @@ const EventTodoSwitch = ({isEvent, switchHandler}:{isEvent:boolean;switchHandler
     </div>
   );
 };
-const DateTimeSelector = () => {
+const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
 
   const { makeEventTodo,base } = useSelector((state:RootState)=>state.dateReducer)
-  const { selectStartTime, selectEndTime, isSelectDateClick, isStartTimeClick, isEndTimeClick} = makeEventTodo;
+  const { selectStartTime, selectEndTime, isSelectDateClick, isStartTimeClick, isEndTimeClick, selectEndDate} = makeEventTodo;
   const [ dateSpan, setDateSpan ] = useState( DateTime.fromISO(base.baseDate).toFormat("M월 d일") );
+  const [ endDateSpan, setEndDateSpan ] = useState( DateTime.fromISO(selectEndDate).toFormat("M월 d일") );
   const dispatch = useDispatch();
 
   useEffect(()=>{         
     setDateSpan(DateTime.fromISO(base.baseDate).toFormat("M월 d일"));
   },[base])
+  useEffect(()=>{         
+    setEndDateSpan(DateTime.fromISO(selectEndDate).toFormat("M월 d일"));
+  },[selectEndDate])
 
   const startTimeRef = useRef(null);
   const endTimeRef = useRef(null);
@@ -88,18 +118,27 @@ const DateTimeSelector = () => {
       <div className="basetime-select" onClick={()=>{ dispatch( setIsSelectDateClick(true) ) }}>
         <span className="basetime-select__span">{dateSpan}</span>
       </div>
-      <div className="time-select">
-        <div className="time-select__inner" onClick={()=>{startTimeHandler()}}>
-          <span className="time-select__span">{makeTimeText(selectStartTime)}</span>
-        </div>
-        <span>-</span>
-        <div className="time-select__inner"onClick={()=>{endTimeHandler()}}>
-          <span className="time-select__span">{makeTimeText(selectEndTime)}</span>
-        </div>
-      </div>
+      {
+        isAllday ? (
+          <div className="basetime-select" onClick={()=>{ dispatch( setIsSelectDateClick(true) ) }}>
+            <span className="basetime-select__span">{endDateSpan}</span>
+          </div>
+        ):(
+          <div className="time-select">
+            <div className="time-select__inner" onClick={()=>{startTimeHandler()}}>
+              <span className="time-select__span">{makeTimeText(selectStartTime)}</span>
+            </div>
+          <span>-</span>
+            <div className="time-select__inner"onClick={()=>{endTimeHandler()}}>
+              <span className="time-select__span">{makeTimeText(selectEndTime)}</span>
+            </div>
+          </div>
+        )
+      }
+
       {
         isSelectDateClick ? (
-          <div style={miniCss}> <MiniCalendar/> </div>
+          <div style={miniCss}> <MiniCalendar from={isAllday? "end":"start"} /> </div>
         ):(
           null
         )
@@ -138,6 +177,7 @@ const Attendants = () => {
 export default function MakeEventTodo() {
 
   const [isEvent, setIsEvent] = useState(true);
+  const [isAllday, setIsAllday ] = useState(false);
 
   const selectRef = useRef(null);
   const dispatch = useDispatch();
@@ -171,7 +211,9 @@ export default function MakeEventTodo() {
         <svg className="event-svg" width="24px" height="24px" viewBox="0 0 24 24">
           <path d="M12 20C16.4 20 20 16.4 20 12S16.4 4 12 4 4 7.6 4 12 7.6 20 12 20M12 2C17.5 2 22 6.5 22 12S17.5 22 12 22C6.5 22 2 17.5 2 12C2 6.5 6.5 2 12 2M17 13.9L16.3 15.2L11 12.3V7H12.5V11.4L17 13.9Z" />
         </svg>
-        <DateTimeSelector />
+        <DateTimeSelector isAllday={isAllday} setIsAllday={setIsAllday} />
+        <CheckBox isAllday={isAllday} setIsAllday={setIsAllday}/>
+        <span style={{paddingLeft:35}}>종일</span>
       </div>
         {
           isEvent ? (

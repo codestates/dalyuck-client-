@@ -1,10 +1,8 @@
-import React from "react";
 import "./App.css";
 import {
   Switch,
   Route,
   Redirect,
-  withRouter,
   BrowserRouter,
 } from "react-router-dom";
 import Main from "./pages/Main";

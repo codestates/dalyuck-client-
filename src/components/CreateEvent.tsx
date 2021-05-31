@@ -1,7 +1,6 @@
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from "../reducers/index";
 import { setMakeEventTodo }  from "../actions/index";
-import { DateTime } from 'luxon';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
 export default function CreateEvent() {
 

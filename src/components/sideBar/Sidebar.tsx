@@ -55,7 +55,7 @@ export default function Sidebar() {
           <div className="sidebar__inner-blank"></div>
           <div className="sidebar-body">
             {/* 미니달력 */}
-                <MiniCalendar/>
+                <MiniCalendar from={'side'}/>
             <div className="sidebar-body-calendar-list">
               <div className="sidebar-body-calendar-list__inner">
                 {/* 내, 다른 컴포넌트 */}

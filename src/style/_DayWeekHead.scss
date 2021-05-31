@@ -18,7 +18,7 @@
     flex-direction: column;
     overflow: hidden;
     position: relative;
-    height: 90px;
+    // height: 90px;
 }
 .date-info-con {
     flex: 1 1 auto;
@@ -115,6 +115,13 @@
     border-right: 1px solid transparent;
     flex: 1 0 ;    // 주, 일 에따라서 min-width 가 달라지는데,,, 
 }
+.all-day-event-con-3{
+    display: flex;
+    // justify-content: space-evenly;
+    height: 1em;
+    border-bottom: $grid-line;
+}
+
 .extand-grid-left {
     border-left: $grid-line;
     bottom: 0;
@@ -133,4 +140,8 @@
 .main-cal-blank{
     overflow: scroll;
     visibility: hidden;
+}
+.all-day-con{
+    flex: 1 1;
+    min-width: 81px;
 }

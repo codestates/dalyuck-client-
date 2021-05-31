@@ -11,6 +11,8 @@ import {
   SET_END_TIME,
   SET_IS_START_TIME_CLICK,
   SET_IS_END_TIME_CLICK,
+  SET_END_DATE,
+  SET_IS_END_DATE_CLICK,
   SET_CALENDAR,
   } from "../actions/index";
  import { initialState, State } from "./InitialState";
@@ -101,6 +103,22 @@ import { stat } from "fs";
           }
         })
       case SET_IS_END_TIME_CLICK:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_END_DATE:
+        return Object.assign({}, state, {
+          ...state,
+          makeEventTodo:{
+            ...state.makeEventTodo,
+            ...action.payload
+          }
+        })
+      case SET_IS_END_DATE_CLICK:
         return Object.assign({}, state, {
           ...state,
           makeEventTodo:{

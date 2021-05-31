@@ -1,7 +1,7 @@
 @import "variables";
 @import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod","CalendarMonth","UnderDay";
 @import "MiniCalendar","SidebarCalendars","Sidebar","CalendarsList","CalendarOption","CreateEvent","EventInfoCon";
-@import "EventModal";
+@import "EventModal","AllDay";
 
 html{
   height: 100%;

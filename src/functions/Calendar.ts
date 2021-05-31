@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import {DateTime} from 'luxon';
+import {DateTime, Interval} from 'luxon';
 
 
 export function useOutSideClick(               // 컴포넌트 바깥 클릭시 콜백함수 호출 하는 함수
@@ -108,3 +108,5 @@ export const makeDayInfoArr = (base:{baseDate:string;basePeriod:string})=>{
     return weekInfoArr
   }
 }
+
+

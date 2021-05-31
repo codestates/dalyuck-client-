@@ -26,7 +26,7 @@ export const data = {
         {
             eventId: 1,
             startTime : "2021-05-24T13:00:00.000+09:00",
-            endTime: "2021-05-24T13:30:00.000+09:00",
+            endTime: "2021-05-25T13:30:00.000+09:00",
             eventName: "아침회의",
             colour: "rgb(97, 97, 97)",
             location: "서울시 인수동",
