@@ -87,6 +87,7 @@ const Signin = (props: SigninProps) => {
       .then((res: any) => {
         const token = res.headers.authorization.split(" ")[1];
         if (token) {
+          console.log(res.data)
           dispatch(signIn(res.data, token));
           handleCloseBtn();
           setModalComment("로그인 완료.");

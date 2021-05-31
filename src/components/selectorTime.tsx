@@ -35,7 +35,7 @@ const SelectorPeriodSpanCon = ({ time, isStart }: { time: DateTime, isStart:stri
 
 const SelectorTime = ({isStart}:{isStart:string}) => {
 
-  const { base, makeEventTodo } = useSelector((state:RootState)=>state.dateReducer);
+  const { base, makeEventTodo } = useSelector((state:RootState)=>state.userReducer);
   let baseDate = DateTime.fromISO(base.baseDate);
   let timeArray: DateTime[] = [];
 

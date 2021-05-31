@@ -17,7 +17,7 @@ const MiniCalendarHeader = ({ day }: { day: string }) => {
 const MiniWeekDay = ({ day, from }: { day: DateTime;from:string }) => {
 
   const dispatch = useDispatch();
-  let {base} = useSelector( (state:RootState) => state.dateReducer )
+  let {base} = useSelector( (state:RootState) => state.userReducer )
   let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
   let isBase = DateTime.fromISO(base.baseDate).toFormat("D") === day.toFormat("D")
   
@@ -49,7 +49,7 @@ const MiniWeek = ({headerDay,from}:{headerDay:DateTime[],from:string}) => {
 };
 export default function MiniCalendar({from}:{from:string}) {
 
-  let {base} = useSelector( (state:RootState) => state.dateReducer )
+  let {base} = useSelector( (state:RootState) => state.userReducer )
 
   useEffect(()=>{
     setMiniBase(base)

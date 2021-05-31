@@ -75,7 +75,7 @@ export default function CalendarsList({isOpen, calendar}:{isOpen:boolean;calenda
                 <CheckBox calendar={calendar}/>
               </div>
               <div className="calendar-label-name">
-                <span className="calendar-label-name__span">{calendar.calenderName}</span>
+                <span className="calendar-label-name__span">{calendar.calendarName}</span>
               </div>
               <OptionDelete calendar={calendar}/>
             </div>

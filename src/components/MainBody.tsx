@@ -10,7 +10,7 @@ import MakeEventTodo from './MakeEventTodo';
 
 export default function MainBody(){
 
-    const {base, colorOption, eventTodo, makeEventTodo} = useSelector((state:RootState) => state.dateReducer);
+    const {base, colorOption, eventTodo, makeEventTodo} = useSelector((state:RootState) => state.userReducer);
 
     return(
         <div className="main-body">

@@ -193,9 +193,9 @@ export const setMakeEventTodo = (
     },
   };
 };
-export const setCalendar = (data:{calendarName:string;colour:string;description:string,id:number;userId:number}) => {
+export const setCalendar = (data:any) => {
   return{
-    type: IS_OPTION_CLICK,
+    type: SET_CALENDAR,
     payload: {
       data
     }

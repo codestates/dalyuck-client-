@@ -53,7 +53,7 @@ const EventTodoSwitch = ({isEvent, switchHandler}:{isEvent:boolean;switchHandler
 };
 const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
 
-  const { makeEventTodo,base } = useSelector((state:RootState)=>state.dateReducer)
+  const { makeEventTodo,base } = useSelector((state:RootState)=>state.userReducer)
   const { selectStartTime, selectEndTime, isSelectDateClick, isStartTimeClick, isEndTimeClick, selectEndDate} = makeEventTodo;
   const [ dateSpan, setDateSpan ] = useState( DateTime.fromISO(base.baseDate).toFormat("M월 d일") );
   const [ endDateSpan, setEndDateSpan ] = useState( DateTime.fromISO(selectEndDate).toFormat("M월 d일") );

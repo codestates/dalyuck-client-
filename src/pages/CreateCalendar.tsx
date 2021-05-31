@@ -3,10 +3,13 @@
 import { withRouter } from "react-router-dom";
 import React, { useState } from "react";
 import "../style/_CreateCalendar.scss";
+import { createCalendar } from "../functions/Axios";
+import { useHistory } from 'react-router-dom';
 // 새 캘린더 만들기 프레임 추가  #119
 // Server쪽에 보낼 캘린더 이름과 설명을 입력할 Input 컨트롤 코딩.
 
 function CreateCalendar() {
+  const history = useHistory();
   // state로 저장 (name, explain)
   const [state, setForm] = useState({
     name: "",
@@ -19,7 +22,7 @@ function CreateCalendar() {
     // Form제출시 초기화 방지
     e.preventDefault();
 
-    if (!state.name || !state.explain) {
+    if (!state.name) {
       alert("Please Enter the Text");
       return;
     }
@@ -47,7 +50,7 @@ function CreateCalendar() {
           placeholder="Enter About your description"
           onChange={(e) => setForm({ ...state, explain: e.target.value })}
         />
-        <input className="submit-btn" type="submit" value="Save Task" />
+        <input className="submit-btn" type="submit" value="Save Task" onClick={()=>{createCalendar(state.name);history.push("/")}} />
       </div>
     </form>
   );

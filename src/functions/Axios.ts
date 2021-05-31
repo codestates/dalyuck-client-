@@ -45,8 +45,10 @@ export const createCalendar = async(calendarName:string,description?:string)=>{
             description,
             userId:userState.data.userId
         }).then(res=>{
-            console.log(res.data)
-        })
+            return getCalendar()
+        }).then(res=>
+            store.dispatch(action.setCalendar(res))
+        )
     }catch (error){
         if(axios.isAxiosError(error)){
             console.log('axios error')

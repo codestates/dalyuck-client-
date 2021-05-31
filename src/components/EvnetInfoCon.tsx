@@ -96,7 +96,7 @@ const HasAccess = () => {
     const callback = ()=>{dispatch(setEventTodo(false,[0,0],0,0,0,false))}
     useOutSideClick(closeRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
-    const { eventTodo } = useSelector( (state:RootState) => state.dateReducer)
+    const { eventTodo } = useSelector( (state:RootState) => state.userReducer)
     const position={
       top: eventTodo.position[1]-36,
       left: eventTodo.position[0]>250 ? (eventTodo.position[0]-223):( eventTodo.position[0])

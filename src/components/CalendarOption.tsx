@@ -41,7 +41,7 @@ const CalendarOptionColor = () => {
 export default function CalendarOption() {
     let history = useHistory();
     const dispatch = useDispatch();
-    const {colorOption} = useSelector((state:RootState) => state.dateReducer);
+    const {colorOption} = useSelector((state:RootState) => state.userReducer);
     const callback = ()=>{dispatch(isOptionClick(false,0,0))}
     const selectRef = useRef(null)
     

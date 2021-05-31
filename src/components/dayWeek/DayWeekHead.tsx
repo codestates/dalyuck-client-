@@ -2,7 +2,7 @@ import { DateTime, Interval } from "luxon";
 import { useDispatch } from "react-redux";
 import { setBaseDate, setBasePeriod } from "../../actions/index";
 import AllDay from '../AllDay';
-import {data,EventType}  from '../../fakeData/Events';
+import {fakedata,EventType}  from '../../fakeData/Events';
 import { useState } from 'react';
 interface DayInfoHead {
     yoil:string;
@@ -46,7 +46,7 @@ const AllDayCon = ({day, allDayEvents, setAllDayEvents}:{day:DateTime;allDayEven
                     let startTime = DateTime.fromISO(event.startTime).startOf('day');
                     let endTime = DateTime.fromISO(event.endTime).endOf('day');
                     if(Interval.fromDateTimes(startTime,endTime).contains(day)) {
-                        return <AllDay event={event}/>
+                        return <AllDay key={event.endTime} event={event}/>
                     }
                 })
             }
@@ -58,11 +58,11 @@ const AllDayCon = ({day, allDayEvents, setAllDayEvents}:{day:DateTime;allDayEven
 const DayWeekHead = ({info}:any) => {
 
     let events:EventType[]=[] ;
-    data.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+    fakedata.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
 
         cal.event.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
           event.calendarId =cal.calendarId;
-          event.userId = data.userId;
+          event.userId = fakedata.userId;
         })
         events = [...events,...cal.event]
     });
@@ -97,8 +97,8 @@ const DayWeekHead = ({info}:any) => {
                             <div className="all-day-event-con-3">
                                 {/* // 종일 컴포넌트 들거갈 공각 */}
                                 {
-                                    info.map(({day}:{day:DateTime})=>{
-                                        return <AllDayCon day={day} allDayEvents={allDayEvents} setAllDayEvents={setAllDayEvents}/>
+                                    info.map(({day,i}:{day:DateTime,i:number})=>{
+                                        return <AllDayCon key={i} day={day} allDayEvents={allDayEvents} setAllDayEvents={setAllDayEvents}/>
                                     })
                                 }
                                 <div className="main-cal-blank" style={{width:7+'px'}}></div>

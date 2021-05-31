@@ -1,5 +1,5 @@
 import { DateTime, Interval } from 'luxon';
-import { data ,EventType } from '../../fakeData/Events';
+import { fakedata ,EventType } from '../../fakeData/Events';
 import { useDispatch } from 'react-redux'
 import { setEventTodo } from "../../actions/index";
 import { useRef } from 'react';   // 레퍼런스 훅스
@@ -65,11 +65,11 @@ const Event = ({ event }:any ) => {
 const Day = ({ day }: any) => {
   let events:EventType[]=[] ;
 
-  data.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+  fakedata.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
 
     cal.event.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
       event.calendarId =cal.calendarId;
-      event.userId = data.userId;
+      event.userId = fakedata.userId;
     })
     events = [...events,...cal.event]
   })

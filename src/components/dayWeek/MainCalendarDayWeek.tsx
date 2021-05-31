@@ -6,7 +6,7 @@ import { makeDayInfoArr } from '../../functions/Calendar'
 
 const MainCalendarDayWeek = () => {
 
-    const {base} = useSelector( (state:RootState) => state.dateReducer )
+    const {base} = useSelector( (state:RootState) => state.userReducer )
     const dayInfoArr = makeDayInfoArr(base)
 
 

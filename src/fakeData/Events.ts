@@ -15,12 +15,12 @@ export type Calendar = {
     event: Event[];
 }[];
 
-export const data = {
+export const fakedata = {
     userId : 1,
     calendar : [
     {
       calendarId:1,  
-      calenderName: "강정환",
+      calendarName: "강정환",
       colour: "#7986CB",
       event: [
         {
@@ -66,7 +66,7 @@ export const data = {
     },
     {
         calendarId:2,  
-        calenderName: "회의",
+        calendarName: "회의",
         colour: "rgb(192, 202, 51)",
         event: [
           {
@@ -119,7 +119,7 @@ export const data = {
     OtherCalendar : [
     {
         calendarId:1,  
-        calenderName: "대한민국 휴일",
+        calendarName: "대한민국 휴일",
         colour: "#F09300",
         event: [
         {
@@ -165,7 +165,7 @@ export const data = {
     },
     {
         calendarId:2,  
-        calenderName: "Full Time Immersive 27기",
+        calendarName: "Full Time Immersive 27기",
         colour: "#616161",
         event: [
             {
