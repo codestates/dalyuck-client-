@@ -58,3 +58,22 @@ body, html {
   background-color: lighten($today-color, 10%);
   color: white;
 }
+
+.swal2-title{
+  font-size: 19px;
+  height: 44px;
+}
+.swal2-popup{
+  left: 17px;
+}
+.swal2-actions{
+  margin:0;
+}
+
+.make-event-todo__footer{
+  display: flex;
+  align-items: center;
+  & select{
+    margin-left: 14px;
+  }
+}

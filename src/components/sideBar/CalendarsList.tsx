@@ -2,6 +2,7 @@ import { useDispatch } from "react-redux";
 import { isOptionClick } from "../../actions/index";
 import { useRef } from "react"; // 레퍼런스 훅
 import Swal from "sweetalert2";
+import { deleteCalendar } from '../../functions/Axios'
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
   return (
@@ -24,7 +25,7 @@ const CheckBox = ({ calendar }: { calendar: any }) => {
   );
 };
 
-const Remove = () => {
+const Remove = (calendarId:number) => {
   Swal.fire({
     title: "삭제 하시겠습니까?",
     showCancelButton: true,
@@ -42,16 +43,17 @@ const Remove = () => {
         position: "center-left",
         width: "200px",
       });
+      deleteCalendar(calendarId)
     }
   });
 };
 
-const Delete = () => {
+const Delete = ({calendarId}:{calendarId:number}) => {
   return (
     <div
       className="icon"
       onClick={() => {
-        Remove();
+        Remove(calendarId);
       }}
     >
       <svg className="icon-svg" viewBox="-3 -3 30 30">
@@ -68,7 +70,7 @@ const Option = ({ calendar }: { calendar: any }) => {
     let yAxis = 0;
     if (componentRef.current?.getBoundingClientRect().y)
       yAxis = componentRef.current?.getBoundingClientRect().y;
-    dispatch(isOptionClick(true, calendar.calendarId, yAxis));
+    dispatch(isOptionClick(true, calendar.id, yAxis));
   };
 
   return (
@@ -90,7 +92,7 @@ function OptionDelete({ calendar }: { calendar: any }) {
   return (
     <div className="option-delete">
       <div className="option-delete__inner">
-        <Delete />
+        <Delete calendarId={calendar.id} />
         <Option calendar={calendar} />
       </div>
     </div>
@@ -117,7 +119,7 @@ export default function CalendarsList({
               </div>
               <div className="calendar-label-name">
                 <span className="calendar-label-name__span">
-                  {calendar.calenderName}
+                  {calendar.calendarName}
                 </span>
               </div>
               <OptionDelete calendar={calendar} />

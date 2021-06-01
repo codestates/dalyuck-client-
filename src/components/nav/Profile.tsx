@@ -22,7 +22,7 @@ export const Profile = () => {
 
   const state = useSelector((state: RootState) => state);
   const {
-    userReducer: { data, token },
+    userReducer: { user, token },
   } = state;
 
   const { profile } = useSelector((state: RootState) => state.userReducer);
@@ -43,7 +43,7 @@ export const Profile = () => {
       .post(
         process.env.REACT_APP_API_URL + `/user/logout/`,
         {
-          userId: data.userId,
+          userId: user.id,
         },
         {
           headers: {
@@ -64,8 +64,8 @@ export const Profile = () => {
 
   return (
     <div className="profile__info__form" style={position} ref={selectRef}>
-      <span>{data.userName}</span>
-      <span>{data.email}</span>
+      <span>{user.userName}</span>
+      <span>{user.email}</span>
       <div className="logout__form">
         <button
           onClick={() => {

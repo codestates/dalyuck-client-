@@ -1,8 +1,9 @@
 import { DateTime, Interval } from 'luxon';
 import { fakedata ,EventType } from '../../fakeData/Events';
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setEventTodo } from "../../actions/index";
 import { useRef } from 'react';   // 레퍼런스 훅스
+import { RootState } from '../../reducers/index';
 
 const timeToPixel = (time:DateTime):number=>{
   const minute = time.minute;
@@ -63,16 +64,20 @@ const Event = ({ event }:any ) => {
 };
 
 const Day = ({ day }: any) => {
+
   let events:EventType[]=[] ;
-
-  fakedata.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
-
-    cal.event.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
-      event.calendarId =cal.calendarId;
-      event.userId = fakedata.userId;
+  const { user } = useSelector((state:RootState)=>state.userReducer);
+  if(user){
+    user.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+      if(cal.event){
+        cal.event.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
+          event.calendarId =cal.id;
+          event.userId = user.id;
+        })
+        events = [...events,...cal.event]
+      }
     })
-    events = [...events,...cal.event]
-  })
+  }
 
   const now = DateTime.now(); //  현재시간
   const height = timeToPixel(now);

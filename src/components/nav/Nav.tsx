@@ -26,7 +26,7 @@ const Nav = () => {
   );
   const state = useSelector((state: RootState) => state);
   const {
-    userReducer: { data, token },
+    userReducer: { user, token },
   } = state;
   const history = useHistory();
   const dispatch = useDispatch();

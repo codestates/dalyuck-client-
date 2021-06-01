@@ -132,19 +132,19 @@ import { stat } from "fs";
       case SET_CALENDAR:
         return Object.assign({}, state, {
           ...state,
-          data:{
-            ...state.data,
+          user:{
+            ...state.user,
             ...action.payload
           }
         });
       case SIGN_IN:
         return Object.assign({}, state, {
-          data: action.payload.data,
+          user: action.payload.data,
           token: action.payload.token,
         });
       case SIGN_OUT:
         return Object.assign({}, state, {
-          data: "",
+          user: "",
           token: "",
         });
       case SELECT_PROFILE:

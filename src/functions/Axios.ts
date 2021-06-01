@@ -34,38 +34,12 @@ const updateState = () =>{
     })
 }
 
-// [ 새 캘린더 만들기]
-
-export const createCalendar = async(calendarName:string,description?:string)=>{  
-    updateState()
-    let result;
-    try{
-        result = await basicAxios.post("/calendar",{
-            calendarName,
-            description,
-            userId:userState.data.userId
-        }).then(res=>{
-            return getCalendar()
-        }).then(res=>
-            store.dispatch(action.setCalendar(res))
-        )
-    }catch (error){
-        if(axios.isAxiosError(error)){
-            console.log('axios error')
-            console.log(error)
-        } else{
-            console.log('unExpected error')
-        }
-    }
-    return result
-}
-
 // 캘린더 겟요청
 export const getCalendar = async()=>{  
     updateState()
     let result;
 
-    result = await basicAxios.get(`/calendar/${userState.data.userId}`)
+    result = await basicAxios.get(`/calendar/${userState.user.id}`)
     .then(res=>{
         return res.data
     }).catch(error=>{
@@ -79,6 +53,32 @@ export const getCalendar = async()=>{
     return result
 }
 
+// [ 새 캘린더 만들기]
+export const createCalendar = async(calendarName:string,description?:string)=>{  
+    updateState()
+    let result;
+    try{
+        result = await basicAxios.post("/calendar",{
+            calendarName,
+            description,
+            userId:userState.user.id
+        }).then(res=>{
+            return getCalendar()
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res))
+        })
+    }catch (error){
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    }
+    return result
+}
+
+
 // [ 캘린더 수정 ] 없는 전달인자는 undefined 기입 ex) updateCalendar(1,undefined,undefined,"#2134") 색만 변경 원할경우 (캘ㄹ린더 아이디는 컴포넌트에서 상태로 받아와야함 )
 
 export const updateCalendar = async(calendarId:number,calendarName?:string,description?:string,colour?:string)=>{   
@@ -88,11 +88,13 @@ export const updateCalendar = async(calendarId:number,calendarName?:string,descr
         result = await basicAxios.patch("/calendar",{
             calendarName,
             description,
-            userId:userState.data.userId,
+            userId:userState.user.id,
             calendarId,
             colour
         }).then(res=>{
-            console.log(res.data)
+            return getCalendar()
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res))
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -113,10 +115,12 @@ export const deleteCalendar = async(calendarId:number)=>{
         result = await basicAxios.delete("/calendar",{
             data:{             // delete는 바디를 data객체 안에 넣어서 전달해야한다.
                 calendarId,
-                userId:userState.data.userId
+                userId:userState.user.id
             }
         }).then(res=>{
-            console.log(res.data)
+           return getCalendar()
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res))
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -124,11 +128,30 @@ export const deleteCalendar = async(calendarId:number)=>{
             console.log(error)
         } else{
             console.log('unExpected error')
+            console.log(error)
         }
     }
     return result
 }
 
+// 이벤트 겟요청
+export const getEvent = async()=>{  
+    updateState()
+    let result;
+
+    result = await basicAxios.get(`/event/${userState.user.id}`)
+    .then(res=>{
+        return res.data
+    }).catch(error=>{
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    })
+    return result
+}
 
 // [ 새 이벤트 만들기]
 export const createEvent = async(startTime:string,endTime:string,calendarId:number,eventName:string,description?:string,access=true,location?:string,colour?:string)=>{  
@@ -144,9 +167,11 @@ export const createEvent = async(startTime:string,endTime:string,calendarId:numb
             location,
             colour,
             description,
-            userId:userState.data.userId
+            userId:userState.user.id
         }).then(res=>{
-            console.log(res.data)
+            return getCalendar()
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res))
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -175,9 +200,9 @@ export const updateEvent = async(calendarId:number,eventId:number,startTime?:str
             location,
             colour,
             description,
-            userId:userState.data.userId
+            userId:userState.user.id
         }).then(res=>{
-            console.log(res.data)
+            console.log(res)
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -198,10 +223,10 @@ export const deleteEvent = async(eventId:number)=>{
         result = await basicAxios.delete("/event",{
             data:{             // delete는 바디를 data객체 안에 넣어서 전달해야한다.
                 eventId,
-                userId:userState.data.userId
+                userId:userState.user.id
             }
         }).then(res=>{
-            console.log(res.data)
+            console.log(res)
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -225,9 +250,9 @@ export const createTodo = async(startTime:string,toDoListrId:number,toDoName:str
             toDoListrId,
             toDoName,
             description,
-            userId:userState.data.userId
+            userId:userState.user.id
         }).then(res=>{
-            console.log(res.data)
+            console.log(res)
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -252,9 +277,9 @@ export const updateTodo = async(toDoListId:number,startTime?:string,toDoName?:st
             toDoName,
             description,
             isFinished,
-            userId:userState.data.userId
+            userId:userState.user.id
         }).then(res=>{
-            console.log(res.data)
+            console.log(res)
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -275,10 +300,10 @@ export const deleteTodo= async(toDoId:number)=>{
         result = await basicAxios.delete("/todo",{
             data:{             // delete는 바디를 data객체 안에 넣어서 전달해야한다.
                 toDoId,
-                userId:userState.data.userId
+                id:userState.user.id
             }
         }).then(res=>{
-            console.log(res.data)
+            console.log(res)
         })
     }catch (error){
         if(axios.isAxiosError(error)){
