@@ -9,6 +9,8 @@ import { DateTime } from 'luxon';
 import  MiniCalendar  from './sideBar/MiniCalendar';
 import SelectorTime from './selectorTime';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
+import { createEvent } from '../functions/Axios';
+
 
 const CheckBox = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
 
@@ -83,7 +85,7 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
     borderRadius: '10px'
     // boxShadow: '0 8px 10px 1px #e6e6e6 0 3px 14px 2px #e6e6e 0 5px 5px -3px #e6e6e6',
   }
-
+ 
   const startTimeCss:CSS.Properties = {
     position: 'absolute',
     left: '100px',
@@ -173,17 +175,60 @@ const Attendants = () => {
     </div>
   )
 }
+const FootCheckBox = ({color}:{color:string}) => {
+  return (
+    <div className="check-box">
+      <div className="check-box__inner" style={{ borderColor: color }}>
+        <div className="check-box__padding"></div>
+        <div className="check-box__mid"></div>
+        <div className="check-box__bot">
+        </div>
+      </div>
+    </div>
+  );
+};
+
+const MakeEventTodoFooter = ({footCal,setFootCalId,submitHandler}:{footCal:any,setFootCalId:any,submitHandler:Function}) => {
+  
+  const [color, setColor] = useState(footCal[0].colour)
+
+  const setFootHandler = (e:React.ChangeEvent<HTMLSelectElement>) => {
+    setFootCalId(e.target.value)
+    for(let i = 0; i<footCal.length ; i++){
+      if(footCal[i].id.toString()===e.target.value){
+        setColor(footCal[i].colour)
+      }
+    }
+  }
+
+  return (
+    <div className="make-event-todo__footer">
+      <FootCheckBox color={color}/>
+      <select id="cal-select" onChange={(e)=>{setFootHandler(e)}}>
+        {
+          footCal.map((calendar:any)=>{
+            return <option value={calendar.id}>{calendar.calendarName}</option>
+          })
+        }
+      </select>
+      <button className="event__submit__btn" onClick={()=>{submitHandler()}}>저장</button>
+    </div>
+  );
+}
 
 export default function MakeEventTodo() {
 
+  const { makeEventTodo, user } = useSelector((state:RootState)=>state.userReducer);
   const [isEvent, setIsEvent] = useState(true);
   const [isAllday, setIsAllday ] = useState(false);
-
+  const [title, setTitle] = useState('( 제목 없음 )');
+  let footCal = user.calendar;
+  const [footCalId, setFootCalId] = useState(user.calendar[0].id)
   const selectRef = useRef(null);
   const dispatch = useDispatch();
   const callback = ()=>{dispatch(setMakeEventTodo(false, '', true, initStartTime, initEndTime ))};
   useOutSideClick(selectRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
-
+ 
   const position: CSS.Properties={   
     position: 'absolute',
     left: '409px',
@@ -193,6 +238,14 @@ export default function MakeEventTodo() {
 
   const switchHandler = (e:boolean)=>{
     setIsEvent(e)
+  }
+  const submitHandler = () => {
+    let startTime = makeEventTodo.selectStartTime;
+    let endTime = makeEventTodo.selectEndTime;
+    let color = user.calendar[0].colour;
+
+    createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color)
+    dispatch(setMakeEventTodo(false,'',true,initStartTime, initEndTime))
   }
 
   return (
@@ -204,7 +257,7 @@ export default function MakeEventTodo() {
         <svg className="event-svg" width="24px" height="24px" viewBox="0 0 24 24">
           <path d="M5,4V7H10.5V19H13.5V7H19V4H5Z" />
         </svg>
-        <input placeholder="( 제목 없음 )" className="title__input" />
+        <input placeholder="( 제목 없음 )" className="title__input" onChange={(e)=>{setTitle(e.target.value)}}/>
       </div>
       <EventTodoSwitch isEvent={isEvent} switchHandler={switchHandler} />
       <div className="event__form">
@@ -231,7 +284,7 @@ export default function MakeEventTodo() {
           placeholder="설명 추가"
         ></textarea>
       </div>
-      <button className="event__submit__btn">저장</button>
+      <MakeEventTodoFooter footCal={footCal} setFootCalId={setFootCalId} submitHandler={submitHandler}/>
     </div>
   );
 }

@@ -180,7 +180,7 @@ const Signup = (props: SignupProps) => {
           const token = res.headers.authorization.split(" ")[1];
           if (res.status === 201) {
             handleCloseBtn();
-            dispatch(signIn(res.data, token));
+            dispatch(signIn(res.user, token));
             setModalComment("회원가입이 완료되었습니다.");
             handleModalOpen();
             return;

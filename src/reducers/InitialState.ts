@@ -3,11 +3,18 @@ const today = DateTime.now().toISO();
 export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO();
 export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO();
 export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO();
+export const initEvent = {
+      id: 0,
+      startTime: '',
+      endTime: '',
+      eventName: '',
+      colour: '',
+      location: '',
+      description: '',
+      access: true,
+      notification: []
+}
 export type State = {
-  user: {
-    email: string;
-    userName: string;
-  };
 
   token: string;
 
@@ -52,26 +59,33 @@ export type State = {
   eventTodo: {
     isEventClick: false;
     position: [0, 0];
-    eventId: number;
-    userId: number;
-    calendarId: number;
-    access: boolean;
+    event:{
+      id: number;
+      startTime: any;
+      endTime: any;
+      eventName: string;
+      colour: string;
+      location: string;
+      description: string;
+      access: boolean;
+      notification: any[]; 
+    }
   };
 
-  data: {
+  user: {
     userName: string;
-    userId: number;
+    id: number;
     email: string;
     //calendars
     calendar: [
       {
-        calendarId: number;
+        id: number;
         calendarName: string;
         colour: string;
         //event
         event: [
           {
-            eventId: number;
+            id: number;
             startTime: any;
             endTime: any;
             eventName: string;
@@ -92,16 +106,32 @@ export type State = {
         colour: string;
       }
     ];
+    otherCalendar: [
+      {
+        id: number;
+        calendarName: string;
+        colour: string;
+        //event
+        event: [
+          {
+            id: number;
+            startTime: any;
+            endTime: any;
+            eventName: string;
+            colour: string;
+            location: string;
+            description: string;
+            access: boolean;
+            notification: any[];
+          }
+        ];
+      }
+    ]
   };
 };
 
 export const initialState: State = {
   // User
-  // User
-  user: {
-    email: "",
-    userName: "",
-  },
 
   token: "",
 
@@ -150,26 +180,33 @@ export const initialState: State = {
   eventTodo: {
     isEventClick: false,
     position: [0, 0],
-    eventId: 0,
-    userId: 0,
-    calendarId: 0,
-    access: false,
+    event:{
+      id: 0,
+      startTime: '',
+      endTime: '',
+      eventName: '',
+      colour: '',
+      location: '',
+      description: '',
+      access: true,
+      notification: []
+    }
   },
 
-  data: {
+  user: {
+    id: 0,
     userName: "",
-    userId: 0,
     email: "",
     //calendar
     calendar: [
       {
-        calendarId: 0,
+        id: 0,
         calendarName: "",
         colour: "",
         //event
         event: [
           {
-            eventId: 0,
+            id: 0,
             startTime: "",
             endTime: "",
             eventName: "",
@@ -188,6 +225,27 @@ export const initialState: State = {
         toDoListId: 0,
         toDoListName: "",
         colour: "",
+      },
+    ],
+    otherCalendar: [
+      {
+        id: 0,
+        calendarName: "",
+        colour: "",
+        //event
+        event: [
+          {
+            id: 0,
+            startTime: "",
+            endTime: "",
+            eventName: "",
+            colour: "",
+            location: "",
+            description: "",
+            access: true,
+            notification: [],
+          },
+        ],
       },
     ],
   },
