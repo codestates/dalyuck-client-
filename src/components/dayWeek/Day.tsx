@@ -1,5 +1,5 @@
 import { DateTime, Interval } from 'luxon';
-import { fakedata ,EventType } from '../../fakeData/Events';
+import { EventType } from '../../fakeData/Events';
 import { useDispatch, useSelector } from 'react-redux'
 import { setEventTodo } from "../../actions/index";
 import { useRef } from 'react';   // 레퍼런스 훅스
@@ -36,7 +36,6 @@ const Event = ({ event }:any ) => {
     height: intervalPixel,
     backgroundColor: event.colour
   };
-
   const componentRef = useRef<HTMLDivElement>(null);  //  ref타입 설정
   const dispatch = useDispatch();
   const eventHandler = () =>{
@@ -44,7 +43,7 @@ const Event = ({ event }:any ) => {
       let x:number,y:number;
       x = componentRef.current?.getBoundingClientRect().x;
       y = componentRef.current?.getBoundingClientRect().y;
-      dispatch(setEventTodo(true,[x,y],event.eventId,event.calendarId,event.userId,event.access))
+      dispatch(setEventTodo(true,[x,y],event))
     } 
   }
 
@@ -69,16 +68,15 @@ const Day = ({ day }: any) => {
   const { user } = useSelector((state:RootState)=>state.userReducer);
   if(user){
     user.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
-      if(cal.event){
-        cal.event.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
+      if(cal.events){
+        cal.events.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
           event.calendarId =cal.id;
           event.userId = user.id;
         })
-        events = [...events,...cal.event]
+        events = [...events,...cal.events]
       }
     })
   }
-
   const now = DateTime.now(); //  현재시간
   const height = timeToPixel(now);
   const isToday = day.toFormat("D") === now.toFormat("D");

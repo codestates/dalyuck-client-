@@ -10,7 +10,7 @@ import  MiniCalendar  from './sideBar/MiniCalendar';
 import SelectorTime from './selectorTime';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
 import { createEvent } from '../functions/Axios';
-import { AnyRecord } from 'dns';
+
 
 const CheckBox = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
 

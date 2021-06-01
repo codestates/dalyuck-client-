@@ -3,6 +3,17 @@ const today = DateTime.now().toISO();
 export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO();
 export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO();
 export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO();
+export const initEvent = {
+      id: 0,
+      startTime: '',
+      endTime: '',
+      eventName: '',
+      colour: '',
+      location: '',
+      description: '',
+      access: true,
+      notification: []
+}
 export type State = {
 
   token: string;
@@ -48,10 +59,17 @@ export type State = {
   eventTodo: {
     isEventClick: false;
     position: [0, 0];
-    eventId: number;
-    userId: number;
-    calendarId: number;
-    access: boolean;
+    event:{
+      id: number;
+      startTime: any;
+      endTime: any;
+      eventName: string;
+      colour: string;
+      location: string;
+      description: string;
+      access: boolean;
+      notification: any[]; 
+    }
   };
 
   user: {
@@ -162,10 +180,17 @@ export const initialState: State = {
   eventTodo: {
     isEventClick: false,
     position: [0, 0],
-    eventId: 0,
-    userId: 0,
-    calendarId: 0,
-    access: false,
+    event:{
+      id: 0,
+      startTime: '',
+      endTime: '',
+      eventName: '',
+      colour: '',
+      location: '',
+      description: '',
+      access: true,
+      notification: []
+    }
   },
 
   user: {

@@ -155,10 +155,17 @@ export const isOptionClick = (
 export const setEventTodo = (
   isEventClick: boolean,
   position: number[],
-  eventId: number,
-  calendarId: number,
-  userId: number,
-  access: boolean
+  event:{
+    id: number;
+    startTime: any;
+    endTime: any;
+    eventName: string;
+    colour: string;
+    location: string;
+    description: string;
+    access: boolean;
+    notification: any[]; 
+  }
 ) => {
   return {
     type: SET_EVENT_TODO,
@@ -166,10 +173,7 @@ export const setEventTodo = (
       eventTodo: {
         isEventClick,
         position,
-        eventId,
-        userId,
-        calendarId,
-        access
+        event
       }
     }
   }

@@ -3,6 +3,8 @@ import { RootState } from '../reducers/index';
 import { setEventTodo } from '../actions/index';
 import { useOutSideClick } from '../functions/Calendar';
 import { useRef } from 'react';
+import { initEvent } from '../reducers/InitialState';
+import { DateTime } from 'luxon';
 const HasAccess = () => {
     return (
       <div className="event-option-access">
@@ -35,12 +37,10 @@ const HasAccess = () => {
   };
   const EventOptionIcons = ({access}:{access:boolean}) => {
 
-
-
     const dispatch = useDispatch()
 
     const closeHandler = () => {
-      dispatch(setEventTodo(false,[0,0],0,0,0,false))
+      dispatch(setEventTodo(false,[0,0],initEvent))
     }
 
     return (
@@ -64,8 +64,10 @@ const HasAccess = () => {
     );
   };
   
-  const EventInfo = () => {
-
+  const EventInfo = ({eventTodo}:{eventTodo:any}) => {
+    // let name = eventTodo.event;
+    // let date = eventTodo.startTime;
+    // let time =
     return (
       <div className="event-info">
         <div className="event-info-color">
@@ -76,7 +78,7 @@ const HasAccess = () => {
         <div className="event-info-text">
           <div className="event-info-text__inner">
             <div className="event-info-text__subject">
-              <div className="event-info-text__subject-span">제목 없음</div>
+              <div className="event-info-text__subject-span">{eventTodo.event.eventName}</div>
             </div>
             <div className="event-info-text__time">
               5월 25일
@@ -93,7 +95,7 @@ const HasAccess = () => {
 
     const dispatch = useDispatch()
     const closeRef = useRef(null);
-    const callback = ()=>{dispatch(setEventTodo(false,[0,0],0,0,0,false))}
+    const callback = ()=>{dispatch(setEventTodo(false,[0,0],initEvent))}
     useOutSideClick(closeRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
     const { eventTodo } = useSelector( (state:RootState) => state.userReducer)
@@ -105,9 +107,9 @@ const HasAccess = () => {
     return (
       <div className="event-info-con" style={position} ref={closeRef}>
         <div className="event-info-con__inner">
-          <EventOptionIcons access={eventTodo.access}/>
+          <EventOptionIcons access={true}/>   {/*일단 항상 트루 수정 관한 */}
           <div className="event-info-con-body">
-            <EventInfo />
+            <EventInfo eventTodo={eventTodo}/>
           </div>
         </div>
       </div>
