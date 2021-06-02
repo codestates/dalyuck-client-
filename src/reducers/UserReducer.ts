@@ -163,8 +163,7 @@ import {
         });
       case SIGN_OUT:
         return Object.assign({}, state, {
-          user: "",
-          token: "",
+          ...initialState
         });
       case SELECT_PROFILE:
         return Object.assign({}, state, {

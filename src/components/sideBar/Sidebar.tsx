@@ -4,7 +4,7 @@ import MiniCalendar from "./MiniCalendar";
 import { useSelector } from 'react-redux'
 import { RootState } from '../../reducers/index';
 import { useEffect, useState } from 'react';
-import { fakedata  } from "../../fakeData/Events";
+// import { fakedata  } from "../../fakeData/Events";
 import { useHistory } from "react-router";
 import TodoLidst from './TodoList';
 
@@ -12,9 +12,9 @@ const  AddCalendar = ({isMine,calendars,isMyCalOpen}:{isMine:string,calendars:an
   let history = useHistory();
 
   let otherCalNum = 0;
-  if(calendars)  otherCalNum = Object.keys(calendars).length;
+  if(calendars)  otherCalNum = Object.keys(calendars.calendar).length + 1;
   let otherTop = 39 +(otherCalNum*32);
-  isMyCalOpen ?  otherTop=39 +(otherCalNum*32) : otherTop = 39 ;
+  isMyCalOpen ?  otherTop = 39 +(otherCalNum*32) : otherTop = 39 ;
   let addTop:string = '';
   isMine === 'mine'? addTop = '5px' : addTop = `${otherTop}px` //10px 부분은 계산해서 other calendar
 
@@ -44,14 +44,14 @@ const  AddCalendar = ({isMine,calendars,isMyCalOpen}:{isMine:string,calendars:an
 export default function Sidebar() {
   const { user } = useSelector((state:RootState)=>state.userReducer);
   let [calendars, setcal] = useState(user)
-
   useEffect(()=>{
     setcal(user)
-  },[user.calendar])
+  },[user])
   
   let cals = calendars.calendar;
+  let otherCals = calendars.otherCalendar;
   let todoList = user.todolist;
-  let otherCalendars = fakedata.OtherCalendar;
+  // let otherCalendars = fakedata.OtherCalendar;
   const[isMyCalOpen, setIsMycalOpen] = useState(true);
   const[isOtherCalOpen, setIsOthercalOpen ] = useState(true);
 
@@ -71,21 +71,17 @@ export default function Sidebar() {
                 {/* 내, 다른 컴포넌트 */}
                 <SidebarCalendars myOrOther="my" setIsOpen={setIsMycalOpen} isOpen={isMyCalOpen} />
                 {
-                  // cals ? (
                     cals && cals.map((calendar,i)=>{
                       return <CalendarList key={calendar.id+i} isOpen={isMyCalOpen} calendar={calendar}/>
                     })
-                  // ):(
-                  //   null
-                  // )
                 }
                 <TodoLidst isOpen={isMyCalOpen} calendar={todoList[0]} />
                 <AddCalendar isMine="mine" calendars={calendars} isMyCalOpen={isMyCalOpen}/>
                 <SidebarCalendars myOrOther="other" setIsOpen={setIsOthercalOpen} isOpen={isOtherCalOpen}/>
                 {
-                  otherCalendars ? (
-                    otherCalendars.map((calendar,i)=>{
-                    return <CalendarList key={calendar.calendarId+i} isOpen={isOtherCalOpen} calendar={calendar}/>
+                  otherCals ? (
+                    otherCals.map((calendar,i)=>{
+                    return <CalendarList key={calendar.id+i} isOpen={isOtherCalOpen} calendar={calendar}/>
                   })
                   ):(
                     null

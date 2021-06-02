@@ -25,16 +25,26 @@ const Redline = ({height}:any)=>{
 }
 
 
-const Event = ({ event }:any ) => {              
+const Event = ({ event }:any ) => {
+
+  const { user } = useSelector((state:RootState)=>state.userReducer);
   const start = DateTime.fromISO(event.startTime);
   const end = DateTime.fromISO(event.endTime);
   const startPixel = timeToPixel(start);
   const interval = Interval.fromDateTimes(start, end);
   const intervalPixel = 48 * interval.length("hour");
+
+  let color = '';
+  if(event.colour){
+    color = event.colour;
+  }else{
+    color = user.todolist[0].colour;
+  }
+
   const position = {
     top: startPixel,
     height: intervalPixel,
-    backgroundColor: event.colour
+    backgroundColor: color
   };
   const componentRef = useRef<HTMLDivElement>(null);  //  ref타입 설정
   const dispatch = useDispatch();
@@ -47,12 +57,19 @@ const Event = ({ event }:any ) => {
     } 
   }
 
+  let name:string ='';
+  if(event.eventName){
+    name = event.eventName;
+  }else{
+    name = event.toDoName;
+  }
+
   return (
     <div className="event-con" style={position} ref={componentRef} onClick={()=>{eventHandler()}}>
       <div className="event-text-con">
         {/* 30분짜리면 span 1시간 이상이면 div 인데 */}
         <div className="event-text-title-con">
-          <span className="event-text-title">{event.eventName}</span>
+          <span className="event-text-title">{name}</span>
         </div>
         <div className="event-text-time">
           {start.toFormat("HH:mm")+"~"+end.toFormat("HH:mm")}
@@ -77,12 +94,21 @@ const Day = ({ day }: any) => {
       }
     })
   }
+  
+  events = events.filter(event=>{
+    let startTime = DateTime.fromISO(event.startTime);
+    let endTime = DateTime.fromISO(event.endTime);
+    let result = (Interval.fromDateTimes(startTime,endTime).count('hour') < 24)
+    return result
+  })
+
   const now = DateTime.now(); //  현재시간
   const height = timeToPixel(now);
   const isToday = day.toFormat("D") === now.toFormat("D");
   const dayEvent = events.filter((event) => {                            //당일의 이벤트만 필터링
     return DateTime.fromISO(event.startTime).toFormat("D") === day.toFormat("D");
   });
+
 
   return (
     <div className="day-con">

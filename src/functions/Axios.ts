@@ -34,7 +34,24 @@ const updateState = () =>{
         },
     })
 }
+// 참석자 겟 요청
+export const getAttendants= async()=>{  
+    updateState()
+    let result;
 
+    result = await basicAxios.get(`/event/attend/${userState.user.id}`)
+    .then(res=>{
+        return res.data
+    }).catch(error=>{
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    })
+    return result
+}
 // 캘린더 겟요청
 export const getCalendar = async()=>{  
     updateState()
@@ -154,8 +171,34 @@ export const getEvent = async()=>{
     return result
 }
 
+// [ 이벤트 참가자 요청]
+export const reqEventAttend = async(eventId:string, attandent:string)=>{  
+    updateState()
+    let result;
+    try{
+        result = await basicAxios.post("/event/attend",{
+            eventId,
+            userId:userState.user.id,
+            requesterEmail:userState.user.email,
+            requesteeEmail:attandent
+        }).then(res=>{
+            return getAttendants();
+        }).then(res=>{
+            store.dispatch(action.setTodoList(res));
+        })
+    }catch (error){
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error,'attendant')
+        } else{
+            console.log('unExpected error')
+        }
+    }
+    return result
+}
+
 // [ 새 이벤트 만들기]
-export const createEvent = async(startTime:string,endTime:string,calendarId:number,eventName:string,description?:string,access=true,location?:string,colour?:string)=>{  
+export const createEvent = async(startTime:string,endTime:string,calendarId:number,eventName:string,description?:string,access=true,location?:string,colour?:string,attendant?:string)=>{  
     updateState()
     let result;
     try{
@@ -170,6 +213,9 @@ export const createEvent = async(startTime:string,endTime:string,calendarId:numb
             description,
             userId:userState.user.id
         }).then(res=>{
+            console.log(attendant)
+            if(attendant) reqEventAttend(res.data.id, attendant);
+            getAttendants()
             return getCalendar()
         }).then(res=>{
             store.dispatch(action.setCalendar(res))
@@ -330,6 +376,83 @@ export const deleteTodo= async(toDoId:number)=>{
             return getTodo();
         }).then(res=>{
             store.dispatch(action.setTodoList(res));
+        })
+    }catch (error){
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    }
+    return result
+}
+
+// [ 포스트 캘린더 구독  ]
+export const subscribeCalendar= async(requesteeEmail:string)=>{  
+    updateState()
+    let result;
+    try{
+        result = await basicAxios.post("/calendar/subscribe",{
+            requesterEmail:userState.user.email,
+            requesteeEmail,
+            userId:userState.user.id
+        }).then(res=>{
+            return getCalendar();
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res));
+        })
+    }catch (error){
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    }
+    return result
+}
+
+// [ 패치 구독한 캘린더 수정  ]
+export const updateOtherCalendar= async(otherCalendarId:number,calendarName?:string,color?:string)=>{  
+    updateState()
+    let result;
+    try{
+        result = await basicAxios.patch("/calendar/subscribe",{
+            id:userState.user.id,
+            otherCalendarId,
+            calendarName,
+            color
+        }).then(res=>{
+            return getCalendar();
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res));
+        })
+    }catch (error){
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    }
+    return result
+}
+
+// [ 삭제 구독한 캘린더 삭제 ]
+export const deleteOtherCalendar= async(otherCalendarId:number)=>{  
+    updateState()
+    let result;
+    try{
+        result = await basicAxios.delete("/calendar/subscribe",{
+            data:{             // delete는 바디를 data객체 안에 넣어서 전달해야한다.
+                otherCalendarId,
+                id:userState.user.id
+            }
+        }).then(res=>{
+            return getCalendar();
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res));
         })
     }catch (error){
         if(axios.isAxiosError(error)){

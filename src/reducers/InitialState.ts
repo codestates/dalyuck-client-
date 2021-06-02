@@ -85,7 +85,7 @@ export type State = {
         calendarName: string;
         colour: string;
         //event
-        event: [
+        events: [
           {
             id: number;
             startTime: any;
@@ -123,7 +123,7 @@ export type State = {
         calendarName: string;
         colour: string;
         //event
-        event: [
+        events: [
           {
             id: number;
             startTime: any;
@@ -217,7 +217,7 @@ export const initialState: State = {
         calendarName: "",
         colour: "",
         //event
-        event: [
+        events: [
           {
             id: 0,
             startTime: "",
@@ -255,7 +255,7 @@ export const initialState: State = {
         calendarName: "",
         colour: "",
         //event
-        event: [
+        events: [
           {
             id: 0,
             startTime: "",
