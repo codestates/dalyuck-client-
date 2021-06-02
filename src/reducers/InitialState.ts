@@ -1,8 +1,8 @@
 import { DateTime } from "luxon";
 const today = DateTime.now().toISO();
-export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO();
-export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO();
-export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO();
+export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO().split('T')[1];
+export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO().split('T')[1];
+export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO().split('T')[0];
 export const initEvent = {
       id: 0,
       startTime: '',
@@ -34,13 +34,15 @@ export type State = {
   makeEventTodo:{
     isMakeBtnClick:boolean;
     isFromSidebar:boolean;
-    selectDate: string;
+    selectStartDate: string;
     selectStartTime: string;
     selectEndTime:string;
     isSelectDateClick:boolean;
     isStartTimeClick:boolean;
     isEndTimeClick:boolean;
     selectEndDate:string;
+    isStartDateClick:boolean;
+    isEndDateClick:boolean;
   }
 
   // 일간 월간 선택할때 필요한 상태
@@ -99,11 +101,20 @@ export type State = {
       }
     ];
     //toDoList
-    toDoList: [
+    todolist: [
       {
-        toDoListId: number;
-        toDoListName: string;
+        id:number,
         colour: string;
+        toDoListName: string;
+        userId:number;
+        todo: [
+          {
+            id: number;
+            startTime: any;
+            toDoName: string;
+            description: string;
+            todolistId:number;
+          }]
       }
     ];
     otherCalendar: [
@@ -167,13 +178,15 @@ export const initialState: State = {
   makeEventTodo:{
     isMakeBtnClick:false,
     isFromSidebar:true,
-    selectDate: '',
+    selectStartDate: '',
     selectStartTime: initStartTime,
     selectEndTime:initEndTime,
     isSelectDateClick:false,
     isStartTimeClick:false,
     isEndTimeClick:false,
-    selectEndDate:initEndDate
+    selectEndDate:initEndDate,
+    isStartDateClick:false,
+    isEndDateClick:false
   },
 
   // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태
@@ -220,12 +233,21 @@ export const initialState: State = {
       },
     ],
     //toDoList
-    toDoList: [
+    todolist: [
       {
-        toDoListId: 0,
-        toDoListName: "",
-        colour: "",
-      },
+        id:0,
+        colour: '',
+        toDoListName: '',
+        userId:0,
+        todo: [
+          {
+            id: 0,
+            startTime: '',
+            toDoName: '',
+            description: '',
+            todolistId:0,
+          }]
+      }
     ],
     otherCalendar: [
       {

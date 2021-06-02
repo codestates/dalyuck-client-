@@ -16,10 +16,10 @@ const SelectorPeriodSpanCon = ({ time, isStart }: { time: DateTime, isStart:stri
 
   const selectHandler = ()=>{
     if(isStart==="start"){
-      dispatch(setStartTime(time.toISO()));
+      dispatch(setStartTime(time.toISO().split('T')[1]));
       dispatch(setIsStartTimeClick(false))
     }else{
-      dispatch(setEndTime(time.toISO()));
+      dispatch(setEndTime(time.toISO().split('T')[1]));
       dispatch(setIsEndTimeClick(false))
     }
   }
@@ -36,13 +36,14 @@ const SelectorPeriodSpanCon = ({ time, isStart }: { time: DateTime, isStart:stri
 const SelectorTime = ({isStart}:{isStart:string}) => {
 
   const { base, makeEventTodo } = useSelector((state:RootState)=>state.userReducer);
+
   let baseDate = DateTime.fromISO(base.baseDate);
   let timeArray: DateTime[] = [];
 
   let startOfDay = baseDate.startOf("day");
   for (let i = 0; i < 24; i++) {
-    for (let j = 0; j < 4; j++) {
-      timeArray.push(startOfDay.plus({ hour: i, minute: 15 * j }));
+    for (let j = 0; j < 2; j++) {
+      timeArray.push(startOfDay.plus({ hour: i, minute: 30 * j }));
     }
   }
 

@@ -2,6 +2,7 @@ import axios from 'axios';
 import {store} from '../store/Store'   // 리액트 컴포넌트 밖에서 상태를 가져오기 위해 스토어를 가져옴 
 import dotenv from 'dotenv';
 import * as action from '../actions/index';
+import { strict } from 'assert';
 
 
 dotenv.config()
@@ -226,7 +227,9 @@ export const deleteEvent = async(eventId:number)=>{
                 userId:userState.user.id
             }
         }).then(res=>{
-            console.log(res)
+            return getCalendar();
+        }).then(res=>{
+            store.dispatch(action.setCalendar(res))
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -239,20 +242,39 @@ export const deleteEvent = async(eventId:number)=>{
     return result
 }
 
+// 할일 겟 요청
+export const getTodo= async()=>{  
+    updateState()
+    let result;
 
+    result = await basicAxios.get(`/todo/${userState.user.id}`)
+    .then(res=>{
+        return res.data
+    }).catch(error=>{
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    })
+    return result
+}
 // [ 새 할일 만들기]
-export const createTodo = async(startTime:string,toDoListrId:number,toDoName:string,description?:string)=>{  
+export const createTodo = async(startTime:string,toDoListId:number,toDoName:string,description?:string)=>{  
     updateState()
     let result;
     try{
         result = await basicAxios.post("/todo",{
             startTime,
-            toDoListrId,
+            toDoListId,  //??? 둘중에 하난데 
             toDoName,
             description,
             userId:userState.user.id
         }).then(res=>{
-            console.log(res)
+            return getTodo();
+        }).then(res=>{
+            store.dispatch(action.setTodoList(res));
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -279,7 +301,9 @@ export const updateTodo = async(toDoListId:number,startTime?:string,toDoName?:st
             isFinished,
             userId:userState.user.id
         }).then(res=>{
-            console.log(res)
+            return getTodo();
+        }).then(res=>{
+            store.dispatch(action.setTodoList(res));
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -303,7 +327,9 @@ export const deleteTodo= async(toDoId:number)=>{
                 id:userState.user.id
             }
         }).then(res=>{
-            console.log(res)
+            return getTodo();
+        }).then(res=>{
+            store.dispatch(action.setTodoList(res));
         })
     }catch (error){
         if(axios.isAxiosError(error)){
