@@ -42,11 +42,11 @@ const AllDayCon = ({day, allDayEvents, setAllDayEvents}:{day:DateTime;allDayEven
     return(
         <div className="all-day-con">
             {
-                allDayEvents.map((event:EventType)=>{
+                allDayEvents.map((event:EventType,i:number)=>{
                     let startTime = DateTime.fromISO(event.startTime).startOf('day');
                     let endTime = DateTime.fromISO(event.endTime).endOf('day');
                     if(Interval.fromDateTimes(startTime,endTime).contains(day)) {
-                        return <AllDay key={event.endTime} event={event}/>
+                        return <AllDay key={i} event={event}/>
                     }
                 })
             }

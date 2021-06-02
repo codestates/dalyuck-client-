@@ -6,6 +6,7 @@ import { RootState } from '../../reducers/index';
 import { useEffect, useState } from 'react';
 import { fakedata  } from "../../fakeData/Events";
 import { useHistory } from "react-router";
+import TodoLidst from './TodoList';
 
 const  AddCalendar = ({isMine,calendars,isMyCalOpen}:{isMine:string,calendars:any,isMyCalOpen:boolean})=> {
   let history = useHistory();
@@ -49,6 +50,7 @@ export default function Sidebar() {
   },[user.calendar])
   
   let cals = calendars.calendar;
+  let todoList = user.todolist;
   let otherCalendars = fakedata.OtherCalendar;
   const[isMyCalOpen, setIsMycalOpen] = useState(true);
   const[isOtherCalOpen, setIsOthercalOpen ] = useState(true);
@@ -77,7 +79,7 @@ export default function Sidebar() {
                   //   null
                   // )
                 }
-
+                <TodoLidst isOpen={isMyCalOpen} calendar={todoList[0]} />
                 <AddCalendar isMine="mine" calendars={calendars} isMyCalOpen={isMyCalOpen}/>
                 <SidebarCalendars myOrOther="other" setIsOpen={setIsOthercalOpen} isOpen={isOtherCalOpen}/>
                 {

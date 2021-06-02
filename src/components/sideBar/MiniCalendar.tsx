@@ -2,8 +2,10 @@ import { makeDayInfoArr } from '../../functions/Calendar'
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
-import { useState, useEffect } from 'react';
-import { setBaseDate, setIsSelectDateClick, setEndDate } from "../../actions/index";
+import { useState, useEffect, useRef } from 'react';
+import { setBaseDate, setSelectStartDate, setIsSelectDateClick, setEndDate, setIsStartDateClick, setIsEndDateClick } from "../../actions/index";
+import { useOutSideClick } from '../../functions/Calendar';
+
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
 const MiniCalendarHeader = ({ day }: { day: string }) => {
@@ -21,15 +23,18 @@ const MiniWeekDay = ({ day, from }: { day: DateTime;from:string }) => {
   let isToday = day.toFormat("D")===DateTime.now().toFormat("D")
   let isBase = DateTime.fromISO(base.baseDate).toFormat("D") === day.toFormat("D")
   
-  const baseHandler = () => {
-
+  function baseHandler(){
     if( from === 'start' || from === 'side'){
-      dispatch(setBaseDate(day.toISO()))
-    }else{
-      dispatch(setEndDate(day.toISO()))
+      dispatch( setBaseDate( day.toISO() ) )
+      dispatch( setSelectStartDate( day.toISO().split('T')[0] ) )
+    }else if(from==='end'){
+      dispatch( setEndDate( day.toISO().split('T')[0] ) )
     }
     dispatch(setIsSelectDateClick(false));
+    dispatch(setIsStartDateClick(false));
+    dispatch(setIsEndDateClick(false));
   }
+
   return (
     <span className="mini-week__day" onClick={()=>{baseHandler()}}>
       <div className={"mini-week__day__text"+ ( isBase? ' base': "" ) + (isToday ? ' today':'')}>{day.day}</div>
@@ -48,6 +53,13 @@ const MiniWeek = ({headerDay,from}:{headerDay:DateTime[],from:string}) => {
   );
 };
 export default function MiniCalendar({from}:{from:string}) {
+  const dispatch = useDispatch();
+  const selectRef = useRef(null);
+  // const callback = ()=>{
+  //   dispatch(setIsStartDateClick(false));
+  //   dispatch(setIsEndDateClick(false));
+  // }
+  // useOutSideClick(selectRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
   let {base} = useSelector( (state:RootState) => state.userReducer )
 
@@ -75,7 +87,7 @@ export default function MiniCalendar({from}:{from:string}) {
   }
 
   return (
-    <div className="mini">
+    <div className="mini" ref={selectRef}>
       <div className="mini__inner">
         <div className="mini-nav">
           <span className="mini-nav__span"> {DateTime.fromISO(miniBase.baseDate).toFormat("y년 M월")} </span>

@@ -11,6 +11,7 @@ export const IS_SIDEBAR_OPEN = "IS_SIDEBAR_OPEN" as const;
 export const IS_OPTION_CLICK = "IS_OPTION_CLICK" as const;
 export const SET_EVENT_TODO = "SET_EVENT_TODO" as const;
 export const SET_CALENDAR = "SET_CALENDAR" as const;
+export const SET_TODOLIST = "SET_TODOLIST" as const;
 export const SET_MAKE_EVENT_TODO = "SET_MAKE_EVENT_TODO" as const;
 export const SET_IS_SELECT_DATE_CLICK = "SET_IS_SELECT_DATE_CLICK" as const;
 export const SET_START_TIME = "SET_START_TIME" as const;
@@ -18,7 +19,9 @@ export const SET_END_TIME = "SET_END_TIME" as const;
 export const SET_IS_START_TIME_CLICK = "SET_IS_START_TIME_CLICK" as const;
 export const SET_IS_END_TIME_CLICK = "SET_IS_END_TIME_CLICK" as const;
 export const SET_END_DATE = "SET_END_DATE" as const;
+export const SET_SELECT_START_DATE = "SET_SELECT_START_DATE" as const;
 export const SET_IS_END_DATE_CLICK = "SET_IS_END_DATE_CLICK" as const;
+export const SET_IS_START_DATE_CLICK = "SET_IS_START_DATE_CLICK" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -36,8 +39,11 @@ export type Action =
   | ReturnType<typeof setIsStartTimeClick>
   | ReturnType<typeof setIsEndTimeClick>
   | ReturnType<typeof setEndDate>
+  | ReturnType<typeof setSelectStartDate>
   | ReturnType<typeof setIsEndDateClick>
-  | ReturnType<typeof setCalendar>;
+  | ReturnType<typeof setIsStartDateClick>
+  | ReturnType<typeof setCalendar>
+  | ReturnType<typeof setTodoList>;
 export interface UserInfo {
   data: {
     userName: string;
@@ -206,6 +212,14 @@ export const setCalendar = (data:any) => {
     }
   }
 }
+export const setTodoList = (data:any) => {
+  return{
+    type: SET_TODOLIST,
+    payload: {
+        todolist:data.calendar,
+    }
+  }
+}
 
 export const setIsSelectDateClick = (isSelectDateClick:boolean) => {
   return{
@@ -255,11 +269,27 @@ export const setEndDate= (selectEndDate:string) => {
     }
   }
 }
+export const setSelectStartDate= (selectStartDate:string) => {
+  return{
+    type: SET_SELECT_START_DATE,
+    payload: {
+      selectStartDate
+    }
+  }
+}
 export const setIsEndDateClick= (isEndDateClick:boolean) => {
   return{
     type: SET_IS_END_DATE_CLICK,
     payload: {
       isEndDateClick
+    }
+  }
+}
+export const setIsStartDateClick= (isStartDateClick:boolean) => {
+  return{
+    type: SET_IS_START_DATE_CLICK,
+    payload: {
+      isStartDateClick
     }
   }
 }

@@ -1,8 +1,6 @@
-import { useDispatch } from "react-redux";
 import { isOptionClick } from "../../actions/index";
-import { useRef } from "react"; // 레퍼런스 훅
-import Swal from "sweetalert2";
-import { deleteCalendar } from '../../functions/Axios'
+import { useRef } from "react"; // 레퍼런스 
+import { useDispatch } from "react-redux";
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
   return (
@@ -25,43 +23,6 @@ const CheckBox = ({ calendar }: { calendar: any }) => {
   );
 };
 
-const Remove = (calendarId:number) => {
-  Swal.fire({
-    title: "삭제 하시겠습니까?",
-    showCancelButton: true,
-    confirmButtonColor: "#5f6063",
-    cancelButtonColor: "#5f6063",
-    confirmButtonText: "삭제",
-    cancelButtonText: "취소",
-    position: "center-left",
-    width: "200px",
-  }).then((result) => {
-    if (result.isConfirmed) {
-      Swal.fire({
-        title: "삭제 완료.",
-        confirmButtonColor: "#5f6063",
-        position: "center-left",
-        width: "200px",
-      });
-      deleteCalendar(calendarId)
-    }
-  });
-};
-
-const Delete = ({calendarId}:{calendarId:number}) => {
-  return (
-    <div
-      className="icon"
-      onClick={() => {
-        Remove(calendarId);
-      }}
-    >
-      <svg className="icon-svg" viewBox="-3 -3 30 30">
-        <path d="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" />
-      </svg>
-    </div>
-  );
-};
 const Option = ({ calendar }: { calendar: any }) => {
   const componentRef = useRef<HTMLDivElement>(null); //  ref타입 설정
   const dispatch = useDispatch();
@@ -92,13 +53,13 @@ function OptionDelete({ calendar }: { calendar: any }) {
   return (
     <div className="option-delete">
       <div className="option-delete__inner">
-        <Delete calendarId={calendar.id} />
         <Option calendar={calendar} />
       </div>
     </div>
   );
 }
-export default function CalendarsList({ isOpen, calendar,}: { isOpen: boolean; calendar: any; }){
+
+function TodoList({ isOpen, calendar}: { isOpen: boolean; calendar: any; }){
 
   return (
     <div className="calendars-list">
@@ -114,10 +75,10 @@ export default function CalendarsList({ isOpen, calendar,}: { isOpen: boolean; c
               </div>
               <div className="calendar-label-name">
                 <span className="calendar-label-name__span">
-                  {calendar.calendarName}
+                  {calendar.toDoListName}
                 </span>
               </div>
-              <OptionDelete calendar={calendar} />
+              {/* <OptionDelete calendar={calendar}/> */}
             </div>
           </div>
         </div>
@@ -125,3 +86,5 @@ export default function CalendarsList({ isOpen, calendar,}: { isOpen: boolean; c
     </div>
   );
 }
+
+export default TodoList

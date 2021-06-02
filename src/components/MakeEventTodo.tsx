@@ -4,16 +4,16 @@ import { RootState } from '../reducers/index';
 import * as CSS from 'csstype';
 import { useRef } from 'react'
 import { useOutSideClick } from '../functions/Calendar';
-import { setMakeEventTodo, setIsSelectDateClick, setIsStartTimeClick, setIsEndTimeClick } from '../actions/index';
+import { setMakeEventTodo, setIsSelectDateClick, setIsEndDateClick, setIsStartTimeClick, setIsEndTimeClick, setIsStartDateClick, setSelectStartDate} from '../actions/index';
 import { DateTime } from 'luxon';
 import  MiniCalendar  from './sideBar/MiniCalendar';
 import SelectorTime from './selectorTime';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
-import { createEvent } from '../functions/Axios';
+import { createEvent, createTodo } from '../functions/Axios';
+import { Link } from 'react-router-dom';
 
 
 const CheckBox = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
-
   return (
     <div className="check-box" style={{left:28}} onClick={()=>{setIsAllday(!isAllday)}}>
       <div className="check-box__inner" > 
@@ -56,14 +56,17 @@ const EventTodoSwitch = ({isEvent, switchHandler}:{isEvent:boolean;switchHandler
 const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
 
   const { makeEventTodo,base } = useSelector((state:RootState)=>state.userReducer)
-  const { selectStartTime, selectEndTime, isSelectDateClick, isStartTimeClick, isEndTimeClick, selectEndDate} = makeEventTodo;
+  const { selectStartDate, selectStartTime, selectEndTime, isStartDateClick, isEndDateClick,isStartTimeClick, isEndTimeClick, selectEndDate} = makeEventTodo;
   const [ dateSpan, setDateSpan ] = useState( DateTime.fromISO(base.baseDate).toFormat("M월 d일") );
   const [ endDateSpan, setEndDateSpan ] = useState( DateTime.fromISO(selectEndDate).toFormat("M월 d일") );
   const dispatch = useDispatch();
 
-  useEffect(()=>{         
-    setDateSpan(DateTime.fromISO(base.baseDate).toFormat("M월 d일"));
-  },[base])
+  useEffect(()=>{
+    dispatch(setSelectStartDate(DateTime.fromISO(base.baseDate).toISO().split('T')[0]))
+  },[])
+  useEffect(()=>{   
+    setDateSpan(DateTime.fromISO(selectStartDate).toFormat("M월 d일"));
+  },[selectStartDate])
   useEffect(()=>{         
     setEndDateSpan(DateTime.fromISO(selectEndDate).toFormat("M월 d일"));
   },[selectEndDate])
@@ -109,20 +112,26 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
     if (DateTime.fromISO(date).hour < 12) {
       timeSpan = DateTime.fromISO(date).toFormat("오전 h:mm");
     } else {
-      timeSpan = DateTime.fromISO(date).toFormat("오전 h:mm");
+      timeSpan = DateTime.fromISO(date).toFormat("오후 h:mm");
     }
     return timeSpan
   }
-  
-  
+  const startDateHandler = () => {
+    dispatch( setIsSelectDateClick(true) );
+    dispatch( setIsStartDateClick(true) );
+  }
+  const endDateHandler = () => {
+    dispatch( setIsSelectDateClick(true) );
+    dispatch( setIsEndDateClick(true) );
+  }
   return (
     <div className={"date-time-selector"} >
-      <div className="basetime-select" onClick={()=>{ dispatch( setIsSelectDateClick(true) ) }}>
+      <div className="basetime-select" onClick={()=>{ startDateHandler() }}>
         <span className="basetime-select__span">{dateSpan}</span>
       </div>
       {
         isAllday ? (
-          <div className="basetime-select" onClick={()=>{ dispatch( setIsSelectDateClick(true) ) }}>
+          <div className="basetime-select" onClick={()=>{ endDateHandler() }}>
             <span className="basetime-select__span">{endDateSpan}</span>
           </div>
         ):(
@@ -139,8 +148,15 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
       }
 
       {
-        isSelectDateClick ? (
-          <div style={miniCss}> <MiniCalendar from={isAllday? "end":"start"} /> </div>
+        isStartDateClick ? (
+          <div style={miniCss}> <MiniCalendar from={'start'} /> </div>
+        ):(
+          null
+        )
+      }
+      {
+        isEndDateClick ? (
+          <div style={miniCss}> <MiniCalendar from={'end'} /> </div>
         ):(
           null
         )
@@ -175,7 +191,10 @@ const Attendants = () => {
     </div>
   )
 }
-const FootCheckBox = ({color}:{color:string}) => {
+const FootCheckBox = ({color,isEvent}:{color:string,isEvent:boolean}) => {
+
+  const { user } = useSelector((state:RootState)=>state.userReducer);
+  if(!isEvent) color = user.todolist[0].colour;
   return (
     <div className="check-box">
       <div className="check-box__inner" style={{ borderColor: color }}>
@@ -188,29 +207,31 @@ const FootCheckBox = ({color}:{color:string}) => {
   );
 };
 
-const MakeEventTodoFooter = ({footCal,setFootCalId,submitHandler}:{footCal:any,setFootCalId:any,submitHandler:Function}) => {
-  
+const MakeEventTodoFooter = ({isEvent,footCal,setFootCalId,submitHandler}:{isEvent:boolean,footCal:any,setFootCalId:any,submitHandler:Function}) => {
+
   const [color, setColor] = useState(footCal[0].colour)
 
   const setFootHandler = (e:React.ChangeEvent<HTMLSelectElement>) => {
     setFootCalId(e.target.value)
-    for(let i = 0; i<footCal.length ; i++){
-      if(footCal[i].id.toString()===e.target.value){
-        setColor(footCal[i].colour)
+    if(isEvent){
+      for(let i = 0; i<footCal.length ; i++){
+        if(footCal[i].id.toString()===e.target.value){
+          setColor(footCal[i].colour)
+        }
       }
     }
   }
-
   return (
     <div className="make-event-todo__footer">
-      <FootCheckBox color={color}/>
-      <select id="cal-select" onChange={(e)=>{setFootHandler(e)}}>
+      <FootCheckBox color={color} isEvent={isEvent}/>
+      <select id="cal-select" onChange={(e)=>{setFootHandler(e)}} style={isEvent?{visibility:'visible'}:{visibility:'hidden'}}>
         {
           footCal.map((calendar:any)=>{
-            return <option value={calendar.id}>{calendar.calendarName}</option>
+            return <option key={calendar.id} value={calendar.id}>{calendar.calendarName}</option>
           })
         }
       </select>
+      <Link to="/setting/createcalendar">옵션 더보기</Link>          {/** 여기도 링크 url 수정  */}
       <button className="event__submit__btn" onClick={()=>{submitHandler()}}>저장</button>
     </div>
   );
@@ -223,6 +244,7 @@ export default function MakeEventTodo() {
   const [isAllday, setIsAllday ] = useState(false);
   const [title, setTitle] = useState('( 제목 없음 )');
   let footCal = user.calendar;
+  let toDoLisdId = user.todolist[0].id;      // 투두리스트 아이디 지정 
   const [footCalId, setFootCalId] = useState(user.calendar[0].id)
   const selectRef = useRef(null);
   const dispatch = useDispatch();
@@ -240,11 +262,27 @@ export default function MakeEventTodo() {
     setIsEvent(e)
   }
   const submitHandler = () => {
+    let startDate = makeEventTodo.selectStartDate;
+    let endDate = makeEventTodo.selectEndDate;
     let startTime = makeEventTodo.selectStartTime;
     let endTime = makeEventTodo.selectEndTime;
     let color = user.calendar[0].colour;
-
-    createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color)
+    for(let i = 0 ; i<user.calendar.length ; i++){
+      if(user.calendar[i].id===Number(footCalId)) color = user.calendar[i].colour;
+    }
+    if(!isAllday){
+      startTime = startDate+'T'+startTime;
+      endTime = startDate+'T'+endTime;
+    }else{
+      startTime = DateTime.fromISO(startDate).startOf('day').toISO();
+      endTime = DateTime.fromISO(endDate).endOf('day').toISO()
+    }
+    console.log(isEvent);
+    if(isEvent){
+      createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color)
+    }else{
+      createTodo(startTime,toDoLisdId,'하이',undefined);
+    }
     dispatch(setMakeEventTodo(false,'',true,initStartTime, initEndTime))
   }
 
@@ -284,7 +322,7 @@ export default function MakeEventTodo() {
           placeholder="설명 추가"
         ></textarea>
       </div>
-      <MakeEventTodoFooter footCal={footCal} setFootCalId={setFootCalId} submitHandler={submitHandler}/>
+      <MakeEventTodoFooter isEvent={isEvent} footCal={footCal} setFootCalId={setFootCalId} submitHandler={submitHandler}/>
     </div>
   );
 }

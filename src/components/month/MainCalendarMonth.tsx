@@ -3,7 +3,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState } from '../../reducers/index';
 import { DateTime } from 'luxon';
 import UnderDay from './UnderDay';
-import { fakedata } from '../../fakeData/Events'
 import { setBaseDate, setBasePeriod } from '../../actions/index';
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
@@ -43,7 +42,7 @@ const WeekEvent = ({day, calendar}:any) => {
 
   let dayEvents:any=[];
   for(let i = 0 ; i<calendar.length ; i++){
-    let events = calendar[i].event;
+    let events = calendar[i].events;
     let filteredEvents = events.filter((event:any) => {                    // 모든 캘린더에서 해당하는 날의 이밴트를 가져온다.
       return DateTime.fromISO(event.startTime).toFormat("D") === day.toFormat("D");
     });
@@ -61,7 +60,9 @@ const WeekEvent = ({day, calendar}:any) => {
 };
 
 const MonthWeek = (props:{headerDay:DateTime[]}) => {
-  let calendar = fakedata.calendar;          //  페이크 데이터 
+  const { user } = useSelector((state:RootState)=>state.userReducer);
+
+  let calendar = user.calendar;          
   let headerDay=props.headerDay
   return (
     <div className="month-weeks__week">
