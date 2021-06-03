@@ -1,28 +1,38 @@
 import { DateTime } from "luxon";
 const today = DateTime.now().toISO();
-export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO().split('T')[1];
-export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO().split('T')[1];
-export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO().split('T')[0];
+export const initStartTime = DateTime.now()
+  .plus({ hour: 1 })
+  .set({ minute: 0 })
+  .toISO()
+  .split("T")[1];
+export const initEndTime = DateTime.fromISO(initStartTime)
+  .plus({ hour: 1 })
+  .toISO()
+  .split("T")[1];
+export const initEndDate = DateTime.fromISO(initStartTime)
+  .plus({ day: 1 })
+  .toISO()
+  .split("T")[0];
 export const initEvent = {
-      id: 0,
-      startTime: '',
-      endTime: '',
-      eventName: '',
-      colour: '',
-      location: '',
-      description: '',
-      access: true,
-      notification: []
-}
-export const initTodo ={
-    id: 0,
-    startTime: '',
-    endTime:'',
-    toDoName: '',
-    description: '',
-    todolistId:0,
-}
-export interface EventType{
+  id: 0,
+  startTime: "",
+  endTime: "",
+  eventName: "",
+  colour: "",
+  location: "",
+  description: "",
+  access: true,
+  notification: [],
+};
+export const initTodo = {
+  id: 0,
+  startTime: "",
+  endTime: "",
+  toDoName: "",
+  description: "",
+  todolistId: 0,
+};
+export interface EventType {
   id: number;
   startTime: any;
   endTime: any;
@@ -35,9 +45,8 @@ export interface EventType{
   calendarId: number;
 }
 export type State = {
-
   token: string;
-
+  password: string;
   // 프로필 선택할때 필요한 상태
   profile: {
     isOn: boolean;
@@ -51,19 +60,19 @@ export type State = {
   };
 
   // 이벤트 만들기때 필요한 상태
-  makeEventTodo:{
-    isMakeBtnClick:boolean;
-    isFromSidebar:boolean;
+  makeEventTodo: {
+    isMakeBtnClick: boolean;
+    isFromSidebar: boolean;
     selectStartDate: string;
     selectStartTime: string;
-    selectEndTime:string;
-    isSelectDateClick:boolean;
-    isStartTimeClick:boolean;
-    isEndTimeClick:boolean;
-    selectEndDate:string;
-    isStartDateClick:boolean;
-    isEndDateClick:boolean;
-  }
+    selectEndTime: string;
+    isSelectDateClick: boolean;
+    isStartTimeClick: boolean;
+    isEndTimeClick: boolean;
+    selectEndDate: string;
+    isStartDateClick: boolean;
+    isEndDateClick: boolean;
+  };
 
   // 일간 월간 선택할때 필요한 상태
   selector: {
@@ -77,13 +86,13 @@ export type State = {
     isOptionClick: boolean;
     calendarId: number;
     yAxis: number;
-    myOrOther:string;
+    myOrOther: string;
   };
   eventTodo: {
     isEventClick: boolean;
     position: [0, 0];
-    isEvent:string;
-    event:{
+    isEvent: string;
+    event: {
       id: number;
       startTime: any;
       endTime: any;
@@ -94,15 +103,15 @@ export type State = {
       access: boolean;
       notification: any[];
       calendarId: number;
-    },
+    };
     todo: {
       id: number;
       startTime: string;
-      endTime:string;
+      endTime: string;
       toDoName: string;
       description: string;
-      todolistId:number;
-    }
+      todolistId: number;
+    };
   };
 
   user: {
@@ -135,19 +144,20 @@ export type State = {
     //toDoList
     todolist: [
       {
-        id:number,
+        id: number;
         colour: string;
         toDoListName: string;
-        userId:number;
+        userId: number;
         todo: [
           {
             id: number;
             startTime: string;
-            endTime:string;
+            endTime: string;
             toDoName: string;
             description: string;
-            todolistId:number;
-          }]
+            todolistId: number;
+          }
+        ];
       }
     ];
     otherCalendars: [
@@ -155,7 +165,7 @@ export type State = {
         id: number;
         calendarName: string;
         colour: string;
-        userId:number;
+        userId: number;
         //event
         otherEvents: [
           {
@@ -172,27 +182,29 @@ export type State = {
           }
         ];
       }
-    ],
-    attendEvents: [{
-      id: number;
-      startTime: string;
-      endTime: string;
-      eventName: string;
-      colour: string;
-      location: string;
-      description: string;
-      access: true,
-      calendarId: number;
-      notification: any[];
-    }]
-  }
+    ];
+    attendEvents: [
+      {
+        id: number;
+        startTime: string;
+        endTime: string;
+        eventName: string;
+        colour: string;
+        location: string;
+        description: string;
+        access: true;
+        calendarId: number;
+        notification: any[];
+      }
+    ];
+  };
 };
 
 export const initialState: State = {
   // User
 
   token: "",
-
+  password: "",
   // 프로필 선택시 필요한 상태
   profile: {
     isOn: false,
@@ -219,49 +231,49 @@ export const initialState: State = {
     isOptionClick: false,
     calendarId: 0,
     yAxis: 0,
-    myOrOther:'',
+    myOrOther: "",
   },
 
   // 만들기 레이어 관련 상태
-  makeEventTodo:{
-    isMakeBtnClick:false,
-    isFromSidebar:true,
-    selectStartDate: '',
+  makeEventTodo: {
+    isMakeBtnClick: false,
+    isFromSidebar: true,
+    selectStartDate: "",
     selectStartTime: initStartTime,
-    selectEndTime:initEndTime,
-    isSelectDateClick:false,
-    isStartTimeClick:false,
-    isEndTimeClick:false,
-    selectEndDate:initEndDate,
-    isStartDateClick:false,
-    isEndDateClick:false
+    selectEndTime: initEndTime,
+    isSelectDateClick: false,
+    isStartTimeClick: false,
+    isEndTimeClick: false,
+    selectEndDate: initEndDate,
+    isStartDateClick: false,
+    isEndDateClick: false,
   },
 
   // 이벤트 할일 컴포넌트 클릭할 때 필요한 상태
   eventTodo: {
     isEventClick: false,
     position: [0, 0],
-    isEvent:'',
-    event:{
+    isEvent: "",
+    event: {
       id: 0,
-      startTime: '',
-      endTime: '',
-      eventName: '',
-      colour: '',
-      location: '',
-      description: '',
+      startTime: "",
+      endTime: "",
+      eventName: "",
+      colour: "",
+      location: "",
+      description: "",
       access: true,
       notification: [],
-      calendarId: 0
+      calendarId: 0,
     },
     todo: {
-        id: 0,
-        startTime: '',
-        endTime:'',
-        toDoName: '',
-        description: '',
-        todolistId:0,
-    }
+      id: 0,
+      startTime: "",
+      endTime: "",
+      toDoName: "",
+      description: "",
+      todolistId: 0,
+    },
   },
 
   user: {
@@ -294,20 +306,21 @@ export const initialState: State = {
     //toDoList
     todolist: [
       {
-        id:0,
-        colour: '',
-        toDoListName: '',
-        userId:0,
+        id: 0,
+        colour: "",
+        toDoListName: "",
+        userId: 0,
         todo: [
           {
             id: 0,
-            startTime: '',
-            endTime:'',
-            toDoName: '',
-            description: '',
-            todolistId:0,
-          }]
-      }
+            startTime: "",
+            endTime: "",
+            toDoName: "",
+            description: "",
+            todolistId: 0,
+          },
+        ],
+      },
     ],
     otherCalendars: [
       {
@@ -315,7 +328,7 @@ export const initialState: State = {
         calendarName: "",
         colour: "",
         //event
-        userId:0,
+        userId: 0,
         otherEvents: [
           {
             id: 0,
@@ -332,17 +345,19 @@ export const initialState: State = {
         ],
       },
     ],
-    attendEvents: [{
-      id: 0,
-      startTime: "",
-      endTime: "",
-      eventName: "",
-      colour: "",
-      location: "",
-      description: "",
-      access: true,
-      calendarId: 0,
-      notification: [],
-    }],
+    attendEvents: [
+      {
+        id: 0,
+        startTime: "",
+        endTime: "",
+        eventName: "",
+        colour: "",
+        location: "",
+        description: "",
+        access: true,
+        calendarId: 0,
+        notification: [],
+      },
+    ],
   },
 };

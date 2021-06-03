@@ -6,7 +6,9 @@ import { selectProfile, signOut } from "../../actions/index";
 import { RootState } from "../../reducers/index";
 import { useOutSideClick } from "../../functions/Calendar";
 import { useHistory } from "react-router-dom";
-
+import Swal from "sweetalert2";
+import dotenv from "dotenv";
+dotenv.config();
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
 
@@ -22,10 +24,8 @@ export const Profile = () => {
 
   const state = useSelector((state: RootState) => state);
   const {
-    userReducer: { user, token },
+    userReducer: { user, token, password, profile },
   } = state;
-
-  const { profile } = useSelector((state: RootState) => state.userReducer);
 
   let left = profile.leftPosition - 78;
 
@@ -38,7 +38,6 @@ export const Profile = () => {
   };
 
   const handleSignOutBtn = () => {
-    // console.log(process.env.REACT_APP_API_URL);
     axios
       .post(
         process.env.REACT_APP_API_URL + `/user/logout/`,
@@ -48,10 +47,6 @@ export const Profile = () => {
         {
           headers: {
             authorization: `Bearer ${token}`,
-            // 에러부분 시작.
-            // "Content-Type": "application/json", // Content-Type CORS위배
-            // credentials: "include", // 위쪽에 이미 credentials선언 true
-            // 에러부분 끝.
           },
         }
       )
@@ -60,6 +55,48 @@ export const Profile = () => {
         dispatch(selectProfile(false, 900));
       })
       .catch((err: any) => console.error(err));
+  };
+
+  const deleteMyAccount = () => {
+    axios
+      .delete(process.env.REACT_APP_API_URL + `/user/info`, {
+        data: {
+          userId: user.id,
+          password: password,
+        },
+        headers: {
+          authorization: `Bearer ${token}`,
+        },
+      })
+      .then((res: any) => {
+        console.log(res);
+        dispatch(signOut());
+        // dispatch(selectProfile(false, 900));
+      })
+      .catch((err: any) => console.error(err));
+  };
+
+  const handleDeleteBtn = () => {
+    Swal.fire({
+      title: "탈퇴 하시겠습니까?",
+      showCancelButton: true,
+      confirmButtonColor: "#5f6063",
+      cancelButtonColor: "#5f6063",
+      confirmButtonText: "탈퇴",
+      cancelButtonText: "취소",
+      position: "top-right",
+      width: "200px",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        Swal.fire({
+          title: "탈퇴 완료.",
+          confirmButtonColor: "#5f6063",
+          position: "top-right",
+          width: "200px",
+        });
+        deleteMyAccount();
+      }
+    });
   };
 
   return (
@@ -75,6 +112,29 @@ export const Profile = () => {
           로그아웃
         </button>
       </div>
+      {user.email === process.env.REACT_APP_MAIL_USER ? (
+        <div className="delete__form">
+          <button
+            style={{ backgroundColor: "#9b9b9c" }}
+            disabled
+            onClick={() => {
+              handleDeleteBtn();
+            }}
+          >
+            회원탈퇴
+          </button>
+        </div>
+      ) : (
+        <div className="delete__form">
+          <button
+            onClick={() => {
+              handleDeleteBtn();
+            }}
+          >
+            회원탈퇴
+          </button>
+        </div>
+      )}
     </div>
   );
 };

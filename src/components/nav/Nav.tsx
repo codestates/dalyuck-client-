@@ -11,10 +11,10 @@ import {
 } from "../../actions/index";
 import { DateTime } from "luxon";
 import { useRef, useState } from "react"; // 레퍼런스 훅스
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 import SignIn from "../SignIn";
 import Modal from "../Modal";
-dotenv.config()
+dotenv.config();
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
 
@@ -210,14 +210,15 @@ const Nav = () => {
 
         {token.length === 0 ? (
           <div className="profile-con">
-            <div className="profile" onClick={() => handleSignInBtn()}>
+            {/* <div className="profile" onClick={() => handleSignInBtn()}>
               <svg viewBox="0 0 24 24">
                 <path
                   fill="currentColor"
                   d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
                 />
               </svg>
-            </div>
+            </div> */}
+            <button onClick={() => handleSignInBtn()}>로그인</button>
           </div>
         ) : (
           <div
@@ -231,7 +232,7 @@ const Nav = () => {
             <div className="profile">
               <svg viewBox="0 0 24 24" className="profile-svg">
                 <path
-                  color="purple"
+                  color="#1a73e8"
                   fill="currentColor"
                   d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
                 />
