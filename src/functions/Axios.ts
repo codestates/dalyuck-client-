@@ -289,11 +289,11 @@ export const deleteEvent = async(eventId:number)=>{
 }
 
 // 할일 겟 요청
-export const getTodo= async()=>{  
+export const getTodo= async(toDoListId:number)=>{  
     updateState()
     let result;
 
-    result = await basicAxios.get(`/todo/${userState.user.id}`)
+    result = await basicAxios.get(`/todo/${userState.user.id}?todolistId=${toDoListId}`)
     .then(res=>{
         return res.data
     }).catch(error=>{
@@ -313,12 +313,12 @@ export const createTodo = async(startTime:string,toDoListId:number,toDoName:stri
     try{
         result = await basicAxios.post("/todo",{
             startTime,
-            toDoListId,  //??? 둘중에 하난데 
+            toDoListId, 
             toDoName,
             description,
             userId:userState.user.id
         }).then(res=>{
-            return getTodo();
+            return getTodo(toDoListId);
         }).then(res=>{
             store.dispatch(action.setTodoList(res));
         })
@@ -347,7 +347,7 @@ export const updateTodo = async(toDoListId:number,startTime?:string,toDoName?:st
             isFinished,
             userId:userState.user.id
         }).then(res=>{
-            return getTodo();
+            return getTodo(toDoListId);
         }).then(res=>{
             store.dispatch(action.setTodoList(res));
         })
@@ -363,7 +363,7 @@ export const updateTodo = async(toDoListId:number,startTime?:string,toDoName?:st
 }
 
 // [ 할일 삭제 ]
-export const deleteTodo= async(toDoId:number)=>{  
+export const deleteTodo= async(toDoId:number,toDoListId:number)=>{  
     updateState()
     let result;
     try{
@@ -373,7 +373,7 @@ export const deleteTodo= async(toDoId:number)=>{
                 id:userState.user.id
             }
         }).then(res=>{
-            return getTodo();
+            return getTodo(toDoListId);
         }).then(res=>{
             store.dispatch(action.setTodoList(res));
         })
@@ -447,7 +447,7 @@ export const deleteOtherCalendar= async(otherCalendarId:number)=>{
         result = await basicAxios.delete("/calendar/subscribe",{
             data:{             // delete는 바디를 data객체 안에 넣어서 전달해야한다.
                 otherCalendarId,
-                id:userState.user.id
+                userId:userState.user.id
             }
         }).then(res=>{
             return getCalendar();

@@ -144,7 +144,8 @@ export const setIsSidebarOpen = (isSidebarOpen: boolean) => {
 export const isOptionClick = (
   isOptionClick: boolean,
   calendarId: number,
-  yAxis: number
+  yAxis: number,
+  myOrOther:string
 ) => {
   return {
     type: IS_OPTION_CLICK,
@@ -153,6 +154,7 @@ export const isOptionClick = (
         isOptionClick,
         calendarId,
         yAxis,
+        myOrOther
       },
     },
   };
@@ -161,7 +163,8 @@ export const isOptionClick = (
 export const setEventTodo = (
   isEventClick: boolean,
   position: number[],
-  event:{
+  isEvent:string,
+  event?:{
     id: number;
     startTime: any;
     endTime: any;
@@ -171,6 +174,14 @@ export const setEventTodo = (
     description: string;
     access: boolean;
     notification: any[]; 
+  },
+  todo?: {
+    id: number;
+    startTime: string;
+    endTime:string;
+    toDoName: string;
+    description: string;
+    todolistId:number;
   }
 ) => {
   return {
@@ -179,7 +190,9 @@ export const setEventTodo = (
       eventTodo: {
         isEventClick,
         position,
-        event
+        isEvent,
+        event,
+        todo
       }
     }
   }
@@ -208,7 +221,7 @@ export const setCalendar = (data:any) => {
     type: SET_CALENDAR,
     payload: {
         calendar:data.calendar,
-        otherCalendar:data.otherCalendar
+        otherCalendars:data.otherCalendars
     }
   }
 }
@@ -216,7 +229,7 @@ export const setTodoList = (data:any) => {
   return{
     type: SET_TODOLIST,
     payload: {
-        todolist:data.calendar,
+        todolist:data,
     }
   }
 }

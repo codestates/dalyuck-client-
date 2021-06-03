@@ -49,9 +49,9 @@ export default function Sidebar() {
   },[user])
   
   let cals = calendars.calendar;
-  let otherCals = calendars.otherCalendar;
-  let todoList = user.todolist;
-  // let otherCalendars = fakedata.OtherCalendar;
+  let otherCals = calendars.otherCalendars;
+  let todoList = calendars.todolist;
+
   const[isMyCalOpen, setIsMycalOpen] = useState(true);
   const[isOtherCalOpen, setIsOthercalOpen ] = useState(true);
 
@@ -72,16 +72,17 @@ export default function Sidebar() {
                 <SidebarCalendars myOrOther="my" setIsOpen={setIsMycalOpen} isOpen={isMyCalOpen} />
                 {
                     cals && cals.map((calendar,i)=>{
-                      return <CalendarList key={calendar.id+i} isOpen={isMyCalOpen} calendar={calendar}/>
+                      return <CalendarList key={calendar.id+i} isOpen={isMyCalOpen} calendar={calendar} myOrOther="my"/>
                     })
                 }
+
                 <TodoLidst isOpen={isMyCalOpen} calendar={todoList[0]} />
                 <AddCalendar isMine="mine" calendars={calendars} isMyCalOpen={isMyCalOpen}/>
                 <SidebarCalendars myOrOther="other" setIsOpen={setIsOthercalOpen} isOpen={isOtherCalOpen}/>
                 {
                   otherCals ? (
                     otherCals.map((calendar,i)=>{
-                    return <CalendarList key={calendar.id+i} isOpen={isOtherCalOpen} calendar={calendar}/>
+                    return <CalendarList key={calendar.id+i} isOpen={isOtherCalOpen} calendar={calendar} myOrOther="other"/>
                   })
                   ):(
                     null

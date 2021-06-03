@@ -1,9 +1,9 @@
 import { DateTime, Interval } from 'luxon';
-import { EventType } from '../../fakeData/Events';
 import { useDispatch, useSelector } from 'react-redux'
 import { setEventTodo } from "../../actions/index";
-import { useRef } from 'react';   // 레퍼런스 훅스
+import { useEffect, useRef, useState } from 'react';   // 레퍼런스 훅스
 import { RootState } from '../../reducers/index';
+import { EventType } from '../../reducers/InitialState';
 
 const timeToPixel = (time:DateTime):number=>{
   const minute = time.minute;
@@ -53,7 +53,11 @@ const Event = ({ event }:any ) => {
       let x:number,y:number;
       x = componentRef.current?.getBoundingClientRect().x;
       y = componentRef.current?.getBoundingClientRect().y;
-      dispatch(setEventTodo(true,[x,y],event))
+      if(event.todolistId){
+        dispatch(setEventTodo(true, [x,y],'todo',undefined,event));
+      }else{
+        dispatch(setEventTodo(true, [x,y], 'evnet', event, undefined));
+      }
     } 
   }
 
@@ -81,20 +85,39 @@ const Event = ({ event }:any ) => {
 
 const Day = ({ day }: any) => {
 
-  let events:EventType[]=[] ;
+  let events:any[]=[] ;
   const { user } = useSelector((state:RootState)=>state.userReducer);
-  if(user){
-    user.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+  const [userHook, serUserHook] = useState(user)
+  useEffect(()=>{
+    serUserHook(user)
+  },[user])
+  if(userHook){
+    userHook.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
       if(cal.events){
         cal.events.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
-          event.calendarId =cal.id;
-          event.userId = user.id;
+          event.userId = cal.userId;
         })
         events = [...events,...cal.events]
       }
     })
   }
-  
+
+  if(userHook){
+    userHook.otherCalendars.forEach((cal:any)=>{      // 모든 구독한 캘린더의 이벤트들을 하나의 배열안에 넣음
+      if(cal.otherEvents){
+        cal.otherEvents.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
+          event.calendarId =cal.otherCalendarId
+          event.userId = cal.userId;
+        })
+        events = [...events,...cal.otherEvents]
+      }
+    })
+  }
+
+  if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
+  if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
+
+  // events = [...events , ...user.attendEvents];         참가자 중복 되어서 주석
   events = events.filter(event=>{
     let startTime = DateTime.fromISO(event.startTime);
     let endTime = DateTime.fromISO(event.endTime);

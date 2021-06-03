@@ -3,7 +3,7 @@ import { RootState } from '../reducers/index';
 import { setEventTodo } from '../actions/index';
 import { useOutSideClick } from '../functions/Calendar';
 import { useRef } from 'react';
-import { initEvent } from '../reducers/InitialState';
+import { initEvent, initTodo } from '../reducers/InitialState';
 import { DateTime } from 'luxon';
 import { deleteEvent } from '../functions/Axios';
 import { useHistory } from "react-router";
@@ -14,7 +14,7 @@ const HasAccess = () => {
   const { eventTodo } = useSelector((state:RootState)=>state.userReducer);
   const deleteHandelr = () => {
     deleteEvent(eventTodo.event.id)
-    dispatch(setEventTodo(false,[0,0],initEvent))
+    dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))
   }
   
   return (
@@ -51,7 +51,7 @@ const EventOptionIcons = ({access}:{access:boolean}) => {
   const dispatch = useDispatch()
 
   const closeHandler = () => {
-    dispatch(setEventTodo(false,[0,0],initEvent))
+    dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))
   }
 
   return (
@@ -107,7 +107,7 @@ export default function EventInfoCon() {
 
   const dispatch = useDispatch()
   const closeRef = useRef(null);
-  const callback = ()=>{dispatch(setEventTodo(false,[0,0],initEvent))}
+  const callback = ()=>{dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))}
   useOutSideClick(closeRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
   const { eventTodo } = useSelector( (state:RootState) => state.userReducer)

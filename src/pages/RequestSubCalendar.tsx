@@ -4,10 +4,12 @@ import { withRouter } from "react-router-dom";
 import React, { useState } from "react";
 import "../style/_RequestSubCalendar.scss";
 import { subscribeCalendar } from '../functions/Axios';
+import { useHistory } from 'react-router-dom';
 // 다른사람 캘린더를 본인 캘린더에 추가 #120
 // Server쪽에 보낼 캘린더 소유자의 email 입력할 Input 컨트롤 코딩.
 
 function RequestSubCalendar() {
+  const history = useHistory();
   // state 저장(email)
   const [state, setForm] = useState({
     email: "",
@@ -28,7 +30,7 @@ function RequestSubCalendar() {
 
     // 아래는 axios가 들어가야함.
     subscribeCalendar(state.email)
-
+    history.push('/')
     return;
   };
 
