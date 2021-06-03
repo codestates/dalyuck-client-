@@ -2,7 +2,7 @@ import { DateTime, Interval } from "luxon";
 import { useDispatch, useSelector } from "react-redux";
 import { setBaseDate, setBasePeriod } from "../../actions/index";
 import AllDay from '../AllDay';
-import {fakedata,EventType}  from '../../fakeData/Events';
+import {EventType}  from '../../fakeData/Events';
 import { useState, useEffect } from 'react';
 import { RootState } from "../../reducers";
 
@@ -87,7 +87,9 @@ const DayWeekHead = ({info}:any) => {
     }
   
     if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
-    if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
+    if(userHook.todolist.length > 0 ){
+        if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일
+    }
 
     let filteredEvent:any[] = [];  // 하루이상 종일 이벤트 필터링
     events.forEach((event)=>{

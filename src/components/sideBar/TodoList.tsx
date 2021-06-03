@@ -3,11 +3,18 @@ import { useRef } from "react"; // 레퍼런스
 import { useDispatch } from "react-redux";
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
+
+  let color:string = '';
+  if(!calendar){
+    color = 'rgb(66, 133, 244)';
+  }else{
+    color = calendar.colour
+  }
   return (
     <div className="check-box">
       <div
         className="check-box__inner"
-        style={{ borderColor: calendar.colour }}
+        style={{ borderColor: color }}
       >
         <div className="check-box__padding"></div>
         <div className="check-box__mid"></div>
@@ -75,7 +82,7 @@ function TodoList({ isOpen, calendar}: { isOpen: boolean; calendar: any; }){
               </div>
               <div className="calendar-label-name">
                 <span className="calendar-label-name__span">
-                  {calendar.toDoListName}
+                  {calendar && calendar.toDoListName}
                 </span>
               </div>
               {/* <OptionDelete calendar={calendar}/> */}

@@ -4,8 +4,8 @@ import { setEventTodo } from '../actions/index';
 import { useOutSideClick } from '../functions/Calendar';
 import { useRef } from 'react';
 import { initEvent, initTodo } from '../reducers/InitialState';
-import { DateTime } from 'luxon';
-import { deleteEvent } from '../functions/Axios';
+import { DateTime, Interval } from 'luxon';
+import { deleteEvent, deleteTodo } from '../functions/Axios';
 import { useHistory } from "react-router";
 
 const HasAccess = () => {
@@ -13,7 +13,11 @@ const HasAccess = () => {
   const dispatch = useDispatch();
   const { eventTodo } = useSelector((state:RootState)=>state.userReducer);
   const deleteHandelr = () => {
-    deleteEvent(eventTodo.event.id)
+    if(eventTodo.isEvent==='event'){
+      deleteEvent(eventTodo.event.id)
+    }else{
+      deleteTodo(eventTodo.todo.id, eventTodo.todo.todolistId)
+    }
     dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))
   }
   
@@ -76,10 +80,26 @@ const EventOptionIcons = ({access}:{access:boolean}) => {
 };
 
 const EventInfo = ({eventTodo}:{eventTodo:any}) => {
-  
-  let date = DateTime.fromISO(eventTodo.event.startTime).toFormat("M월 d일");
-  let startTime = DateTime.fromISO(eventTodo.event.startTime).toFormat("t");
-  let endTime = DateTime.fromISO(eventTodo.event.endTime).toFormat("t");
+
+  let startTime:string = '';
+  let endTime:string = '';
+  let name:string = '';
+
+  if(eventTodo.event){
+    startTime = eventTodo.event.startTime;
+    endTime = eventTodo.event.endTime;
+    name = eventTodo.event.eventName;
+  }else{
+    startTime = eventTodo.todo.startTime;
+    endTime = eventTodo.todo.endTime;
+    name = eventTodo.todo.eventName;
+  }
+
+  let isAllday = Interval.fromDateTimes(DateTime.fromISO(startTime),DateTime.fromISO(endTime)).count('hour') >= 24  
+  let date = DateTime.fromISO(startTime).toFormat("M월 d일");
+  startTime = DateTime.fromISO(startTime).toFormat("t");
+  endTime = DateTime.fromISO(endTime).toFormat("t");
+
   return (
     <div className="event-info">
       <div className="event-info-color">
@@ -90,12 +110,18 @@ const EventInfo = ({eventTodo}:{eventTodo:any}) => {
       <div className="event-info-text">
         <div className="event-info-text__inner">
           <div className="event-info-text__subject">
-            <div className="event-info-text__subject-span">{eventTodo.event.eventName}</div>
+            <div className="event-info-text__subject-span">{name}</div>
           </div>
           <div className="event-info-text__time">
             {date}
             <span className="event-info-text__time-dot">⋅</span>
-            <span className="event-info-text__time-span">{startTime+"~"+endTime}</span>
+            {
+              isAllday ? (<span className="event-info-text__time-span">종일</span>
+              ):(  
+              <span className="event-info-text__time-span">{startTime+"~"+endTime}</span>
+              )
+            }
+         
           </div>
         </div>
       </div>

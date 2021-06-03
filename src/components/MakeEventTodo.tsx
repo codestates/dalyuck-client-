@@ -289,7 +289,12 @@ export default function MakeEventTodo() {
     if(isEvent){           // 할일 일때 종일이면 하루, 종일 아니면 30분
       createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color, attendant)
     }else{
-      createTodo(startTime,toDoLisdId,'하이','');
+      if(isAllday){
+        endTime = DateTime.fromISO(startTime).endOf('day').toISO();
+      }else{
+        endTime = DateTime.fromISO(startTime).plus({minute:30}).toISO();
+      }
+      createTodo(startTime,endTime,toDoLisdId,title,'');
     }
     dispatch(setMakeEventTodo(false,'',true,initStartTime, initEndTime))
   }
