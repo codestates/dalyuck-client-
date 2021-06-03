@@ -251,7 +251,8 @@ export default function MakeEventTodo() {
   const [ attendant, setAttendant ] = useState(undefined);
   const [title, setTitle] = useState('( 제목 없음 )');
   let footCal = user.calendar;
-  let toDoLisdId = user.todolist[0].id;      // 투두리스트 아이디 지정 
+  let toDoLisdId:number = 0;
+  if(user.todolist.length > 0) toDoLisdId = user.todolist[0].id;      // 투두리스트 아이디 지정 
   const [footCalId, setFootCalId] = useState(user.calendar[0].id)
   const selectRef = useRef(null);
   const dispatch = useDispatch();
@@ -289,7 +290,12 @@ export default function MakeEventTodo() {
     if(isEvent){           // 할일 일때 종일이면 하루, 종일 아니면 30분
       createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color, attendant)
     }else{
-      createTodo(startTime,toDoLisdId,'하이','');
+      if(isAllday){
+        endTime = DateTime.fromISO(startTime).endOf('day').toISO();
+      }else{
+        endTime = DateTime.fromISO(startTime).plus({minute:30}).toISO();
+      }
+      createTodo(startTime,endTime,toDoLisdId,title,'');
     }
     dispatch(setMakeEventTodo(false,'',true,initStartTime, initEndTime))
   }

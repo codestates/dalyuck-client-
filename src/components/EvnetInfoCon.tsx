@@ -4,8 +4,8 @@ import { setEventTodo } from '../actions/index';
 import { useOutSideClick } from '../functions/Calendar';
 import { useRef } from 'react';
 import { initEvent, initTodo } from '../reducers/InitialState';
-import { DateTime } from 'luxon';
-import { deleteEvent } from '../functions/Axios';
+import { DateTime, Interval } from 'luxon';
+import { deleteEvent, deleteTodo } from '../functions/Axios';
 import { useHistory } from "react-router";
 
 const HasAccess = () => {
@@ -13,7 +13,11 @@ const HasAccess = () => {
   const dispatch = useDispatch();
   const { eventTodo } = useSelector((state:RootState)=>state.userReducer);
   const deleteHandelr = () => {
-    deleteEvent(eventTodo.event.id)
+    if(eventTodo.isEvent==='event'){
+      deleteEvent(eventTodo.event.id)
+    }else{
+      deleteTodo(eventTodo.todo.id, eventTodo.todo.todolistId)
+    }
     dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))
   }
   
@@ -46,7 +50,7 @@ const HasAccess = () => {
     </div>
   );
 };
-const EventOptionIcons = ({access}:{access:boolean}) => {
+const EventOptionIcons = ({status}:{status:string}) => {
 
   const dispatch = useDispatch()
 
@@ -69,17 +73,38 @@ const EventOptionIcons = ({access}:{access:boolean}) => {
         </div>
       </div>
       {
-        access ? (<HasAccess />):(null)
+        status.length === 0 ? (
+            <HasAccess />
+          ):
+          (
+            null
+          )
       }
     </div>
   );
 };
 
-const EventInfo = ({eventTodo}:{eventTodo:any}) => {
-  
-  let date = DateTime.fromISO(eventTodo.event.startTime).toFormat("M월 d일");
-  let startTime = DateTime.fromISO(eventTodo.event.startTime).toFormat("t");
-  let endTime = DateTime.fromISO(eventTodo.event.endTime).toFormat("t");
+const EventInfo = ({eventTodo, status}:{eventTodo:any,status:string}) => {
+
+  let startTime:string = '';
+  let endTime:string = '';
+  let name:string = '';
+
+  if(eventTodo.event){
+    startTime = eventTodo.event.startTime;
+    endTime = eventTodo.event.endTime;
+    name = eventTodo.event.eventName;
+  }else{
+    startTime = eventTodo.todo.startTime;
+    endTime = eventTodo.todo.endTime;
+    name = eventTodo.todo.eventName;
+  }
+
+  let isAllday = Interval.fromDateTimes(DateTime.fromISO(startTime),DateTime.fromISO(endTime)).count('hour') >= 24  
+  let date = DateTime.fromISO(startTime).toFormat("M월 d일");
+  startTime = DateTime.fromISO(startTime).toFormat("t");
+  endTime = DateTime.fromISO(endTime).toFormat("t");
+
   return (
     <div className="event-info">
       <div className="event-info-color">
@@ -90,12 +115,24 @@ const EventInfo = ({eventTodo}:{eventTodo:any}) => {
       <div className="event-info-text">
         <div className="event-info-text__inner">
           <div className="event-info-text__subject">
-            <div className="event-info-text__subject-span">{eventTodo.event.eventName}</div>
+            <div className="event-info-text__subject-span">{name}</div>
           </div>
           <div className="event-info-text__time">
             {date}
             <span className="event-info-text__time-dot">⋅</span>
-            <span className="event-info-text__time-span">{startTime+"~"+endTime}</span>
+            {
+              isAllday ? (<span className="event-info-text__time-span">종일</span>
+              ):(  
+              <span className="event-info-text__time-span">{startTime+"~"+endTime}</span>
+              )
+            }
+            {
+              status.length > 0 ? (
+                <span className="event-info-text__time-span">{status}</span>
+              ):(
+                null
+              )
+            }
           </div>
         </div>
       </div>
@@ -105,6 +142,7 @@ const EventInfo = ({eventTodo}:{eventTodo:any}) => {
 
 export default function EventInfoCon() {
 
+  const { user } = useSelector((state:RootState)=>state.userReducer);
   const dispatch = useDispatch()
   const closeRef = useRef(null);
   const callback = ()=>{dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))}
@@ -115,13 +153,30 @@ export default function EventInfoCon() {
     top: eventTodo.position[1]-36,
     left: eventTodo.position[0]>250 ? (eventTodo.position[0]-223):( eventTodo.position[0])
   }
+
+  let status:string = '';          // 구독했는지 참가했는지 내가 만든 이벤트인지 구분하기 위한 변수.
+
+  if( eventTodo.isEvent === 'event'){
+
+    if(user.id !== eventTodo.event.userId){
+      user.otherCalendars.forEach(cal=>{
+        if(cal.id===eventTodo.event.calendarId) status = `구독중인 캘린더 ${cal.calendarName}`;
+      })
+    }else if(!eventTodo.event.userId){
+      user.attendEvents.forEach(event=>{
+
+        if(event.id === eventTodo.event.id && event.calendarId === eventTodo.event.calendarId) status = '참석중';
+      })
+    }
+  }
+  console.log(status)
   
   return (
     <div className="event-info-con" style={position} ref={closeRef}>
       <div className="event-info-con__inner">
-        <EventOptionIcons access={true} />   {/*일단 항상 트루 수정 관한 */}
+        <EventOptionIcons status={status} />   {/*일단 항상 트루 수정 관한 */}
         <div className="event-info-con-body">
-          <EventInfo eventTodo={eventTodo}/>
+          <EventInfo eventTodo={eventTodo} status={status}/>
         </div>
       </div>
     </div>

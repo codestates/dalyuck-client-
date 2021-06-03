@@ -54,9 +54,9 @@ const Event = ({ event }:any ) => {
       x = componentRef.current?.getBoundingClientRect().x;
       y = componentRef.current?.getBoundingClientRect().y;
       if(event.todolistId){
-        dispatch(setEventTodo(true, [x,y],'todo',undefined,event));
+        dispatch(setEventTodo(true, [x,y],'todo',undefined, event));
       }else{
-        dispatch(setEventTodo(true, [x,y], 'evnet', event, undefined));
+        dispatch(setEventTodo(true, [x,y], 'event', event, undefined));
       }
     } 
   }
@@ -115,9 +115,11 @@ const Day = ({ day }: any) => {
   }
 
   if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
-  if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
-
+  if(userHook.todolist.length > 0){
+    if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
+  }
   // events = [...events , ...user.attendEvents];         참가자 중복 되어서 주석
+
   events = events.filter(event=>{
     let startTime = DateTime.fromISO(event.startTime);
     let endTime = DateTime.fromISO(event.endTime);

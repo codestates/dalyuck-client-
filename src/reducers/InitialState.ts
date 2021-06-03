@@ -56,7 +56,7 @@ export type State = {
   // 캘린더 렌더링 할때 필요한 상태
   base: {
     baseDate: string;
-    basePeriod: string;
+    basePeriod: 'month'|'week'|'day';
   };
 
   // 이벤트 만들기때 필요한 상태
@@ -91,8 +91,8 @@ export type State = {
   eventTodo: {
     isEventClick: boolean;
     position: [0, 0];
-    isEvent: string;
-    event: {
+    isEvent:'event'|'todo';
+    event:{
       id: number;
       startTime: any;
       endTime: any;
@@ -103,7 +103,9 @@ export type State = {
       access: boolean;
       notification: any[];
       calendarId: number;
-    };
+
+      userId:number;
+    },
     todo: {
       id: number;
       startTime: string;
@@ -253,8 +255,9 @@ export const initialState: State = {
   eventTodo: {
     isEventClick: false,
     position: [0, 0],
-    isEvent: "",
-    event: {
+
+    isEvent:'event',
+    event:{
       id: 0,
       startTime: "",
       endTime: "",
@@ -265,6 +268,7 @@ export const initialState: State = {
       access: true,
       notification: [],
       calendarId: 0,
+      userId:0,
     },
     todo: {
       id: 0,

@@ -213,7 +213,6 @@ export const createEvent = async(startTime:string,endTime:string,calendarId:numb
             description,
             userId:userState.user.id
         }).then(res=>{
-            console.log(attendant)
             if(attendant) reqEventAttend(res.data.id, attendant);
             getAttendants()
             return getCalendar()
@@ -293,7 +292,7 @@ export const getTodo= async(toDoListId:number)=>{
     updateState()
     let result;
 
-    result = await basicAxios.get(`/todo/${userState.user.id}?todolistId=${toDoListId}`)
+    result = await basicAxios.get(`/todoList?userId=${userState.user.id}`)
     .then(res=>{
         return res.data
     }).catch(error=>{
@@ -307,12 +306,13 @@ export const getTodo= async(toDoListId:number)=>{
     return result
 }
 // [ 새 할일 만들기]
-export const createTodo = async(startTime:string,toDoListId:number,toDoName:string,description?:string)=>{  
+export const createTodo = async(startTime:string,endTime:string,toDoListId:number,toDoName:string,description?:string)=>{  
     updateState()
     let result;
     try{
         result = await basicAxios.post("/todo",{
             startTime,
+            endTime,
             toDoListId, 
             toDoName,
             description,
@@ -320,6 +320,7 @@ export const createTodo = async(startTime:string,toDoListId:number,toDoName:stri
         }).then(res=>{
             return getTodo(toDoListId);
         }).then(res=>{
+
             store.dispatch(action.setTodoList(res));
         })
     }catch (error){
@@ -369,8 +370,8 @@ export const deleteTodo= async(toDoId:number,toDoListId:number)=>{
     try{
         result = await basicAxios.delete("/todo",{
             data:{             // delete는 바디를 data객체 안에 넣어서 전달해야한다.
-                toDoId,
-                id:userState.user.id
+                todoId:toDoId,
+                userId:userState.user.id
             }
         }).then(res=>{
             return getTodo(toDoListId);

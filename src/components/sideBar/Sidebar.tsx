@@ -76,7 +76,7 @@ export default function Sidebar() {
                     })
                 }
 
-                <TodoLidst isOpen={isMyCalOpen} calendar={todoList[0]} />
+                {calendars && <TodoLidst isOpen={isMyCalOpen} calendar={todoList[0]} /> }
                 <AddCalendar isMine="mine" calendars={calendars} isMyCalOpen={isMyCalOpen}/>
                 <SidebarCalendars myOrOther="other" setIsOpen={setIsOthercalOpen} isOpen={isOtherCalOpen}/>
                 {
