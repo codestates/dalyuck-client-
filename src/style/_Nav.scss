@@ -320,42 +320,29 @@
   height: 48px;
   line-height: normal;
   padding: 0 4px;
-
   flex: 0 0 auto;
-
   vertical-align: middle;
   white-space: nowrap;
   align-items: center;
   display: flex;
-
   padding-left: 40px;
+  button {
+    margin-right: 15px;
+    font-size: 15px;
+  }
 }
 .profile {
   cursor: pointer;
   text-decoration: none;
 
   padding: 4px;
-
+  margin-right: 10px;
   background-size: 32px 32px;
   border: 0;
   border-radius: 50%;
   display: block;
-  margin: 0;
   position: relative;
   height: 32px;
   width: 32px;
   z-index: 0;
-}
-
-.profile-svg {
-  border: 2px solid transparent;
-  border-image: linear-gradient(
-    to bottom right,
-    #b827fc 0%,
-    #2c90fc 25%,
-    #b8fd33 50%,
-    #fec837 75%,
-    #fd1892 100%
-  );
-  border-image-slice: 1;
 }

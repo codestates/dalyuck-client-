@@ -82,10 +82,10 @@ export interface UserInfo {
 
 // Action Creators
 // User Action Creator
-export const signIn = (data: UserInfo, token: string) => {
+export const signIn = (data: UserInfo, token: string, password: string) => {
   return {
     type: SIGN_IN,
-    payload: { data, token },
+    payload: { data, token, password },
   };
 };
 
@@ -145,7 +145,7 @@ export const isOptionClick = (
   isOptionClick: boolean,
   calendarId: number,
   yAxis: number,
-  myOrOther:string
+  myOrOther: string
 ) => {
   return {
     type: IS_OPTION_CLICK,
@@ -154,7 +154,7 @@ export const isOptionClick = (
         isOptionClick,
         calendarId,
         yAxis,
-        myOrOther
+        myOrOther,
       },
     },
   };
@@ -163,8 +163,8 @@ export const isOptionClick = (
 export const setEventTodo = (
   isEventClick: boolean,
   position: number[],
-  isEvent:string,
-  event?:{
+  isEvent: string,
+  event?: {
     id: number;
     startTime: any;
     endTime: any;
@@ -173,15 +173,15 @@ export const setEventTodo = (
     location: string;
     description: string;
     access: boolean;
-    notification: any[]; 
+    notification: any[];
   },
   todo?: {
     id: number;
     startTime: string;
-    endTime:string;
+    endTime: string;
     toDoName: string;
     description: string;
-    todolistId:number;
+    todolistId: number;
   }
 ) => {
   return {
@@ -192,16 +192,16 @@ export const setEventTodo = (
         position,
         isEvent,
         event,
-        todo
-      }
-    }
-  }
-}
+        todo,
+      },
+    },
+  };
+};
 
 export const setMakeEventTodo = (
-  isMakeBtnClick:boolean,
+  isMakeBtnClick: boolean,
   selectDate: string,
-  isFromSidebar:boolean,
+  isFromSidebar: boolean,
   selectStartTime: string,
   selectEndTime:string,
 ) => {
@@ -216,94 +216,93 @@ export const setMakeEventTodo = (
     },
   };
 };
-export const setCalendar = (data:any) => {
-  return{
+export const setCalendar = (data: any) => {
+  return {
     type: SET_CALENDAR,
     payload: {
-        calendar:data.calendar,
-        otherCalendars:data.otherCalendars
-    }
-  }
-}
-export const setTodoList = (data:any) => {
-  return{
+      calendar: data.calendar,
+      otherCalendars: data.otherCalendars,
+    },
+  };
+};
+export const setTodoList = (data: any) => {
+  return {
     type: SET_TODOLIST,
     payload: {
-        todolist:data,
-    }
-  }
-}
+      todolist: data,
+    },
+  };
+};
 
-export const setIsSelectDateClick = (isSelectDateClick:boolean) => {
-  return{
+export const setIsSelectDateClick = (isSelectDateClick: boolean) => {
+  return {
     type: SET_IS_SELECT_DATE_CLICK,
     payload: {
-      isSelectDateClick
-    }
-  }
-}
-export const setStartTime= (selectStartTime:string) => {
-  return{
+      isSelectDateClick,
+    },
+  };
+};
+export const setStartTime = (selectStartTime: string) => {
+  return {
     type: SET_START_TIME,
     payload: {
       selectStartTime,
-    }
-  }
-}
-export const setEndTime= (selectEndTime:string) => {
-  return{
+    },
+  };
+};
+export const setEndTime = (selectEndTime: string) => {
+  return {
     type: SET_END_TIME,
     payload: {
       selectEndTime,
-    }
-  }
-}
-export const setIsStartTimeClick= (isStartTimeClick:boolean) => {
-  return{
+    },
+  };
+};
+export const setIsStartTimeClick = (isStartTimeClick: boolean) => {
+  return {
     type: SET_IS_START_TIME_CLICK,
     payload: {
-      isStartTimeClick
-    }
-  }
-}
-export const setIsEndTimeClick= (isEndTimeClick:boolean) => {
-  return{
+      isStartTimeClick,
+    },
+  };
+};
+export const setIsEndTimeClick = (isEndTimeClick: boolean) => {
+  return {
     type: SET_IS_END_TIME_CLICK,
     payload: {
-      isEndTimeClick
-    }
-  }
-}
-export const setEndDate= (selectEndDate:string) => {
-  return{
+      isEndTimeClick,
+    },
+  };
+};
+export const setEndDate = (selectEndDate: string) => {
+  return {
     type: SET_END_DATE,
     payload: {
-      selectEndDate
-    }
-  }
-}
-export const setSelectStartDate= (selectStartDate:string) => {
-  return{
+      selectEndDate,
+    },
+  };
+};
+export const setSelectStartDate = (selectStartDate: string) => {
+  return {
     type: SET_SELECT_START_DATE,
     payload: {
-      selectStartDate
-    }
-  }
-}
-export const setIsEndDateClick= (isEndDateClick:boolean) => {
-  return{
+      selectStartDate,
+    },
+  };
+};
+export const setIsEndDateClick = (isEndDateClick: boolean) => {
+  return {
     type: SET_IS_END_DATE_CLICK,
     payload: {
-      isEndDateClick
-    }
-  }
-}
-export const setIsStartDateClick= (isStartDateClick:boolean) => {
-  return{
+      isEndDateClick,
+    },
+  };
+};
+export const setIsStartDateClick = (isStartDateClick: boolean) => {
+  return {
     type: SET_IS_START_DATE_CLICK,
     payload: {
-      isStartDateClick
-    }
-  }
-}
-
+      isStartDateClick,
+    },
+  };
+};
