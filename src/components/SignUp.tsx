@@ -2,10 +2,10 @@ import React, { useCallback, useEffect, useRef, useState } from "react";
 import { signIn } from "../actions";
 import { useDispatch } from "react-redux";
 import Modal from "./Modal";
-import dotenv from 'dotenv';
+import dotenv from "dotenv";
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
-dotenv.config()
+dotenv.config();
 type SignupProps = {
   open?: boolean;
   close: () => void;
@@ -168,19 +168,16 @@ const Signup = (props: SignupProps) => {
   const handleSignUp = () => {
     if (handleCheckForm()) {
       axios
-        .post(
-          process.env.REACT_APP_API_URL+'/user/signup',
-          {
-            email: inputEmail,
-            userName: inputUserName,
-            password: inputPassword,
-          }
-        )
+        .post(process.env.REACT_APP_API_URL + "/user/signup", {
+          email: inputEmail,
+          userName: inputUserName,
+          password: inputPassword,
+        })
         .then((res: any) => {
           const token = res.headers.authorization.split(" ")[1];
           if (res.status === 201) {
             handleCloseBtn();
-            dispatch(signIn(res.user, token));
+            dispatch(signIn(res.user, token, inputPassword));
             setModalComment("회원가입이 완료되었습니다.");
             handleModalOpen();
             return;

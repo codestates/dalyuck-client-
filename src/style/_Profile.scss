@@ -5,12 +5,13 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 9rem;
-  width: 15rem;
+  height: 160px;
+  padding: 3px;
   border-radius: 5px;
   border: 1px solid #9b9b9c;
   background-color: white;
   border-bottom: none;
+
   span {
     margin-top: 20px;
   }
@@ -21,19 +22,47 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  height: 5rem;
-  width: 9.8rem;
-  margin-top: 20px;
+  width: 157px;
+  margin-top: 10px;
   border: 1px solid #9b9b9c;
   background-color: white;
+  border-bottom: none;
+  padding: 3px;
   button {
     color: rgb(255, 255, 255);
     font-size: 14px;
     font-weight: 500;
     background-color: #1a73e8;
     border-radius: 3px;
-    height: 2rem;
-    width: 5rem;
+    height: 35px;
+    width: 80px;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    &:hover {
+      background-color: #2e9afe;
+      transition: all ease 0.3s;
+    }
+  }
+}
+.delete__form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 157px;
+  border: 1px solid #9b9b9c;
+  background-color: white;
+  padding: 3px;
+  button {
+    color: rgb(255, 255, 255);
+    font-size: 14px;
+    font-weight: 500;
+    background-color: #1a73e8;
+    border-radius: 3px;
+    height: 35px;
+    width: 80px;
+    margin-top: 5px;
+    margin-bottom: 5px;
     &:hover {
       background-color: #2e9afe;
       transition: all ease 0.3s;
