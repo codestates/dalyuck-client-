@@ -31,7 +31,7 @@ const Option = ({ calendar }: { calendar: any }) => {
     let yAxis = 0;
     if (componentRef.current?.getBoundingClientRect().y)
       yAxis = componentRef.current?.getBoundingClientRect().y;
-    dispatch(isOptionClick(true, calendar.id, yAxis));
+    dispatch(isOptionClick(true, calendar.id, yAxis,'my'));
   };
 
   return (

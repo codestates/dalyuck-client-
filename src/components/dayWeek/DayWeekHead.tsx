@@ -1,9 +1,11 @@
 import { DateTime, Interval } from "luxon";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setBaseDate, setBasePeriod } from "../../actions/index";
 import AllDay from '../AllDay';
 import {fakedata,EventType}  from '../../fakeData/Events';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { RootState } from "../../reducers";
+
 interface DayInfoHead {
     yoil:string;
     day:DateTime;
@@ -37,8 +39,6 @@ const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) �
 }
 
 const AllDayCon = ({day, allDayEvents, setAllDayEvents}:{day:DateTime;allDayEvents:EventType[];setAllDayEvents:any})=>{
-
-
     return(
         <div className="all-day-con">
             {
@@ -57,24 +57,45 @@ const AllDayCon = ({day, allDayEvents, setAllDayEvents}:{day:DateTime;allDayEven
 
 const DayWeekHead = ({info}:any) => {
 
-    let events:EventType[]=[] ;
-    fakedata.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+    let events:any[]=[] ;
+    const { user } = useSelector((state:RootState)=>state.userReducer);
+    const [userHook, serUserHook] = useState(user)
+    useEffect(()=>{
+      serUserHook(user)
+    },[user])
+    if(userHook){
+      userHook.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+        if(cal.events){
+          cal.events.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
+            event.userId = cal.userId;
+          })
+          events = [...events,...cal.events]
+        }
+      })
+    }
+  
+    if(userHook){
+      userHook.otherCalendars.forEach((cal:any)=>{      // 모든 구독한 캘린더의 이벤트들을 하나의 배열안에 넣음
+        if(cal.otherEvents){
+          cal.otherEvents.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
+            event.calendarId =cal.otherCalendarId
+            event.userId = cal.userId;
+          })
+          events = [...events,...cal.otherEvents]
+        }
+      })
+    }
+  
+    if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
+    if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
 
-        cal.event.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
-          event.calendarId =cal.calendarId;
-          event.userId = fakedata.userId;
-        })
-        events = [...events,...cal.event]
-    });
-
-    let filteredEvent:EventType[] = [];  // 하루이상 종일 이벤트 필터링
+    let filteredEvent:any[] = [];  // 하루이상 종일 이벤트 필터링
     events.forEach((event)=>{
         let startTime = DateTime.fromISO(event.startTime);
         let endTime = DateTime.fromISO(event.endTime);
         let result = (Interval.fromDateTimes(startTime,endTime).count('hour') >= 24)
         if(result) filteredEvent.push(event)
     })
-
     const [allDayEvents, setAllDayEvents ] = useState(filteredEvent)
 
     return(
@@ -98,7 +119,7 @@ const DayWeekHead = ({info}:any) => {
                                 {/* // 종일 컴포넌트 들거갈 공각 */}
                                 {
                                     info.map(({day,i}:{day:DateTime,i:number})=>{
-                                        return <AllDayCon key={i} day={day} allDayEvents={allDayEvents} setAllDayEvents={setAllDayEvents}/>
+                                        return <AllDayCon key={day.toISO()} day={day} allDayEvents={filteredEvent} setAllDayEvents={setAllDayEvents}/>
                                     })
                                 }
                                 <div className="main-cal-blank" style={{width:7+'px'}}></div>

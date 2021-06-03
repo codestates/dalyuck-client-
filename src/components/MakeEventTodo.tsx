@@ -4,7 +4,7 @@ import { RootState } from '../reducers/index';
 import * as CSS from 'csstype';
 import { useRef } from 'react'
 import { useOutSideClick } from '../functions/Calendar';
-import { setMakeEventTodo, setIsSelectDateClick, setIsEndDateClick, setIsStartTimeClick, setIsEndTimeClick, setIsStartDateClick, setSelectStartDate} from '../actions/index';
+import { setMakeEventTodo, setIsSelectDateClick, setIsEndDateClick, setIsStartTimeClick, setIsEndTimeClick, setIsStartDateClick, setSelectStartDate, setEndDate} from '../actions/index';
 import { DateTime } from 'luxon';
 import  MiniCalendar  from './sideBar/MiniCalendar';
 import SelectorTime from './selectorTime';
@@ -14,8 +14,14 @@ import { Link } from 'react-router-dom';
 
 
 const CheckBox = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
+  const dispatch = useDispatch();
+  const {makeEventTodo} = useSelector((state:RootState)=>state.userReducer);
+  const checkHandler = ()=>{      // 체크 눌러서 종일로 바꿀떼 선택한 날 기준으로 endDate 초기화
+    setIsAllday(!isAllday)
+    dispatch(setEndDate(makeEventTodo.selectStartDate))
+  }
   return (
-    <div className="check-box" style={{left:28}} onClick={()=>{setIsAllday(!isAllday)}}>
+    <div className="check-box" style={{left:28}} onClick={()=>{checkHandler()}}>
       <div className="check-box__inner" > 
         <div className="check-box__padding"></div>
         <div className="check-box__mid"></div>
@@ -179,14 +185,14 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
   );
 };
 
-const Attendants = () => {
+const Attendants = ({setAttendant}:{setAttendant:Function}) => {
   return(
     <div className="event__form">
       <svg className="event-svg" width="24px" height="24px" viewBox="0 0 24 24">
         <path d="M5 6C3.9 6 3 6.9 3 8S3.9 10 5 10 7 9.11 7 8 6.11 6 5 6M12 4C10.9 4 10 4.89 10 6S10.9 8 12 8 14 7.11 14 6 13.11 4 12 4M19 2C17.9 2 17 2.9 17 4S17.9 6 19 6 21 5.11 21 4 20.11 2 19 2M3.5 11C2.67 11 2 11.67 2 12.5V17H3V22H7V17H8V12.5C8 11.67 7.33 11 6.5 11H3.5M10.5 9C9.67 9 9 9.67 9 10.5V15H10V20H14V15H15V10.5C15 9.67 14.33 9 13.5 9H10.5M17.5 7C16.67 7 16 7.67 16 8.5V13H17V18H21V13H22V8.5C22 7.67 21.33 7 20.5 7H17.5Z" />
       </svg>
       <div>
-        <input placeholder="참석자 추가" className="attendants__input" />
+        <input placeholder="참석자 추가(이메일)" className="attendants__input" onChange={(e)=>{setAttendant(e.target.value)}}/>
       </div>
     </div>
   )
@@ -240,8 +246,9 @@ const MakeEventTodoFooter = ({isEvent,footCal,setFootCalId,submitHandler}:{isEve
 export default function MakeEventTodo() {
 
   const { makeEventTodo, user } = useSelector((state:RootState)=>state.userReducer);
-  const [isEvent, setIsEvent] = useState(true);
-  const [isAllday, setIsAllday ] = useState(false);
+  const [ isEvent, setIsEvent ] = useState(true);
+  const [ isAllday, setIsAllday ] = useState(false);
+  const [ attendant, setAttendant ] = useState(undefined);
   const [title, setTitle] = useState('( 제목 없음 )');
   let footCal = user.calendar;
   let toDoLisdId = user.todolist[0].id;      // 투두리스트 아이디 지정 
@@ -270,6 +277,7 @@ export default function MakeEventTodo() {
     for(let i = 0 ; i<user.calendar.length ; i++){
       if(user.calendar[i].id===Number(footCalId)) color = user.calendar[i].colour;
     }
+
     if(!isAllday){
       startTime = startDate+'T'+startTime;
       endTime = startDate+'T'+endTime;
@@ -277,11 +285,11 @@ export default function MakeEventTodo() {
       startTime = DateTime.fromISO(startDate).startOf('day').toISO();
       endTime = DateTime.fromISO(endDate).endOf('day').toISO()
     }
-    console.log(isEvent);
-    if(isEvent){
-      createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color)
+
+    if(isEvent){           // 할일 일때 종일이면 하루, 종일 아니면 30분
+      createEvent(startTime, endTime, footCalId, title, undefined, true, undefined, color, attendant)
     }else{
-      createTodo(startTime,toDoLisdId,'하이',undefined);
+      createTodo(startTime,toDoLisdId,'하이','');
     }
     dispatch(setMakeEventTodo(false,'',true,initStartTime, initEndTime))
   }
@@ -308,7 +316,7 @@ export default function MakeEventTodo() {
       </div>
         {
           isEvent ? (
-            <Attendants/>
+            <Attendants setAttendant={setAttendant}/>
           ):(
             null
           )

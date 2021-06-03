@@ -2,7 +2,8 @@ import { useDispatch } from "react-redux";
 import { isOptionClick } from "../../actions/index";
 import { useRef } from "react"; // 레퍼런스 훅
 import Swal from "sweetalert2";
-import { deleteCalendar } from '../../functions/Axios'
+import { deleteCalendar,deleteOtherCalendar } from '../../functions/Axios'
+
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
   return (
@@ -25,7 +26,7 @@ const CheckBox = ({ calendar }: { calendar: any }) => {
   );
 };
 
-const Remove = (calendarId:number) => {
+const Remove = (calendarId:number, myOrOther:string) => {
   Swal.fire({
     title: "삭제 하시겠습니까?",
     showCancelButton: true,
@@ -43,17 +44,24 @@ const Remove = (calendarId:number) => {
         position: "center-left",
         width: "200px",
       });
-      deleteCalendar(calendarId)
+      console.log(calendarId)
+      if(myOrOther === "my"){
+        deleteCalendar(calendarId);
+      }else{
+        deleteOtherCalendar(calendarId);
+      }
+
     }
   });
 };
 
-const Delete = ({calendarId}:{calendarId:number}) => {
+const Delete = ({ calendarId, myOrOther }:{ calendarId:number, myOrOther:string }) => {
+
   return (
     <div
       className="icon"
       onClick={() => {
-        Remove(calendarId);
+        Remove(calendarId,myOrOther);
       }}
     >
       <svg className="icon-svg" viewBox="-3 -3 30 30">
@@ -62,7 +70,7 @@ const Delete = ({calendarId}:{calendarId:number}) => {
     </div>
   );
 };
-const Option = ({ calendar }: { calendar: any }) => {
+const Option = ({ calendar,myOrOther }: { calendar: any ,myOrOther:string}) => {
   const componentRef = useRef<HTMLDivElement>(null); //  ref타입 설정
   const dispatch = useDispatch();
 
@@ -70,7 +78,7 @@ const Option = ({ calendar }: { calendar: any }) => {
     let yAxis = 0;
     if (componentRef.current?.getBoundingClientRect().y)
       yAxis = componentRef.current?.getBoundingClientRect().y;
-    dispatch(isOptionClick(true, calendar.id, yAxis));
+    dispatch(isOptionClick(true, calendar.id, yAxis,myOrOther));
   };
 
   return (
@@ -88,17 +96,17 @@ const Option = ({ calendar }: { calendar: any }) => {
   );
 };
 
-function OptionDelete({ calendar }: { calendar: any }) {
+function OptionDelete({ calendar, myOrOther }: { calendar: any , myOrOther:string}) {
   return (
     <div className="option-delete">
       <div className="option-delete__inner">
-        <Delete calendarId={calendar.id} />
-        <Option calendar={calendar} />
+        <Delete calendarId={calendar.id} myOrOther={myOrOther}/>
+        <Option calendar={calendar} myOrOther={myOrOther}/>
       </div>
     </div>
   );
 }
-export default function CalendarsList({ isOpen, calendar,}: { isOpen: boolean; calendar: any; }){
+export default function CalendarsList({ isOpen, calendar, myOrOther}: { isOpen: boolean; calendar: any; myOrOther:string}){
 
   return (
     <div className="calendars-list">
@@ -117,7 +125,7 @@ export default function CalendarsList({ isOpen, calendar,}: { isOpen: boolean; c
                   {calendar.calendarName}
                 </span>
               </div>
-              <OptionDelete calendar={calendar} />
+              <OptionDelete calendar={calendar} myOrOther={myOrOther} />
             </div>
           </div>
         </div>

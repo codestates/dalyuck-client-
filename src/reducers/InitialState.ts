@@ -14,6 +14,26 @@ export const initEvent = {
       access: true,
       notification: []
 }
+export const initTodo ={
+    id: 0,
+    startTime: '',
+    endTime:'',
+    toDoName: '',
+    description: '',
+    todolistId:0,
+}
+export interface EventType{
+  id: number;
+  startTime: any;
+  endTime: any;
+  eventName: string;
+  colour: string;
+  location: string;
+  description: string;
+  access: boolean;
+  notification: any[];
+  calendarId: number;
+}
 export type State = {
 
   token: string;
@@ -54,13 +74,15 @@ export type State = {
   isSidebarOpen: boolean;
 
   colorOption: {
-    isOptionClick: false;
+    isOptionClick: boolean;
     calendarId: number;
     yAxis: number;
+    myOrOther:string;
   };
   eventTodo: {
-    isEventClick: false;
+    isEventClick: boolean;
     position: [0, 0];
+    isEvent:string;
     event:{
       id: number;
       startTime: any;
@@ -70,7 +92,16 @@ export type State = {
       location: string;
       description: string;
       access: boolean;
-      notification: any[]; 
+      notification: any[];
+      calendarId: number;
+    },
+    todo: {
+      id: number;
+      startTime: string;
+      endTime:string;
+      toDoName: string;
+      description: string;
+      todolistId:number;
     }
   };
 
@@ -85,7 +116,7 @@ export type State = {
         calendarName: string;
         colour: string;
         //event
-        event: [
+        events: [
           {
             id: number;
             startTime: any;
@@ -96,6 +127,7 @@ export type State = {
             description: string;
             access: boolean;
             notification: any[];
+            calendarId: number;
           }
         ];
       }
@@ -110,20 +142,22 @@ export type State = {
         todo: [
           {
             id: number;
-            startTime: any;
+            startTime: string;
+            endTime:string;
             toDoName: string;
             description: string;
             todolistId:number;
           }]
       }
     ];
-    otherCalendar: [
+    otherCalendars: [
       {
         id: number;
         calendarName: string;
         colour: string;
+        userId:number;
         //event
-        event: [
+        otherEvents: [
           {
             id: number;
             startTime: any;
@@ -134,11 +168,24 @@ export type State = {
             description: string;
             access: boolean;
             notification: any[];
+            otherCalendarId: number;
           }
         ];
       }
-    ]
-  };
+    ],
+    attendEvents: [{
+      id: number;
+      startTime: string;
+      endTime: string;
+      eventName: string;
+      colour: string;
+      location: string;
+      description: string;
+      access: true,
+      calendarId: number;
+      notification: any[];
+    }]
+  }
 };
 
 export const initialState: State = {
@@ -172,6 +219,7 @@ export const initialState: State = {
     isOptionClick: false,
     calendarId: 0,
     yAxis: 0,
+    myOrOther:'',
   },
 
   // 만들기 레이어 관련 상태
@@ -193,6 +241,7 @@ export const initialState: State = {
   eventTodo: {
     isEventClick: false,
     position: [0, 0],
+    isEvent:'',
     event:{
       id: 0,
       startTime: '',
@@ -202,7 +251,16 @@ export const initialState: State = {
       location: '',
       description: '',
       access: true,
-      notification: []
+      notification: [],
+      calendarId: 0
+    },
+    todo: {
+        id: 0,
+        startTime: '',
+        endTime:'',
+        toDoName: '',
+        description: '',
+        todolistId:0,
     }
   },
 
@@ -217,7 +275,7 @@ export const initialState: State = {
         calendarName: "",
         colour: "",
         //event
-        event: [
+        events: [
           {
             id: 0,
             startTime: "",
@@ -228,6 +286,7 @@ export const initialState: State = {
             description: "",
             access: true,
             notification: [],
+            calendarId: 0,
           },
         ],
       },
@@ -243,19 +302,21 @@ export const initialState: State = {
           {
             id: 0,
             startTime: '',
+            endTime:'',
             toDoName: '',
             description: '',
             todolistId:0,
           }]
       }
     ],
-    otherCalendar: [
+    otherCalendars: [
       {
         id: 0,
         calendarName: "",
         colour: "",
         //event
-        event: [
+        userId:0,
+        otherEvents: [
           {
             id: 0,
             startTime: "",
@@ -266,9 +327,22 @@ export const initialState: State = {
             description: "",
             access: true,
             notification: [],
+            otherCalendarId: 0,
           },
         ],
       },
     ],
+    attendEvents: [{
+      id: 0,
+      startTime: "",
+      endTime: "",
+      eventName: "",
+      colour: "",
+      location: "",
+      description: "",
+      access: true,
+      calendarId: 0,
+      notification: [],
+    }],
   },
 };
