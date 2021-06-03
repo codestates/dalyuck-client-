@@ -1,5 +1,6 @@
-import Day from "./Day"
+import Day,{ timeToPixel } from "./Day"
 import {DateTime} from 'luxon';
+import { useEffect, useRef } from 'react';
 
 type Time = {
   time:number;
@@ -62,8 +63,15 @@ const Timetable = ({info}:any) => {
 }
 
 const BackgroundGrid = ({info}:any) =>{
+
+  const compoenetRef = useRef<HTMLDivElement>(null);
+  const now = DateTime.now()
+  const nowPx = timeToPixel(now)
+
+  if(compoenetRef.current) compoenetRef.current.scrollTop = nowPx;  // 현재 시간 기준 스크롤 정렬
+
   return (
-    <div className="scroll">
+    <div className="scroll" ref={compoenetRef}>
       <div className="yscale-timetable">
         <Yscale/>
         <Timetable info={info}/>

@@ -112,8 +112,8 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
   const endTimeHandler = () => {
     dispatch(setIsEndTimeClick(true))
   }
-  const makeTimeText = (date:string):string => {
 
+  const makeTimeText = (date:string):string => {
     let timeSpan = "";
     if (DateTime.fromISO(date).hour < 12) {
       timeSpan = DateTime.fromISO(date).toFormat("오전 h:mm");
@@ -122,6 +122,7 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
     }
     return timeSpan
   }
+  
   const startDateHandler = () => {
     dispatch( setIsSelectDateClick(true) );
     dispatch( setIsStartDateClick(true) );

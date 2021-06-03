@@ -203,7 +203,7 @@ export const setMakeEventTodo = (
   selectDate: string,
   isFromSidebar:boolean,
   selectStartTime: string,
-  selectEndtime:string,
+  selectEndTime:string,
 ) => {
   return {
     type: SET_MAKE_EVENT_TODO,
@@ -212,7 +212,7 @@ export const setMakeEventTodo = (
         isFromSidebar,
         selectDate,
         selectStartTime,
-        selectEndtime,
+        selectEndTime,
     },
   };
 };

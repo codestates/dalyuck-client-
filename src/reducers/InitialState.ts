@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 const today = DateTime.now().toISO();
 export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO().split('T')[1];
-export const initEndTime = DateTime.fromISO(initStartTime).plus({hour:1}).toISO().split('T')[1];
+export const initEndTime = DateTime.fromISO(initStartTime).plus({minute:30}).toISO().split('T')[1];
 export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO().split('T')[0];
 export const initEvent = {
       id: 0,

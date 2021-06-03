@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { RootState } from "../../reducers/index";
 
 import {
@@ -7,7 +7,6 @@ import {
   selectPeriod,
   setIsSidebarOpen,
   selectProfile,
-  signOut,
 } from "../../actions/index";
 import { DateTime } from "luxon";
 import { useRef, useState } from "react"; // 레퍼런스 훅스
