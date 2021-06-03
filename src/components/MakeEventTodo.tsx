@@ -251,7 +251,8 @@ export default function MakeEventTodo() {
   const [ attendant, setAttendant ] = useState(undefined);
   const [title, setTitle] = useState('( 제목 없음 )');
   let footCal = user.calendar;
-  let toDoLisdId = user.todolist[0].id;      // 투두리스트 아이디 지정 
+  let toDoLisdId:number = 0;
+  if(user.todolist.length > 0) toDoLisdId = user.todolist[0].id;      // 투두리스트 아이디 지정 
   const [footCalId, setFootCalId] = useState(user.calendar[0].id)
   const selectRef = useRef(null);
   const dispatch = useDispatch();

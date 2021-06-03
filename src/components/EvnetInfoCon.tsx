@@ -50,7 +50,7 @@ const HasAccess = () => {
     </div>
   );
 };
-const EventOptionIcons = ({access}:{access:boolean}) => {
+const EventOptionIcons = ({status}:{status:string}) => {
 
   const dispatch = useDispatch()
 
@@ -73,13 +73,18 @@ const EventOptionIcons = ({access}:{access:boolean}) => {
         </div>
       </div>
       {
-        access ? (<HasAccess />):(null)
+        status.length === 0 ? (
+            <HasAccess />
+          ):
+          (
+            null
+          )
       }
     </div>
   );
 };
 
-const EventInfo = ({eventTodo}:{eventTodo:any}) => {
+const EventInfo = ({eventTodo, status}:{eventTodo:any,status:string}) => {
 
   let startTime:string = '';
   let endTime:string = '';
@@ -121,7 +126,13 @@ const EventInfo = ({eventTodo}:{eventTodo:any}) => {
               <span className="event-info-text__time-span">{startTime+"~"+endTime}</span>
               )
             }
-         
+            {
+              status.length > 0 ? (
+                <span className="event-info-text__time-span">{status}</span>
+              ):(
+                null
+              )
+            }
           </div>
         </div>
       </div>
@@ -131,6 +142,7 @@ const EventInfo = ({eventTodo}:{eventTodo:any}) => {
 
 export default function EventInfoCon() {
 
+  const { user } = useSelector((state:RootState)=>state.userReducer);
   const dispatch = useDispatch()
   const closeRef = useRef(null);
   const callback = ()=>{dispatch(setEventTodo(false,[0,0],'',initEvent,initTodo))}
@@ -141,13 +153,30 @@ export default function EventInfoCon() {
     top: eventTodo.position[1]-36,
     left: eventTodo.position[0]>250 ? (eventTodo.position[0]-223):( eventTodo.position[0])
   }
+
+  let status:string = '';          // 구독했는지 참가했는지 내가 만든 이벤트인지 구분하기 위한 변수.
+
+  if( eventTodo.isEvent === 'event'){
+
+    if(user.id !== eventTodo.event.userId){
+      user.otherCalendars.forEach(cal=>{
+        if(cal.id===eventTodo.event.calendarId) status = `구독중인 캘린더 ${cal.calendarName}`;
+      })
+    }else if(!eventTodo.event.userId){
+      user.attendEvents.forEach(event=>{
+
+        if(event.id === eventTodo.event.id && event.calendarId === eventTodo.event.calendarId) status = '참석중';
+      })
+    }
+  }
+  console.log(status)
   
   return (
     <div className="event-info-con" style={position} ref={closeRef}>
       <div className="event-info-con__inner">
-        <EventOptionIcons access={true} />   {/*일단 항상 트루 수정 관한 */}
+        <EventOptionIcons status={status} />   {/*일단 항상 트루 수정 관한 */}
         <div className="event-info-con-body">
-          <EventInfo eventTodo={eventTodo}/>
+          <EventInfo eventTodo={eventTodo} status={status}/>
         </div>
       </div>
     </div>
