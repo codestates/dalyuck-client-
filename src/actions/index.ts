@@ -25,6 +25,9 @@ export const SET_IS_START_DATE_CLICK = "SET_IS_START_DATE_CLICK" as const;
 export const SET_CAL_CHECK_MY = "SET_CAL_CHECK_MY" as const;
 export const SET_CAL_CHECK_OTHER = "SET_CAL_CHECK_OTHER" as const;
 export const SET_CAL_CHECK_TODO= "SET_CAL_CHECK_TODO" as const;
+export const DEL_CAL_CHECK_MY = "DEL_CAL_CHECK_MY" as const;
+export const DEL_CAL_CHECK_OTHER = "DEL_CAL_CHECK_OTHER" as const;
+export const DEL_CAL_CHECK_TODO= "DEL_CAL_CHECK_TODO" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -49,7 +52,10 @@ export type Action =
   | ReturnType<typeof setTodoList>
   | ReturnType<typeof setCalCheckMy>
   | ReturnType<typeof setCalCheckOther>
-  | ReturnType<typeof setCalCheckTodo>;
+  | ReturnType<typeof setCalCheckTodo>
+  | ReturnType<typeof delCalCheckMy>
+  | ReturnType<typeof delCalCheckOther>
+  | ReturnType<typeof delCalCheckTodo>
 export interface UserInfo {
   data: {
     userName: string;
@@ -312,27 +318,51 @@ export const setIsStartDateClick = (isStartDateClick: boolean) => {
     },
   };
 };
-export const setCalCheckMy = (calId:number) => {
+export const setCalCheckMy = (myCal:number[]) => {
   return {
     type: SET_CAL_CHECK_MY,
     payload: {
-      calId,
+      myCal,
     },
   };
 };
-export const setCalCheckOther = (calId:number) => {
+export const setCalCheckOther = (otherCal:number[]) => {
   return {
     type: SET_CAL_CHECK_OTHER,
     payload: {
-      calId,
+      otherCal,
     },
   };
 };
-export const setCalCheckTodo = (calId:number) => {
+export const setCalCheckTodo = (todo:number[]) => {
   return {
     type: SET_CAL_CHECK_TODO,
     payload: {
-      calId,
+      todo,
+    },
+  };
+};
+export const delCalCheckMy = (myCal:number) => {
+  return {
+    type: DEL_CAL_CHECK_MY,
+    payload: {
+      myCal,
+    },
+  };
+};
+export const delCalCheckOther = (otherCal:number) => {
+  return {
+    type: DEL_CAL_CHECK_OTHER,
+    payload: {
+      otherCal,
+    },
+  };
+};
+export const delCalCheckTodo = (todo:number) => {
+  return {
+    type: DEL_CAL_CHECK_TODO,
+    payload: {
+      todo,
     },
   };
 };

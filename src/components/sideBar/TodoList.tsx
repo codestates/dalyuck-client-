@@ -1,8 +1,24 @@
-import { isOptionClick } from "../../actions/index";
-import { useRef } from "react"; // 레퍼런스 
+import { isOptionClick, setCalCheckTodo, delCalCheckTodo} from "../../actions/index";
+import { useRef, useState, useEffect } from "react"; // 레퍼런스 
 import { useDispatch } from "react-redux";
 
+
 const CheckBox = ({ calendar }: { calendar: any }) => {
+
+  const dispatch = useDispatch();
+  const [ isCheck, setIsCheck ] = useState(true)
+  const checkHandler = ()=>{
+    setIsCheck(!isCheck);
+    if(!isCheck===true){
+      dispatch(setCalCheckTodo(calendar.id))
+    }else{
+      dispatch(delCalCheckTodo(calendar.id))
+    }
+  }
+
+  useEffect(()=>{
+    dispatch(setCalCheckTodo(calendar.id))
+  },[])
 
   let color:string = '';
   if(!calendar){
@@ -10,15 +26,13 @@ const CheckBox = ({ calendar }: { calendar: any }) => {
   }else{
     color = calendar.colour
   }
+
   return (
-    <div className="check-box">
-      <div
-        className="check-box__inner"
-        style={{ borderColor: color }}
-      >
+    <div className="check-box" onClick={()=>{checkHandler()}}>
+      <div className="check-box__inner" style={{ borderColor: color }} >
         <div className="check-box__padding"></div>
         <div className="check-box__mid"></div>
-        {/* <div className="isChecked" /> */}
+        { isCheck ? (null):( <div className="isChecked" /> ) }
         <div className="check-box__bot">
           <div className="check-box-shape">
             <div className="check-box-shape__1"></div>

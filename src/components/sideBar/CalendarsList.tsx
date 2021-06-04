@@ -1,9 +1,8 @@
 import { useDispatch } from "react-redux";
-import { isOptionClick ,setCalCheckMy, setCalCheckOther} from "../../actions/index";
+import { isOptionClick ,setCalCheckMy, setCalCheckOther, delCalCheckOther,delCalCheckMy } from "../../actions/index";
 import { useEffect, useRef, useState } from "react"; // 레퍼런스 훅
 import Swal from "sweetalert2";
 import { deleteCalendar,deleteOtherCalendar } from '../../functions/Axios'
-
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
 
@@ -11,11 +10,17 @@ const CheckBox = ({ calendar }: { calendar: any }) => {
   const [ isCheck, setIsCheck ] = useState(true)
   const checkHandler = ()=>{
     setIsCheck(!isCheck);
-    if(isCheck){
+    if(!isCheck===true){
       if(calendar.otherEvents){
         dispatch(setCalCheckOther(calendar.id))
       }else{
         dispatch(setCalCheckMy(calendar.id))
+      }
+    }else{
+      if(calendar.otherEvents){
+        dispatch(delCalCheckOther(calendar.id))
+      }else{
+        dispatch(delCalCheckMy(calendar.id))
       }
     }
   }

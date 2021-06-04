@@ -43,13 +43,18 @@ const MonthWeekheaderDay = ({ day }: { day: DateTime }) => {
 const WeekEvent = ({day, calendar}:any) => {
 
   let events:any[]=[] ;
-  const { user } = useSelector((state:RootState)=>state.userReducer);
+  const { user, calCheckArr  } = useSelector((state:RootState)=>state.userReducer);
   const [userHook, serUserHook] = useState(user)
   useEffect(()=>{
     serUserHook(user)
   },[user])
   if(userHook){
-    userHook.calendar.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
+    let mycal = userHook.calendar.filter(cal=>{
+      return calCheckArr.myCal.some(ArrId=>{
+        return ArrId === cal.id
+      })
+    })
+    mycal.forEach((cal:any)=>{      // 모든 캘린더의 이벤트들을 하나의 배열안에 넣음
       if(cal.events){
         cal.events.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
           event.userId = cal.userId;
@@ -60,7 +65,12 @@ const WeekEvent = ({day, calendar}:any) => {
   }
 
   if(userHook){
-    userHook.otherCalendars.forEach((cal:any)=>{      // 모든 구독한 캘린더의 이벤트들을 하나의 배열안에 넣음
+    let othercal = userHook.otherCalendars.filter(cal=>{
+      return calCheckArr.otherCal.some(ArrId=>{
+        return ArrId === cal.id
+      })
+    })
+    othercal.forEach((cal:any)=>{      // 모든 구독한 캘린더의 이벤트들을 하나의 배열안에 넣음
       if(cal.otherEvents){
         cal.otherEvents.forEach((event:any)=>{          // 하나의 이벤트에 캔린더id 유저id 넣어 가공했음 (속성으로 전달할때 간편하게 전달하기 위해서)
           event.calendarId =cal.otherCalendarId
@@ -73,7 +83,9 @@ const WeekEvent = ({day, calendar}:any) => {
 
   if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
   if(userHook.todolist.length > 0){
-    if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
+    if(calCheckArr.todo.length > 1){
+      if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
+    }
   }
 
   let underEvents = events.filter(event=>{
