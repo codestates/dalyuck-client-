@@ -2,6 +2,7 @@ import { DateTime } from "luxon";
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../reducers/index'
 import { setIsStartTimeClick, setStartTime, setEndTime, setIsEndTimeClick } from '../actions/index';
+import { useEffect, useRef } from "react";
 
 const SelectorPeriodSpanCon = ({ time, isStart }: { time: DateTime, isStart:string }) => {
 
@@ -54,9 +55,26 @@ const SelectorTime = ({isStart}:{isStart:string}) => {
     }
   }
 
+  const timeToPixel = (time:DateTime):number=>{
+    const minute = time.minute;
+    const hour = time.hour;
+    const conmponentHeight = 1728;
+    const heightPx = conmponentHeight*((hour+(minute/60))/24)
+    return heightPx
+  }
+  const now = DateTime.now();
+  const heightPx = timeToPixel(now);
+  const compoenetRef = useRef<HTMLDivElement>(null);
+
+  useEffect(()=>{
+    if(makeEventTodo.isStartTimeClick){
+      if(compoenetRef.current) compoenetRef.current.scrollTop = heightPx;
+    }
+  })
+
   return (
-    <div className="selector">
-      <div className="selector__inner">
+    <div className="selector" >
+      <div className="selector__inner" ref={compoenetRef}>
         <div className="selector-time">
           {timeArray.map((time) => {
             return <SelectorPeriodSpanCon time={time} isStart={isStart} />;

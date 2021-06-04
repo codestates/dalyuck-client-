@@ -3,9 +3,8 @@ import { useDispatch, useSelector } from 'react-redux'
 import { setEventTodo } from "../../actions/index";
 import { useEffect, useRef, useState } from 'react';   // 레퍼런스 훅스
 import { RootState } from '../../reducers/index';
-import { EventType } from '../../reducers/InitialState';
 
-const timeToPixel = (time:DateTime):number=>{
+export const timeToPixel = (time:DateTime):number=>{
   const minute = time.minute;
   const hour = time.hour;
   const conmponentHeight = 1153;

@@ -22,6 +22,9 @@ export const SET_END_DATE = "SET_END_DATE" as const;
 export const SET_SELECT_START_DATE = "SET_SELECT_START_DATE" as const;
 export const SET_IS_END_DATE_CLICK = "SET_IS_END_DATE_CLICK" as const;
 export const SET_IS_START_DATE_CLICK = "SET_IS_START_DATE_CLICK" as const;
+export const SET_CAL_CHECK_MY = "SET_CAL_CHECK_MY" as const;
+export const SET_CAL_CHECK_OTHER = "SET_CAL_CHECK_OTHER" as const;
+export const SET_CAL_CHECK_TODO= "SET_CAL_CHECK_TODO" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -43,7 +46,10 @@ export type Action =
   | ReturnType<typeof setIsEndDateClick>
   | ReturnType<typeof setIsStartDateClick>
   | ReturnType<typeof setCalendar>
-  | ReturnType<typeof setTodoList>;
+  | ReturnType<typeof setTodoList>
+  | ReturnType<typeof setCalCheckMy>
+  | ReturnType<typeof setCalCheckOther>
+  | ReturnType<typeof setCalCheckTodo>;
 export interface UserInfo {
   data: {
     userName: string;
@@ -203,16 +209,16 @@ export const setMakeEventTodo = (
   selectDate: string,
   isFromSidebar: boolean,
   selectStartTime: string,
-  selectEndtime: string
+  selectEndTime:string,
 ) => {
   return {
     type: SET_MAKE_EVENT_TODO,
     payload: {
-      isMakeBtnClick,
-      isFromSidebar,
-      selectDate,
-      selectStartTime,
-      selectEndtime,
+        isMakeBtnClick,
+        isFromSidebar,
+        selectDate,
+        selectStartTime,
+        selectEndTime,
     },
   };
 };
@@ -303,6 +309,30 @@ export const setIsStartDateClick = (isStartDateClick: boolean) => {
     type: SET_IS_START_DATE_CLICK,
     payload: {
       isStartDateClick,
+    },
+  };
+};
+export const setCalCheckMy = (calId:number) => {
+  return {
+    type: SET_CAL_CHECK_MY,
+    payload: {
+      calId,
+    },
+  };
+};
+export const setCalCheckOther = (calId:number) => {
+  return {
+    type: SET_CAL_CHECK_OTHER,
+    payload: {
+      calId,
+    },
+  };
+};
+export const setCalCheckTodo = (calId:number) => {
+  return {
+    type: SET_CAL_CHECK_TODO,
+    payload: {
+      calId,
     },
   };
 };

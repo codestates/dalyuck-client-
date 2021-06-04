@@ -1,5 +1,5 @@
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory, useLocation } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { RootState } from "../../reducers/index";
 
 import {
@@ -7,7 +7,6 @@ import {
   selectPeriod,
   setIsSidebarOpen,
   selectProfile,
-  signOut,
 } from "../../actions/index";
 import { DateTime } from "luxon";
 import { useRef, useState } from "react"; // 레퍼런스 훅스
@@ -124,13 +123,8 @@ const Nav = () => {
             <div className="navigator-con">
               {/* 위치 버튼 3개 */}
               <div className="navigator">
-                <div className="today-btn">
-                  <span
-                    className="today-btn-span"
-                    onClick={() => {
-                      todayHandler();
-                    }}
-                  >
+                <div className="today-btn" onClick={() => { todayHandler(); }}>
+                  <span className="today-btn-span">
                     오늘
                   </span>
                 </div>
@@ -198,9 +192,11 @@ const Nav = () => {
                   {/* 일간 주간 월간 선택 */}
                   <span className="period-string">{periodKor}</span>
                   {/* <div className="period-select-btn"> */}
-                  <svg focusable="false" viewBox="0 0 24 24">
-                    <path fill="currentColor" d="M7,10L12,15L17,10H7Z" />
-                  </svg>
+                  <span className="period-select-icon">
+                    <svg focusable="false" viewBox="0 0 24 24">
+                      <path fill="currentColor" d="M7,10L12,15L17,10H7Z" />
+                    </svg>
+                  </span>
                   {/* </div> */}
                 </div>
               </div>

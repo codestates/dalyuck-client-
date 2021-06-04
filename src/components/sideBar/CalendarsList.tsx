@@ -1,20 +1,39 @@
 import { useDispatch } from "react-redux";
-import { isOptionClick } from "../../actions/index";
-import { useRef } from "react"; // 레퍼런스 훅
+import { isOptionClick ,setCalCheckMy, setCalCheckOther} from "../../actions/index";
+import { useEffect, useRef, useState } from "react"; // 레퍼런스 훅
 import Swal from "sweetalert2";
 import { deleteCalendar,deleteOtherCalendar } from '../../functions/Axios'
 
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
+
+  const dispatch = useDispatch();
+  const [ isCheck, setIsCheck ] = useState(true)
+  const checkHandler = ()=>{
+    setIsCheck(!isCheck);
+    if(isCheck){
+      if(calendar.otherEvents){
+        dispatch(setCalCheckOther(calendar.id))
+      }else{
+        dispatch(setCalCheckMy(calendar.id))
+      }
+    }
+  }
+
+  useEffect(()=>{
+    if(calendar.otherEvents){
+      dispatch(setCalCheckOther(calendar.id))
+    }else{
+      dispatch(setCalCheckMy(calendar.id))
+    }
+  },[])
+
   return (
-    <div className="check-box">
-      <div
-        className="check-box__inner"
-        style={{ borderColor: calendar.colour }}
-      >
+    <div className="check-box" onClick={()=>{checkHandler()}}>
+      <div className="check-box__inner" style={{ borderColor: calendar.colour }} >
         <div className="check-box__padding"></div>
         <div className="check-box__mid"></div>
-        {/* <div className="isChecked" /> */}
+        { isCheck ? (null):( <div className="isChecked" /> ) }
         <div className="check-box__bot">
           <div className="check-box-shape">
             <div className="check-box-shape__1"></div>
