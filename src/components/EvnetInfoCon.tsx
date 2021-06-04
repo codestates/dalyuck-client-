@@ -149,9 +149,10 @@ export default function EventInfoCon() {
   useOutSideClick(closeRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
   const { eventTodo } = useSelector( (state:RootState) => state.userReducer)
+  console.log(eventTodo.position[0])
   const position={
-    top: eventTodo.position[1]-36,
-    left: eventTodo.position[0]>250 ? (eventTodo.position[0]-223):( eventTodo.position[0])
+    top: eventTodo.position[1]-160,
+    left: eventTodo.position[0]<60 ? (eventTodo.position[0]-40):( eventTodo.position[0]-330)
   }
 
   let status:string = '';          // 구독했는지 참가했는지 내가 만든 이벤트인지 구분하기 위한 변수.

@@ -238,7 +238,7 @@ const MakeEventTodoFooter = ({isEvent,footCal,setFootCalId,submitHandler}:{isEve
           })
         }
       </select>
-      <Link to="/setting/createcalendar">옵션 더보기</Link>          {/** 여기도 링크 url 수정  */}
+      {/* <Link to="/setting/createcalendar">옵션 더보기</Link>          * 여기도 링크 url 수정  */}
       <button className="event__submit__btn" onClick={()=>{submitHandler()}}>저장</button>
     </div>
   );
@@ -263,7 +263,7 @@ export default function MakeEventTodo() {
   const position: CSS.Properties={   
     position: 'absolute',
     left: '409px',
-    top: '173px'
+    top: '100px'
   };
   
 

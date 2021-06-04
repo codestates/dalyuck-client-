@@ -275,7 +275,7 @@
 }
 .period-string {
   margin-left: 4px;
-  margin-right: 28px;
+  margin-right: 7px;
 
   position: relative;
 
@@ -345,4 +345,10 @@
   height: 32px;
   width: 32px;
   z-index: 0;
+}
+.period-select-icon{
+  box-sizing: border-box;
+  width: 25px;
+  height: 26px;
+  margin-top: 4px;
 }
