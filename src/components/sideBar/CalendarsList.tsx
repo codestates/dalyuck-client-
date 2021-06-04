@@ -3,6 +3,8 @@ import {
   isOptionClick,
   setCalCheckMy,
   setCalCheckOther,
+  delCalCheckOther,
+  delCalCheckMy
 } from "../../actions/index";
 import { useEffect, useRef, useState } from "react"; // 레퍼런스 훅
 import Swal from "sweetalert2";
