@@ -93,7 +93,7 @@ export type State = {
       access: boolean;
       notification: any[];
       calendarId: number;
-
+      otherCalendarId:number;
       userId:number;
     },
     todo: {
@@ -263,6 +263,7 @@ export const initialState: State = {
       access: true,
       notification: [],
       calendarId: 0,
+      otherCalendarId:0,
       userId:0,
     },
     todo: {

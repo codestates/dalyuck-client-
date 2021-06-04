@@ -89,17 +89,20 @@ const EventInfo = ({eventTodo, status}:{eventTodo:any,status:string}) => {
   let startTime:string = '';
   let endTime:string = '';
   let name:string = '';
-
+  let color:string = '';
+  console.log(eventTodo)
   if(eventTodo.event){
     startTime = eventTodo.event.startTime;
     endTime = eventTodo.event.endTime;
     name = eventTodo.event.eventName;
+    color = eventTodo.event.colour;
   }else{
     startTime = eventTodo.todo.startTime;
     endTime = eventTodo.todo.endTime;
     name = eventTodo.todo.eventName;
+    color = eventTodo.todo.colour;
   }
-
+  
   let isAllday = Interval.fromDateTimes(DateTime.fromISO(startTime),DateTime.fromISO(endTime)).count('hour') >= 24  
   let date = DateTime.fromISO(startTime).toFormat("M월 d일");
   startTime = DateTime.fromISO(startTime).toFormat("t");
@@ -109,7 +112,7 @@ const EventInfo = ({eventTodo, status}:{eventTodo:any,status:string}) => {
     <div className="event-info">
       <div className="event-info-color">
         <span className="event-info-color__inner">
-          <div className="event-info-color__shape"></div>
+          <div className="event-info-color__shape" style={{backgroundColor:color}}/>
         </span>
       </div>
       <div className="event-info-text">
@@ -128,7 +131,9 @@ const EventInfo = ({eventTodo, status}:{eventTodo:any,status:string}) => {
             }
             {
               status.length > 0 ? (
-                <span className="event-info-text__time-span">{status}</span>
+                <div className="event-margin">
+                  <span className="event-info-text__time-span">{status}</span>
+                </div>
               ):(
                 null
               )
@@ -149,28 +154,33 @@ export default function EventInfoCon() {
   useOutSideClick(closeRef, callback) // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
 
   const { eventTodo } = useSelector( (state:RootState) => state.userReducer)
-  console.log(eventTodo.position[0])
   const position={
     top: eventTodo.position[1]-160,
     left: eventTodo.position[0]<60 ? (eventTodo.position[0]-40):( eventTodo.position[0]-330)
   }
 
   let status:string = '';          // 구독했는지 참가했는지 내가 만든 이벤트인지 구분하기 위한 변수.
-
+  console.log(eventTodo)
   if( eventTodo.isEvent === 'event'){
 
-    if(user.id !== eventTodo.event.userId){
+    if(eventTodo.event.otherCalendarId){
       user.otherCalendars.forEach(cal=>{
-        if(cal.id===eventTodo.event.calendarId) status = `구독중인 캘린더 ${cal.calendarName}`;
+        if(cal.id===eventTodo.event.otherCalendarId) status = `( 구독중 ) ${cal.calendarName}`;
       })
-    }else if(!eventTodo.event.userId){
-      user.attendEvents.forEach(event=>{
+    }else{
+      let resultEvent;
+      let resultCal = user.calendar.find(cal=>{
+        return cal.id === eventTodo.event.calendarId;
+      })
+      if(resultCal) {
+        resultEvent = resultCal.events.find(event=>{
+          return event.id === eventTodo.event.id;
+        })
+      }
 
-        if(event.id === eventTodo.event.id && event.calendarId === eventTodo.event.calendarId) status = '참석중';
-      })
+      if( !(resultCal && resultEvent) ) status = '( 참가중 )'
     }
   }
-  console.log(status)
   
   return (
     <div className="event-info-con" style={position} ref={closeRef}>
