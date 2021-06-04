@@ -22,11 +22,12 @@ import {
   SET_TODOLIST,
   SET_CAL_CHECK_MY,
   SET_CAL_CHECK_OTHER,
-  SET_CAL_CHECK_TODO
+  SET_CAL_CHECK_TODO,
+  DEL_CAL_CHECK_MY,
+  DEL_CAL_CHECK_OTHER,
 } from "../actions/index";
 import { initialState, State } from "./InitialState";
 import { Action } from "../actions";
-import { Stats } from "fs";
 
 const dateReducer = (state: State = initialState, action: Action): State => {
   switch (action.type) {
@@ -188,7 +189,7 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       ...state,
       calCheckArr: {
         ...state.calCheckArr,
-        myCal: state.calCheckArr.myCal.add(action.payload)
+        myCal: [...state.calCheckArr.myCal, action.payload.myCal]
       },
     });
     case SET_CAL_CHECK_OTHER:
@@ -196,7 +197,7 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       ...state,
       calCheckArr: {
         ...state.calCheckArr,
-        otherCal: state.calCheckArr.otherCal.add(action.payload)
+        otherCal: [...state.calCheckArr.otherCal, action.payload.otherCal]
       },
     });
     case SET_CAL_CHECK_TODO:
@@ -204,10 +205,35 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       ...state,
       calCheckArr: {
         ...state.calCheckArr,
-        todo: state.calCheckArr.todo.add(action.payload)
+        todo:action.payload.todo
       },
     });
-      
+    case DEL_CAL_CHECK_MY:
+
+      let newStateMy = state.calCheckArr.myCal.filter(calId=>{
+        return calId !== action.payload.myCal
+      })
+
+      return Object.assign({}, state, {
+      ...state,
+      calCheckArr: {
+        ...state.calCheckArr,
+        myCal: [...newStateMy]
+      },
+    });
+    case DEL_CAL_CHECK_OTHER:
+
+      let newStateOther = state.calCheckArr.otherCal.filter(calId=>{
+        return calId !== action.payload.otherCal
+      })
+
+      return Object.assign({}, state, {
+      ...state,
+      calCheckArr: {
+        ...state.calCheckArr,
+        otherCal: [...newStateOther]
+      },
+    });      
     default:
       return state;
   }

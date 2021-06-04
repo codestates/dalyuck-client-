@@ -9,16 +9,23 @@ import Swal from "sweetalert2";
 import { deleteCalendar, deleteOtherCalendar } from "../../functions/Axios";
 import Tooltip from "@material-ui/core/Tooltip";
 
+
 const CheckBox = ({ calendar }: { calendar: any }) => {
   const dispatch = useDispatch();
   const [isCheck, setIsCheck] = useState(true);
   const checkHandler = () => {
     setIsCheck(!isCheck);
-    if (isCheck) {
-      if (calendar.otherEvents) {
-        dispatch(setCalCheckOther(calendar.id));
-      } else {
-        dispatch(setCalCheckMy(calendar.id));
+    if(!isCheck===true){
+      if(calendar.otherEvents){
+        dispatch(setCalCheckOther(calendar.id))
+      }else{
+        dispatch(setCalCheckMy(calendar.id))
+      }
+    }else{
+      if(calendar.otherEvents){
+        dispatch(delCalCheckOther(calendar.id))
+      }else{
+        dispatch(delCalCheckMy(calendar.id))
       }
     }
   };
