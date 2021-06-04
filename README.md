@@ -18,7 +18,7 @@
 ## BACK
 ![](https://img.shields.io/badge/BACK-nest_js-339933?style=for-the-badge&logo=nestjs)   
 ![](https://img.shields.io/badge/BACK-typescript-FFDA44?style=for-the-badge&logo=typescript)   
-![](https://img.shields.io/badge/BACK-Sequelize-258FFA?style=for-the-badge&logo=appveyor)   
+![](https://img.shields.io/badge/BACK-TypeOrm-258FFA?style=for-the-badge&logo=appveyor)   
 ![](https://img.shields.io/badge/BACK-MySQL-4479A1?style=for-the-badge&logo=mysql)   
 ![](https://img.shields.io/badge/BACK-JWT-000000?style=for-the-badge&logo=json-web-tokens)   
 ![](https://img.shields.io/badge/BACK-AMAZON_AWS-232F3E?style=for-the-badge&logo=amazon-aws)
