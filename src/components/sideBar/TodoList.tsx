@@ -1,24 +1,22 @@
-import { isOptionClick, setCalCheckTodo, delCalCheckTodo} from "../../actions/index";
-import { useRef, useState, useEffect } from "react"; // 레퍼런스 
+import { isOptionClick, setCalCheckTodo} from "../../actions/index";
+import { useRef, useState } from "react"; // 레퍼런스 
 import { useDispatch } from "react-redux";
 
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
+
+
 
   const dispatch = useDispatch();
   const [ isCheck, setIsCheck ] = useState(true)
   const checkHandler = ()=>{
     setIsCheck(!isCheck);
     if(!isCheck===true){
-      dispatch(setCalCheckTodo(calendar.id))
+      dispatch(setCalCheckTodo(true))
     }else{
-      dispatch(delCalCheckTodo(calendar.id))
+      dispatch(setCalCheckTodo(false))
     }
   }
-
-  useEffect(()=>{
-    dispatch(setCalCheckTodo(calendar.id))
-  },[])
 
   let color:string = '';
   if(!calendar){

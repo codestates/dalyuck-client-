@@ -25,7 +25,6 @@ import {
   SET_CAL_CHECK_TODO,
   DEL_CAL_CHECK_MY,
   DEL_CAL_CHECK_OTHER,
-  DEL_CAL_CHECK_TODO
 } from "../actions/index";
 import { initialState, State } from "./InitialState";
 import { Action } from "../actions";
@@ -206,7 +205,7 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       ...state,
       calCheckArr: {
         ...state.calCheckArr,
-        todo: [...state.calCheckArr.todo, action.payload.todo]
+        todo:action.payload.todo
       },
     });
     case DEL_CAL_CHECK_MY:
@@ -234,21 +233,7 @@ const dateReducer = (state: State = initialState, action: Action): State => {
         ...state.calCheckArr,
         otherCal: [...newStateOther]
       },
-    });
-    case DEL_CAL_CHECK_TODO:
-
-      let newStateTodo = state.calCheckArr.todo.filter(calId=>{
-        return calId !== action.payload.todo
-      })
-
-      return Object.assign({}, state, {
-      ...state,
-      calCheckArr: {
-        ...state.calCheckArr,
-        todo: [...newStateTodo]
-      },
-    });
-      
+    });      
     default:
       return state;
   }

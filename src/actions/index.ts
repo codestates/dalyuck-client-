@@ -54,8 +54,7 @@ export type Action =
   | ReturnType<typeof setCalCheckOther>
   | ReturnType<typeof setCalCheckTodo>
   | ReturnType<typeof delCalCheckMy>
-  | ReturnType<typeof delCalCheckOther>
-  | ReturnType<typeof delCalCheckTodo>
+  | ReturnType<typeof delCalCheckOther>;
 export interface UserInfo {
   data: {
     userName: string;
@@ -334,11 +333,11 @@ export const setCalCheckOther = (otherCal:number[]) => {
     },
   };
 };
-export const setCalCheckTodo = (todo:number[]) => {
+export const setCalCheckTodo = (todo:boolean) => {
   return {
     type: SET_CAL_CHECK_TODO,
     payload: {
-      todo,
+      todo
     },
   };
 };
@@ -358,11 +357,4 @@ export const delCalCheckOther = (otherCal:number) => {
     },
   };
 };
-export const delCalCheckTodo = (todo:number) => {
-  return {
-    type: DEL_CAL_CHECK_TODO,
-    payload: {
-      todo,
-    },
-  };
-};
+

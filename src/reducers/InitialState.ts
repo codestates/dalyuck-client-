@@ -193,7 +193,7 @@ export type State = {
   calCheckArr:{
     myCal:number[];
     otherCal:number[];
-    todo:number[];
+    todo:boolean;
   }
 };
 
@@ -363,6 +363,6 @@ export const initialState: State = {
   calCheckArr:{
     myCal:[],
     otherCal:[],
-    todo:[],
+    todo:true,
   }
 };

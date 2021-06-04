@@ -90,7 +90,7 @@ const Day = ({ day }: any) => {
 
   useEffect(()=>{
     serUserHook(user)
-  },[user]);
+  },[user,calCheckArr]);
 
   if(userHook){
     let mycal = userHook.calendar.filter(cal=>{
@@ -127,9 +127,10 @@ const Day = ({ day }: any) => {
 
   if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
   if(userHook.todolist.length > 0){
-    if(calCheckArr.todo.length > 1){
-      if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
-    }
+    console.log(calCheckArr.todo)
+      if(calCheckArr.todo){
+        events = events.concat(userHook.todolist[0].todo); // 할일 
+      } 
   }
   // events = [...events , ...user.attendEvents];         참가자 중복 되어서 주석
 

@@ -83,7 +83,7 @@ const WeekEvent = ({day, calendar}:any) => {
 
   if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
   if(userHook.todolist.length > 0){
-    if(calCheckArr.todo.length > 1){
+    if(calCheckArr.todo){
       if(userHook.todolist[0].todo.length > 0 ) events = events.concat(userHook.todolist[0].todo); // 할일 
     }
   }
