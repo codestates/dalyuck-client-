@@ -1,7 +1,7 @@
 import { useSelector, useDispatch } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { RootState } from "../../reducers/index";
-
+import Tooltip from "@material-ui/core/Tooltip";
 import {
   setBaseDate,
   selectPeriod,
@@ -9,7 +9,7 @@ import {
   selectProfile,
 } from "../../actions/index";
 import { DateTime } from "luxon";
-import { useRef, useState } from "react"; // 레퍼런스 훅스
+import { useRef, useState, useEffect } from "react"; // 레퍼런스 훅스
 import dotenv from "dotenv";
 import SignIn from "../SignIn";
 import Modal from "../Modal";
@@ -35,6 +35,10 @@ const Nav = () => {
   const [modalType, setModalType] = useState<string>("");
   const [modalComment, setModalComment] = useState<string>("");
 
+  useEffect(() => {
+    handleSignInBtn();
+  }, []);
+
   let date = base.baseDate;
   let period: {};
   let periodKor: string = "주";
@@ -56,6 +60,19 @@ const Nav = () => {
       navText = DateTime.fromISO(date).toFormat("y년 M월");
       break;
   }
+
+  let week = new Array(
+    "일요일",
+    "월요일",
+    "화요일",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일"
+  );
+
+  let today = new Date().getDay();
+  let todayLabel = week[today];
 
   const closeSignInModal = () => {
     setSignInModalOpen(false);
@@ -109,9 +126,22 @@ const Nav = () => {
         <div className="menu-logo-name-con">
           <div className="menu-con" onClick={() => handleSidebar()}>
             {/* sidebar 접었다 폇다하는 버튼 */}
-            <svg focusable="false" viewBox="0 0 24 24">
-              <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
-            </svg>
+            <Tooltip
+              title={
+                <h1
+                  style={{
+                    color: "white",
+                    fontSize: "13px",
+                  }}
+                >
+                  기본 메뉴
+                </h1>
+              }
+            >
+              <svg focusable="false" viewBox="0 0 24 24">
+                <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path>
+              </svg>
+            </Tooltip>
           </div>
           <div className="logo-name-con">
             {/* 로고 사진, 프로젝트명 기입 */}
@@ -123,10 +153,28 @@ const Nav = () => {
             <div className="navigator-con">
               {/* 위치 버튼 3개 */}
               <div className="navigator">
-                <div className="today-btn" onClick={() => { todayHandler(); }}>
-                  <span className="today-btn-span">
-                    오늘
-                  </span>
+                <div
+                  className="today-btn"
+                  onClick={() => {
+                    todayHandler();
+                  }}
+                >
+                  <Tooltip
+                    title={
+                      <h1
+                        style={{
+                          color: "white",
+                          fontSize: "13px",
+                        }}
+                      >
+                        {DateTime.fromISO(date).toFormat(
+                          `M월 d일 (${todayLabel})`
+                        )}
+                      </h1>
+                    }
+                  >
+                    <span className="today-btn-span">오늘</span>
+                  </Tooltip>
                 </div>
                 <div
                   className="previous-btn"
@@ -135,12 +183,25 @@ const Nav = () => {
                   }}
                 >
                   <div className="pre-next-btn-con">
-                    <svg focusable="false" viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
-                      />
-                    </svg>
+                    <Tooltip
+                      title={
+                        <h1
+                          style={{
+                            color: "white",
+                            fontSize: "13px",
+                          }}
+                        >
+                          전 달
+                        </h1>
+                      }
+                    >
+                      <svg focusable="false" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M15.41,16.58L10.83,12L15.41,7.41L14,6L8,12L14,18L15.41,16.58Z"
+                        />
+                      </svg>
+                    </Tooltip>
                   </div>
                 </div>
                 <div
@@ -150,12 +211,25 @@ const Nav = () => {
                   }}
                 >
                   <div className="pre-next-btn-con">
-                    <svg focusable="false" viewBox="0 0 24 24">
-                      <path
-                        fill="currentColor"
-                        d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
-                      />
-                    </svg>
+                    <Tooltip
+                      title={
+                        <h1
+                          style={{
+                            color: "white",
+                            fontSize: "13px",
+                          }}
+                        >
+                          다음 달
+                        </h1>
+                      }
+                    >
+                      <svg focusable="false" viewBox="0 0 24 24">
+                        <path
+                          fill="currentColor"
+                          d="M8.59,16.58L13.17,12L8.59,7.41L10,6L16,12L10,18L8.59,16.58Z"
+                        />
+                      </svg>
+                    </Tooltip>
                   </div>
                 </div>
               </div>
@@ -226,13 +300,37 @@ const Nav = () => {
             }}
           >
             <div className="profile">
-              <svg viewBox="0 0 24 24" className="profile-svg">
-                <path
-                  color="#1a73e8"
-                  fill="currentColor"
-                  d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
-                />
-              </svg>
+              <Tooltip
+                className="profileTooltip"
+                title={
+                  <>
+                    <h1
+                      style={{
+                        color: "white",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {user.userName}
+                    </h1>
+                    <h1
+                      style={{
+                        color: "white",
+                        fontSize: "13px",
+                      }}
+                    >
+                      {user.email}
+                    </h1>
+                  </>
+                }
+              >
+                <svg viewBox="0 0 24 24" className="profile-svg">
+                  <path
+                    color="#1a73e8"
+                    fill="currentColor"
+                    d="M12,4A4,4 0 0,1 16,8A4,4 0 0,1 12,12A4,4 0 0,1 8,8A4,4 0 0,1 12,4M12,14C16.42,14 20,15.79 20,18V20H4V18C4,15.79 7.58,14 12,14Z"
+                  />
+                </svg>
+              </Tooltip>
             </div>
           </div>
         )}
