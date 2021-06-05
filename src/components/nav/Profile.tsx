@@ -5,9 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { selectProfile, signOut } from "../../actions/index";
 import { RootState } from "../../reducers/index";
 import { useOutSideClick } from "../../functions/Calendar";
-import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
-import Tooltip from "@material-ui/core/Tooltip";
 import dotenv from "dotenv";
 dotenv.config();
 const axios: any = require("axios");
@@ -20,8 +18,6 @@ export const Profile = () => {
     dispatch(selectProfile(false, 900));
   };
   useOutSideClick(selectRef, callback); // 해당 컴포넌트의 바깥 지역을 클릭 하면 callback 함수가 실행됨.
-
-  const history = useHistory();
 
   const state = useSelector((state: RootState) => state);
   const {

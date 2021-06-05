@@ -108,12 +108,12 @@ const WeekEvent = ({day, calendar}:any) => {
     <div className="week-event">{/* 이벤트 할일 들어갈 곳 */}
       {
         alldayEvents.map((dayEvent:any)=>{
-          return <Allday key={dayEvent} event={dayEvent}/>
+          return <Allday key={dayEvent.id} event={dayEvent}/>
         })
       }
       {
         underEvents.map((dayEvent:any)=>{
-          return <UnderDay key={dayEvent} event={dayEvent}/>
+          return <UnderDay key={dayEvent.id} event={dayEvent}/>
         })
       }
     </div>)
@@ -129,8 +129,8 @@ const MonthWeek = (props:{headerDay:DateTime[]}) => {
       {/* 주단위 컴포넌트 매핑 */}
       <div className="month-weeks__header">
         {/* 2 3 4 5 6 날짜 헤더컴포 매핑 */}
-        {headerDay.map((day) => {
-          return <MonthWeekheaderDay key={day.day} day={day} />;
+        {headerDay.map((day,i) => {
+          return <MonthWeekheaderDay key={i} day={day} />;
         })}
       </div>
       <div className="month-week__body">

@@ -68,26 +68,26 @@ const Signup = (props: SignupProps) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputEmail(e.target?.value);
     },
-    [inputEmail]
+    []
   );
 
   const handleChangeUserName = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputUserName(e.target?.value);
     },
-    [inputUserName]
+    []
   );
   const handleChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputPassword(e.target?.value);
     },
-    [inputPassword]
+    []
   );
   const handleChangePasswordCheck = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputPasswordCheck(e.target?.value);
     },
-    [inputPasswordCheck]
+    []
   );
 
   const handleCloseBtn = (): void => {
@@ -111,7 +111,7 @@ const Signup = (props: SignupProps) => {
       setErrorMessage("유효하지 않은 이메일입니다.");
       return false;
     },
-    [inputEmail, errorMessage]
+    []
   );
 
   const checkValidPassword = useCallback(
@@ -136,7 +136,7 @@ const Signup = (props: SignupProps) => {
       }
       return true;
     },
-    [inputPassword, errorMessage]
+    []
   );
 
   const handleCheckForm = () => {
@@ -174,14 +174,31 @@ const Signup = (props: SignupProps) => {
           password: inputPassword,
         })
         .then((res: any) => {
-          const token = res.headers.authorization.split(" ")[1];
-          if (res.status === 201) {
+           // const token = res.headers.authorization.split(" ")[1];
+          // if (res.status === 201) {
             handleCloseBtn();
-            dispatch(signIn(res.user, token, inputPassword));
+            // dispatch(signIn(res.data, token, inputPassword));
             setModalComment("회원가입이 완료되었습니다.");
             handleModalOpen();
-            return;
-          }
+            return  axios
+            .post(process.env.REACT_APP_API_URL + "/user/login/", {
+              email: inputEmail,
+              password: inputPassword,
+            })
+            .then((res: any) => {
+              const token = res.headers.authorization.split(" ")[1];
+              if (token) {
+                dispatch(signIn(res.data.user, token, inputPassword));
+                handleCloseBtn();
+                setModalComment("로그인 완료.");
+                handleModalOpen();
+              }
+            })
+            .catch((err: any) => {
+              console.error(err); //response.status(404)에러처리
+              setErrorMessage("해당 유저가 존재하지 않습니다.");
+            });
+          // }
         })
         .catch((err: any) => {
           console.error(err);

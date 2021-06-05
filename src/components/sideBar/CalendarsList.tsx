@@ -39,7 +39,7 @@ const CheckBox = ({ calendar }: { calendar: any }) => {
     } else {
       dispatch(setCalCheckMy(calendar.id));
     }
-  }, []);
+  }, [dispatch,calendar]);
 
   return (
     <div

@@ -69,7 +69,7 @@ const BackgroundGrid = ({info}:any) =>{
   const nowPx = timeToPixel(now)
   useEffect(()=>{
     if(compoenetRef.current) compoenetRef.current.scrollTop = nowPx;  // 현재 시간 기준 스크롤 정렬
-  },[])
+  },[nowPx])
 
   return (
     <div className="scroll" ref={compoenetRef}>

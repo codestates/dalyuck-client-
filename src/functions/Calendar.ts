@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 
-import {DateTime, Interval} from 'luxon';
+import {DateTime} from 'luxon';
 
 
 export function useOutSideClick(               // 컴포넌트 바깥 클릭시 콜백함수 호출 하는 함수
