@@ -211,19 +211,18 @@ const Signin = (props: SigninProps) => {
                 </li>
               </ul>
               <p className="signin__form__error-message">{errorMessage}</p>
-
+              <button
+                className="signin__form__submit-btn"
+                onClick={handleNonMember}
+              >
+                체험하기
+              </button>
               <button
                 className="signin__form__submit-btn"
                 onClick={handleSignIn}
                 onKeyPress={handleKeyPressEnter}
               >
                 로그인
-              </button>
-              <button
-                className="signin__form__submit-btn"
-                onClick={handleNonMember}
-              >
-                체험하기
               </button>
               <button
                 className="signin__form__submit-btn"
