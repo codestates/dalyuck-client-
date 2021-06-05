@@ -13,6 +13,7 @@ import { useRef, useState, useEffect } from "react"; // 레퍼런스 훅스
 import dotenv from "dotenv";
 import SignIn from "../SignIn";
 import Modal from "../Modal";
+import { setSearchData } from "../../actions";
 dotenv.config();
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
@@ -25,7 +26,7 @@ const Nav = () => {
   );
   const state = useSelector((state: RootState) => state);
   const {
-    userReducer: { user, token },
+    userReducer: { user, token, data },
   } = state;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -34,10 +35,10 @@ const Nav = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [modalType, setModalType] = useState<string>("");
   const [modalComment, setModalComment] = useState<string>("");
-
-  useEffect(() => {
-    handleSignInBtn();
-  }, []);
+  const [search, setSearch] = useState({
+    searchText: "",
+    result: [],
+  });
 
   let date = base.baseDate;
   let period: {};
@@ -92,6 +93,41 @@ const Nav = () => {
 
   const handleModalClose = () => {
     setOpenModal(false);
+  };
+
+  const handleSearch = () => {
+    if (!search.searchText) {
+      alert("검색어를 입력 하세요.");
+      return;
+    }
+
+    axios
+      .post(
+        process.env.REACT_APP_API_URL + `/calendar/search`,
+        {
+          userId: user.id,
+          keyword: search.searchText,
+        },
+        {
+          headers: {
+            authorization: `Bearer ${token}`,
+          },
+        }
+      )
+      .then((data: any) => {
+        console.log("data.data", data.data);
+        setSearch({
+          ...search,
+          result: data.data,
+        });
+        dispatch(setSearchData(data.data, true));
+      })
+      .catch((err: any) => console.log(err));
+  };
+
+  const handleHome = () => {
+    dispatch(setSearchData("", false));
+    history.push("/");
   };
 
   const todayHandler = () => {
@@ -243,17 +279,53 @@ const Nav = () => {
           </div>
           <div className="search-period-con">
             <div className="search-period-con-1">
-              <div className="search-btn">
-                {/* 검색버튼 */}
-                <svg
-                  focusable="false"
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 24 24"
-                  style={{ height: 25 }}
+              <div className="search-form">
+                <button
+                  className="home-btn"
+                  onClick={() => {
+                    handleHome();
+                  }}
                 >
-                  <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
-                </svg>
+                  Home
+                </button>
+                <input
+                  type="text"
+                  placeholder="검색어"
+                  className="search-input"
+                  onChange={(e) =>
+                    setSearch({ ...search, searchText: e.target.value })
+                  }
+                />
               </div>
+              <div
+                className="search-btn"
+                onClick={() => {
+                  handleSearch();
+                }}
+              >
+                <Tooltip
+                  title={
+                    <h1
+                      style={{
+                        color: "white",
+                        fontSize: "13px",
+                      }}
+                    >
+                      검색
+                    </h1>
+                  }
+                >
+                  <svg
+                    focusable="false"
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    style={{ height: 25 }}
+                  >
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path>
+                  </svg>
+                </Tooltip>
+              </div>
+
               <div className="period-select">
                 <div
                   className="period-select-con"
@@ -277,7 +349,6 @@ const Nav = () => {
             </div>
           </div>
         </div>
-
         {token.length === 0 ? (
           <div className="profile-con">
             {/* <div className="profile" onClick={() => handleSignInBtn()}>
