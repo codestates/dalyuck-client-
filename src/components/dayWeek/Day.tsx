@@ -159,7 +159,7 @@ const Day = ({ day }: any) => {
       <div className="day-con-1">
         {/* 할일, 이벤트 컴포넌트 들어갈곳 */}
         {dayEvent.map((event) => (
-          <Event event={event} />
+          <Event key={event.id}event={event} />
         ))}
       </div>
     </div>

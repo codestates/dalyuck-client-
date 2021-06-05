@@ -38,7 +38,7 @@ const DateInfo = ({yoil, day}:DayInfoHead) => {                  // (주,일) �
     )
 }
 
-const AllDayCon = ({day, allDayEvents, setAllDayEvents}:{day:DateTime;allDayEvents:EventType[];setAllDayEvents:any})=>{
+const AllDayCon = ({day, allDayEvents}:{day:DateTime;allDayEvents:EventType[]})=>{
     return(
         <div className="all-day-con">
             {
@@ -108,8 +108,7 @@ const DayWeekHead = ({info}:any) => {
         let result = (Interval.fromDateTimes(startTime,endTime).count('hour') >= 24)
         if(result) filteredEvent.push(event)
     })
-    const [allDayEvents, setAllDayEvents ] = useState(filteredEvent)
-
+    
     return(
         <div className = "main-calender-head" >
             <div className = "head-left-blank"></div>
@@ -131,7 +130,7 @@ const DayWeekHead = ({info}:any) => {
                                 {/* // 종일 컴포넌트 들거갈 공각 */}
                                 {
                                     info.map(({day,i}:{day:DateTime,i:number})=>{
-                                        return <AllDayCon key={day.toISO()} day={day} allDayEvents={filteredEvent} setAllDayEvents={setAllDayEvents}/>
+                                        return <AllDayCon key={day.toISO()} day={day} allDayEvents={filteredEvent}/>
                                     })
                                 }
                                 <div className="main-cal-blank" style={{width:7+'px'}}></div>

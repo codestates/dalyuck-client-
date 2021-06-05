@@ -6,7 +6,6 @@ import Signup from "./SignUp";
 import Modal from "./Modal";
 import "../style/User.scss";
 import dotenv from "dotenv";
-import { convertCompilerOptionsFromJson } from "typescript";
 const axios: any = require("axios");
 axios.defaults.withCredentials = true;
 dotenv.config();
@@ -18,7 +17,7 @@ type SigninProps = {
 };
 
 const Signin = (props: SigninProps) => {
-  const { open, close, handleGoogleSign, currentPage } = props;
+  const { open, close} = props;
 
   const dispatch = useDispatch();
   const refEmail = useRef<HTMLInputElement | null>(null);
@@ -30,7 +29,6 @@ const Signin = (props: SigninProps) => {
 
   const [SignUpModalOpen, setSignUpModalOpen] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<string>("");
   const [modalComment, setModalComment] = useState<string>("");
 
   useEffect(() => {
@@ -51,14 +49,14 @@ const Signin = (props: SigninProps) => {
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputEmail(e.target?.value);
     },
-    [inputEmail]
+    []
   );
 
   const handleChangePassword = useCallback(
     (e: React.ChangeEvent<HTMLInputElement>) => {
       setInputPassword(e.target?.value);
     },
-    [inputPassword]
+    []
   );
 
   const handleCloseBtn = (): void => {
@@ -87,7 +85,6 @@ const Signin = (props: SigninProps) => {
       .then((res: any) => {
         const token = res.headers.authorization.split(" ")[1];
         if (token) {
-          console.log(res.data);
           dispatch(signIn(res.data.user, token, inputPassword));
           handleCloseBtn();
           setModalComment("로그인 완료.");

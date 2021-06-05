@@ -1,6 +1,5 @@
 // TS Code
 import axios from "axios";
-import * as https from 'https';
 import React, { useState } from 'react'
 import SearchTextList from "./SearchTextList";
 
@@ -34,16 +33,11 @@ const handleSubmit = (e : React.FormEvent<HTMLFormElement>) => {
             }
         })
         .then(data => {
-            console.log(data);
             
             setForm({
                 ...state,
                 result : data.data
             })
-
-            
-
-
         })
         .catch(err => console.log(err));
 

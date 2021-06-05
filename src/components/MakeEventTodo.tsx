@@ -10,8 +10,6 @@ import  MiniCalendar  from './sideBar/MiniCalendar';
 import SelectorTime from './selectorTime';
 import { initStartTime, initEndTime } from '../reducers/InitialState';
 import { createEvent, createTodo } from '../functions/Axios';
-import { Link } from 'react-router-dom';
-
 
 const CheckBox = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:any}) => {
   const dispatch = useDispatch();
@@ -69,7 +67,7 @@ const DateTimeSelector = ({isAllday,setIsAllday}:{isAllday:boolean,setIsAllday:a
 
   useEffect(()=>{
     dispatch(setSelectStartDate(DateTime.fromISO(base.baseDate).toISO().split('T')[0]))
-  },[])
+  },[dispatch,base.baseDate])
   useEffect(()=>{   
     setDateSpan(DateTime.fromISO(selectStartDate).toFormat("M월 d일"));
   },[selectStartDate])

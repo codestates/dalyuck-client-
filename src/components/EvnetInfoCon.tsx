@@ -90,7 +90,6 @@ const EventInfo = ({eventTodo, status}:{eventTodo:any,status:string}) => {
   let endTime:string = '';
   let name:string = '';
   let color:string = '';
-  console.log(eventTodo)
   if(eventTodo.event){
     startTime = eventTodo.event.startTime;
     endTime = eventTodo.event.endTime;
@@ -160,7 +159,6 @@ export default function EventInfoCon() {
   }
 
   let status:string = '';          // 구독했는지 참가했는지 내가 만든 이벤트인지 구분하기 위한 변수.
-  console.log(eventTodo)
   if( eventTodo.isEvent === 'event'){
 
     if(eventTodo.event.otherCalendarId){

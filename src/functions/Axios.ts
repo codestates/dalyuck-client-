@@ -214,8 +214,10 @@ export const createEvent = async(startTime:string,endTime:string,calendarId:numb
             description,
             userId:userState.user.id
         }).then(res=>{
-            if(attendant) reqEventAttend(res.data.id, attendant);
-            getAttendants()
+            if(attendant) {
+                reqEventAttend(res.data.id, attendant);
+                getAttendants()
+            }
             return getCalendar()
         }).then(res=>{
             store.dispatch(action.setCalendar(res))

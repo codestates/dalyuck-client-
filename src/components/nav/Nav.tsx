@@ -32,8 +32,7 @@ const Nav = () => {
 
   const [SignInModalOpen, setSignInModalOpen] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
-  const [modalType, setModalType] = useState<string>("");
-  const [modalComment, setModalComment] = useState<string>("");
+  const modalComment = "";
 
   useEffect(() => {
     if(state.userReducer.token.length === 0 ){
@@ -90,10 +89,6 @@ const Nav = () => {
 
   const handleGoogleSign = (state: string): void => {
     alert("개발중");
-  };
-
-  const handleModalOpen = () => {
-    setOpenModal(true);
   };
 
   const handleModalClose = () => {
