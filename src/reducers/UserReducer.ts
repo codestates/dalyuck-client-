@@ -26,6 +26,8 @@ import {
   DEL_CAL_CHECK_MY,
   DEL_CAL_CHECK_OTHER,
   SET_SEARCH_DATA,
+  SET_IS_SUB_LOADING,
+  SET_IS_COLOR_LOADING,
 } from "../actions/index";
 import { initialState, State } from "./InitialState";
 import { Action } from "../actions";
@@ -233,12 +235,24 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       });
 
       return Object.assign({}, state, {
-        ...state,
-        calCheckArr: {
-          ...state.calCheckArr,
-          otherCal: [...newStateOther],
-        },
-      });
+
+      ...state,
+      calCheckArr: {
+        ...state.calCheckArr,
+        otherCal: [...newStateOther]
+      },
+    });      
+    case SET_IS_SUB_LOADING:
+      return Object.assign({}, state, {
+      ...state,
+      ...action.payload
+    });
+    case SET_IS_COLOR_LOADING:
+      return Object.assign({}, state, {
+      ...state,
+      ...action.payload
+    })
+
     default:
       return state;
   }

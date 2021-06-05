@@ -4,7 +4,7 @@ import { useOutSideClick } from '../functions/Calendar';
 import { useRef } from 'react'
 import { isOptionClick } from '../actions';
 import { useHistory } from "react-router-dom";
-import { updateCalendar, updateOtherCalendar } from '../functions/Axios';
+import { updateCalendar, updateOtherCalendar, updateTodoList } from '../functions/Axios';
 
 const colorArray = [
     ["#AD1457", "rgb(244, 81, 30)", "#E4C441", "#0B8043", "#3F51B5", "#8E24AA"],
@@ -19,8 +19,10 @@ const OptionColorCon = ({ color }: { color: string }) => {
     const updateHandler = () =>{
         if(colorOption.myOrOther==='my'){
             updateCalendar(colorOption.calendarId,undefined,undefined,color)    
-        }else{
+        }else if(colorOption.myOrOther === 'other'){
             updateOtherCalendar(colorOption.calendarId,undefined,color)
+        }else{
+            updateTodoList(colorOption.calendarId, undefined, color)
         }
    
         dispatch(isOptionClick(false,0,0,''))

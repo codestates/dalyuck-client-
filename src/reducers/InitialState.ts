@@ -203,11 +203,14 @@ export type State = {
       }
     ];
   };
-  calCheckArr: {
-    myCal: number[];
-    otherCal: number[];
-    todo: boolean;
+
+  calCheckArr:{
+    myCal:number[];
+    otherCal:number[];
+    todo:boolean;
   };
+  isSubLoading:boolean;
+  isColorLoading:boolean;
 };
 
 export const initialState: State = {
@@ -376,9 +379,13 @@ export const initialState: State = {
       },
     ],
   },
-  calCheckArr: {
-    myCal: [],
-    otherCal: [],
-    todo: true,
+
+  calCheckArr:{
+    myCal:[],
+    otherCal:[],
+    todo:true,
   },
+  isSubLoading:false,
+  isColorLoading:false
+
 };
