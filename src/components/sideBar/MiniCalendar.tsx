@@ -12,7 +12,6 @@ import {
   setIsEndDateClick,
 } from "../../actions/index";
 import Tooltip from "@material-ui/core/Tooltip";
-import { useOutSideClick } from "../../functions/Calendar";
 
 const weekdayArr = ["일", "월", "화", "수", "목", "금", "토"];
 
@@ -93,7 +92,6 @@ const MiniWeek = ({
   );
 };
 export default function MiniCalendar({ from }: { from: string }) {
-  const dispatch = useDispatch();
   const selectRef = useRef(null);
   // const callback = ()=>{
   //   dispatch(setIsStartDateClick(false));

@@ -36,32 +36,38 @@ const Nav = () => {
   const [modalComment, setModalComment] = useState<string>("");
 
   useEffect(() => {
-    handleSignInBtn();
-  }, []);
+    if(state.userReducer.token.length === 0 ){
+      handleSignInBtn();
+    }
+  }, [state.userReducer.token]);
 
   let date = base.baseDate;
   let period: {};
   let periodKor: string = "주";
   let navText: string = DateTime.fromISO(date).toFormat("y년 M월");
+  let periodToolTip:string = '주';
   switch (base.basePeriod) {
     case "day":
       period = { day: 1 };
       periodKor = "일";
+      periodToolTip = '날'
       navText = DateTime.fromISO(date).toFormat("y년 M월 d일");
       break;
     case "week":
       period = { week: 1 };
       periodKor = "주";
+      periodToolTip = '주';
       navText = DateTime.fromISO(date).toFormat("y년 M월");
       break;
     case "month":
       period = { month: 1 };
       periodKor = "월";
+      periodToolTip = '달'
       navText = DateTime.fromISO(date).toFormat("y년 M월");
       break;
   }
 
-  let week = new Array(
+  let week = [
     "일요일",
     "월요일",
     "화요일",
@@ -69,7 +75,7 @@ const Nav = () => {
     "목요일",
     "금요일",
     "토요일"
-  );
+  ];
 
   let today = new Date().getDay();
   let todayLabel = week[today];
@@ -191,7 +197,7 @@ const Nav = () => {
                             fontSize: "13px",
                           }}
                         >
-                          전 달
+                          {'전 '+ periodToolTip}
                         </h1>
                       }
                     >
@@ -219,7 +225,7 @@ const Nav = () => {
                             fontSize: "13px",
                           }}
                         >
-                          다음 달
+                           {'다음 '+ periodToolTip}
                         </h1>
                       }
                     >

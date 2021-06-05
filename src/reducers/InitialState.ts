@@ -194,7 +194,9 @@ export type State = {
     myCal:number[];
     otherCal:number[];
     todo:boolean;
-  }
+  };
+  isSubLoading:boolean;
+  isColorLoading:boolean;
 };
 
 export const initialState: State = {
@@ -364,5 +366,7 @@ export const initialState: State = {
     myCal:[],
     otherCal:[],
     todo:true,
-  }
+  },
+  isSubLoading:false,
+  isColorLoading:false
 };

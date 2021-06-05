@@ -26,8 +26,6 @@ function RequestSubCalendar() {
       return;
     }
 
-    console.log("Output email : ", state.email);
-
     // 아래는 axios가 들어가야함.
     subscribeCalendar(state.email)
     history.push('/')

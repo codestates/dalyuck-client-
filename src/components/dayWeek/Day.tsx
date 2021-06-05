@@ -23,7 +23,6 @@ const Redline = ({height}:any)=>{
 
 }
 
-
 const Event = ({ event }:any ) => {
 
   const { user } = useSelector((state:RootState)=>state.userReducer);
@@ -34,15 +33,21 @@ const Event = ({ event }:any ) => {
   const intervalPixel = 48 * interval.length("hour");
 
   let color = '';
-  if(event.colour){
+  if(event.calendarId || event.otherCalendarId){
     color = event.colour;
+    user.calendar.forEach(cal=>{
+      if(cal.id === event.calendarId) color=cal.colour;
+    })
+    user.otherCalendars.forEach(cal=>{
+      if(cal.id === event.otherCalendarId) color=cal.colour;
+    })
   }else{
     color = user.todolist[0].colour;
   }
 
   const position = {
     top: startPixel,
-    height: intervalPixel,
+    height: intervalPixel-4,
     backgroundColor: color
   };
   const componentRef = useRef<HTMLDivElement>(null);  //  ref타입 설정
@@ -127,8 +132,7 @@ const Day = ({ day }: any) => {
 
   if(userHook.attendEvents.length > 0 ) events = events.concat(userHook.attendEvents);   // 참가자
   if(userHook.todolist.length > 0){
-    console.log(calCheckArr.todo)
-      if(calCheckArr.todo){
+       if(calCheckArr.todo){
         events = events.concat(userHook.todolist[0].todo); // 할일 
       } 
   }
