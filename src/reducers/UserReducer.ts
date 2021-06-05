@@ -25,6 +25,7 @@ import {
   SET_CAL_CHECK_TODO,
   DEL_CAL_CHECK_MY,
   DEL_CAL_CHECK_OTHER,
+  SET_SEARCH_DATA,
   SET_IS_SUB_LOADING,
   SET_IS_COLOR_LOADING,
 } from "../actions/index";
@@ -178,6 +179,12 @@ const dateReducer = (state: State = initialState, action: Action): State => {
           ...action.payload,
         },
       });
+    case SET_SEARCH_DATA:
+      return Object.assign({}, state, {
+        ...state,
+        data: action.payload.data,
+        search: action.payload.search,
+      });
     case SET_IS_START_DATE_CLICK:
       return Object.assign({}, state, {
         ...state,
@@ -188,48 +195,47 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       });
     case SET_CAL_CHECK_MY:
       return Object.assign({}, state, {
-      ...state,
-      calCheckArr: {
-        ...state.calCheckArr,
-        myCal: [...state.calCheckArr.myCal, action.payload.myCal]
-      },
-    });
+        ...state,
+        calCheckArr: {
+          ...state.calCheckArr,
+          myCal: [...state.calCheckArr.myCal, action.payload.myCal],
+        },
+      });
     case SET_CAL_CHECK_OTHER:
       return Object.assign({}, state, {
-      ...state,
-      calCheckArr: {
-        ...state.calCheckArr,
-        otherCal: [...state.calCheckArr.otherCal, action.payload.otherCal]
-      },
-    });
+        ...state,
+        calCheckArr: {
+          ...state.calCheckArr,
+          otherCal: [...state.calCheckArr.otherCal, action.payload.otherCal],
+        },
+      });
     case SET_CAL_CHECK_TODO:
       return Object.assign({}, state, {
-      ...state,
-      calCheckArr: {
-        ...state.calCheckArr,
-        todo:action.payload.todo
-      },
-    });
+        ...state,
+        calCheckArr: {
+          ...state.calCheckArr,
+          todo: action.payload.todo,
+        },
+      });
     case DEL_CAL_CHECK_MY:
-
-      let newStateMy = state.calCheckArr.myCal.filter(calId=>{
-        return calId !== action.payload.myCal
-      })
+      let newStateMy = state.calCheckArr.myCal.filter((calId) => {
+        return calId !== action.payload.myCal;
+      });
 
       return Object.assign({}, state, {
-      ...state,
-      calCheckArr: {
-        ...state.calCheckArr,
-        myCal: [...newStateMy]
-      },
-    });
+        ...state,
+        calCheckArr: {
+          ...state.calCheckArr,
+          myCal: [...newStateMy],
+        },
+      });
     case DEL_CAL_CHECK_OTHER:
-
-      let newStateOther = state.calCheckArr.otherCal.filter(calId=>{
-        return calId !== action.payload.otherCal
-      })
+      let newStateOther = state.calCheckArr.otherCal.filter((calId) => {
+        return calId !== action.payload.otherCal;
+      });
 
       return Object.assign({}, state, {
+
       ...state,
       calCheckArr: {
         ...state.calCheckArr,
@@ -246,6 +252,7 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       ...state,
       ...action.payload
     })
+
     default:
       return state;
   }

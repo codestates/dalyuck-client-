@@ -153,6 +153,11 @@
     background: darken(white, 10%);
   }
 }
+.home-btn {
+  margin-right: 20px;
+  font-size: 20px;
+}
+
 .next-btn {
   //previous 랑 같음
   width: 32px;
@@ -209,7 +214,22 @@
 
   display: flex; //
 }
-
+.search-input {
+  margin-right: 10px;
+  height: 20px;
+  width: 500px;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 3px;
+  background-color: #f1f3f4;
+  font-size: 15px;
+  color: #5f6063;
+  &:focus {
+    outline: none;
+    border-bottom: 1px solid #1a73e8;
+    transition: all ease 0.3s;
+  }
+}
 .search-btn {
   height: 40px;
   width: 40px;
@@ -346,7 +366,7 @@
   width: 32px;
   z-index: 0;
 }
-.period-select-icon{
+.period-select-icon {
   box-sizing: border-box;
   width: 25px;
   height: 26px;
