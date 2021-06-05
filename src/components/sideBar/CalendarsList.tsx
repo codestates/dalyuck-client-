@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import {
   isOptionClick,
   setCalCheckMy,
@@ -10,6 +10,7 @@ import { useEffect, useRef, useState } from "react"; // 레퍼런스 훅
 import Swal from "sweetalert2";
 import { deleteCalendar, deleteOtherCalendar } from "../../functions/Axios";
 import Tooltip from "@material-ui/core/Tooltip";
+import { RootState } from "../../reducers";
 
 
 const CheckBox = ({ calendar }: { calendar: any }) => {
@@ -83,7 +84,6 @@ const Remove = (calendarId: number, myOrOther: string) => {
         position: "center-left",
         width: "200px",
       });
-      console.log(calendarId);
       if (myOrOther === "my") {
         deleteCalendar(calendarId);
       } else {
@@ -101,12 +101,7 @@ const Delete = ({
   myOrOther: string;
 }) => {
   return (
-    <div
-      className="icon"
-      onClick={() => {
-        Remove(calendarId, myOrOther);
-      }}
-    >
+    <div className="icon" onClick={() => { Remove(calendarId, myOrOther) }} >
       <Tooltip
         title={
           <h1
@@ -171,13 +166,7 @@ const Option = ({
   );
 };
 
-function OptionDelete({
-  calendar,
-  myOrOther,
-}: {
-  calendar: any;
-  myOrOther: string;
-}) {
+function OptionDelete( { calendar, myOrOther, }: {calendar: any;myOrOther: string;}){
   return (
     <div className="option-delete">
       <div className="option-delete__inner">
@@ -187,15 +176,11 @@ function OptionDelete({
     </div>
   );
 }
-export default function CalendarsList({
-  isOpen,
-  calendar,
-  myOrOther,
-}: {
-  isOpen: boolean;
-  calendar: any;
-  myOrOther: string;
-}) {
+
+export default function CalendarsList({ isOpen, calendar, myOrOther }:{ isOpen: boolean;calendar: any;myOrOther: string;}){
+
+  const { isColorLoading } = useSelector((state:RootState)=>state.userReducer);
+
   return (
     <div className="calendars-list">
       <div
@@ -205,9 +190,17 @@ export default function CalendarsList({
         <div className="calendar-label">
           <div className="calendar-label__li">
             <div className="calendar-label__li-inner">
-              <div className="check-box-con">
-                <CheckBox calendar={calendar} />
-              </div>
+              {
+                isColorLoading ? (
+                  <div className="check-box-con">
+                    <img style={{left: -3+'px'}} className="loading" src="loading.gif" alt="" /> 
+                  </div>
+                ):(
+                  <div className="check-box-con">
+                    <CheckBox calendar={calendar} />
+                  </div>
+                )
+              }
               <Tooltip
                 title={
                   <h1

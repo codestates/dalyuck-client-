@@ -25,6 +25,8 @@ import {
   SET_CAL_CHECK_TODO,
   DEL_CAL_CHECK_MY,
   DEL_CAL_CHECK_OTHER,
+  SET_IS_SUB_LOADING,
+  SET_IS_COLOR_LOADING,
 } from "../actions/index";
 import { initialState, State } from "./InitialState";
 import { Action } from "../actions";
@@ -234,6 +236,16 @@ const dateReducer = (state: State = initialState, action: Action): State => {
         otherCal: [...newStateOther]
       },
     });      
+    case SET_IS_SUB_LOADING:
+      return Object.assign({}, state, {
+      ...state,
+      ...action.payload
+    });
+    case SET_IS_COLOR_LOADING:
+      return Object.assign({}, state, {
+      ...state,
+      ...action.payload
+    })
     default:
       return state;
   }

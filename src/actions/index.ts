@@ -28,6 +28,8 @@ export const SET_CAL_CHECK_TODO= "SET_CAL_CHECK_TODO" as const;
 export const DEL_CAL_CHECK_MY = "DEL_CAL_CHECK_MY" as const;
 export const DEL_CAL_CHECK_OTHER = "DEL_CAL_CHECK_OTHER" as const;
 export const DEL_CAL_CHECK_TODO= "DEL_CAL_CHECK_TODO" as const;
+export const SET_IS_SUB_LOADING= "SET_IS_SUB_LOADING" as const;
+export const SET_IS_COLOR_LOADING= "SET_IS_COLOR_LOADING" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -54,7 +56,10 @@ export type Action =
   | ReturnType<typeof setCalCheckOther>
   | ReturnType<typeof setCalCheckTodo>
   | ReturnType<typeof delCalCheckMy>
-  | ReturnType<typeof delCalCheckOther>;
+  | ReturnType<typeof delCalCheckOther>
+  | ReturnType<typeof setIsSubLoading>
+  | ReturnType<typeof setIsColorLoading>;
+
 export interface UserInfo {
   data: {
     userName: string;
@@ -354,6 +359,22 @@ export const delCalCheckOther = (otherCal:number) => {
     type: DEL_CAL_CHECK_OTHER,
     payload: {
       otherCal,
+    },
+  };
+};
+export const setIsSubLoading = (isSubLoading:boolean) => {
+  return {
+    type: SET_IS_SUB_LOADING,
+    payload: {
+      isSubLoading,
+    },
+  };
+};
+export const setIsColorLoading = (isColorLoading:boolean) => {
+  return {
+    type: SET_IS_COLOR_LOADING,
+    payload: {
+      isColorLoading,
     },
   };
 };

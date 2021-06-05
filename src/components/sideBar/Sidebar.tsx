@@ -8,7 +8,9 @@ import { useEffect, useState } from "react";
 import { useHistory } from "react-router";
 import TodoLidst from "./TodoList";
 import Tooltip from "@material-ui/core/Tooltip";
+import dotenv from 'dotenv';
 
+dotenv.config()
 const AddCalendar = ({
   isMine,
   calendars,
@@ -66,7 +68,7 @@ const AddCalendar = ({
   );
 };
 export default function Sidebar() {
-  const { user } = useSelector((state: RootState) => state.userReducer);
+  const { user, isSubLoading } = useSelector((state: RootState) => state.userReducer);
   let [calendars, setcal] = useState(user);
   useEffect(() => {
     setcal(user);
@@ -105,7 +107,7 @@ export default function Sidebar() {
                 cals.map((calendar, i) => {
                   return (
                     <CalendarList
-                      key={calendar.id + i}
+                      key={calendar.id}
                       isOpen={isMyCalOpen}
                       calendar={calendar}
                       myOrOther="my"
@@ -127,10 +129,10 @@ export default function Sidebar() {
                 isOpen={isOtherCalOpen}
               />
               {otherCals
-                ? otherCals.map((calendar, i) => {
+                ? otherCals.map((calendar) => {
                     return (
                       <CalendarList
-                        key={calendar.id + i}
+                        key={calendar.id}
                         isOpen={isOtherCalOpen}
                         calendar={calendar}
                         myOrOther="other"
@@ -143,6 +145,13 @@ export default function Sidebar() {
                 calendars={calendars}
                 isMyCalOpen={isMyCalOpen}
               />
+              {
+                isSubLoading ? (
+                  <img className="loading" style={{marginLeft:90+'px'}} src="loading.gif" alt="" /> 
+                ):(
+                  null
+                )
+              }
             </div>
           </div>
         </div>

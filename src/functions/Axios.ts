@@ -2,8 +2,6 @@ import axios from 'axios';
 import {store} from '../store/Store'   // 리액트 컴포넌트 밖에서 상태를 가져오기 위해 스토어를 가져옴 
 import dotenv from 'dotenv';
 import * as action from '../actions/index';
-import { strict } from 'assert';
-
 
 dotenv.config()
 axios.defaults.withCredentials = true;  
@@ -100,6 +98,8 @@ export const createCalendar = async(calendarName:string,description?:string)=>{
 // [ 캘린더 수정 ] 없는 전달인자는 undefined 기입 ex) updateCalendar(1,undefined,undefined,"#2134") 색만 변경 원할경우 (캘ㄹ린더 아이디는 컴포넌트에서 상태로 받아와야함 )
 
 export const updateCalendar = async(calendarId:number,calendarName?:string,description?:string,colour?:string)=>{   
+
+    // if(colour) store.dispatch(action.setIsColorLoading(true)) ;
     updateState()
     let result;
     try{
@@ -110,6 +110,7 @@ export const updateCalendar = async(calendarId:number,calendarName?:string,descr
             calendarId,
             colour
         }).then(res=>{
+            // store.dispatch(action.setIsColorLoading(false))
             return getCalendar()
         }).then(res=>{
             store.dispatch(action.setCalendar(res))
@@ -392,6 +393,7 @@ export const deleteTodo= async(toDoId:number,toDoListId:number)=>{
 // [ 포스트 캘린더 구독  ]
 export const subscribeCalendar= async(requesteeEmail:string)=>{  
     updateState()
+    store.dispatch(action.setIsSubLoading(true))            // 로딩 상태 변경
     let result;
     try{
         result = await basicAxios.post("/calendar/subscribe",{
@@ -399,6 +401,7 @@ export const subscribeCalendar= async(requesteeEmail:string)=>{
             requesteeEmail,
             userId:userState.user.id
         }).then(res=>{
+            store.dispatch(action.setIsSubLoading(false))
             return getCalendar();
         }).then(res=>{
             store.dispatch(action.setCalendar(res));
@@ -415,7 +418,8 @@ export const subscribeCalendar= async(requesteeEmail:string)=>{
 }
 
 // [ 패치 구독한 캘린더 수정  ]
-export const updateOtherCalendar= async(otherCalendarId:number,calendarName?:string,color?:string)=>{  
+export const updateOtherCalendar= async(otherCalendarId:number,calendarName?:string,color?:string)=>{
+
     updateState()
     let result;
     try{
@@ -454,6 +458,32 @@ export const deleteOtherCalendar= async(otherCalendarId:number)=>{
             return getCalendar();
         }).then(res=>{
             store.dispatch(action.setCalendar(res));
+        })
+    }catch (error){
+        if(axios.isAxiosError(error)){
+            console.log('axios error')
+            console.log(error)
+        } else{
+            console.log('unExpected error')
+        }
+    }
+    return result
+}
+
+export const updateTodoList = async(toDoListId:number,toDoListName?:string,colour?:string)=>{   
+
+    updateState()
+    let result;
+    try{
+        result = await basicAxios.patch("/todoList",{
+            toDoListId:toDoListId,
+            colour,
+            toDoListName:"Tasks",
+            userId:userState.user.id
+        }).then(res=>{
+            return getTodo(toDoListId);
+        }).then(res=>{
+            store.dispatch(action.setTodoList(res));
         })
     }catch (error){
         if(axios.isAxiosError(error)){
