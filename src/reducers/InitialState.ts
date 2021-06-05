@@ -1,8 +1,18 @@
 import { DateTime } from "luxon";
 const today = DateTime.now().toISO();
-export const initStartTime = DateTime.now().plus({hour:1}).set({minute:0}).toISO().split('T')[1];
-export const initEndTime = DateTime.fromISO(initStartTime).plus({minute:30}).toISO().split('T')[1];
-export const initEndDate = DateTime.fromISO(initStartTime).plus({day:1}).toISO().split('T')[0];
+export const initStartTime = DateTime.now()
+  .plus({ hour: 1 })
+  .set({ minute: 0 })
+  .toISO()
+  .split("T")[1];
+export const initEndTime = DateTime.fromISO(initStartTime)
+  .plus({ minute: 30 })
+  .toISO()
+  .split("T")[1];
+export const initEndDate = DateTime.fromISO(initStartTime)
+  .plus({ day: 1 })
+  .toISO()
+  .split("T")[0];
 export const initEvent = {
   id: 0,
   startTime: "",
@@ -46,7 +56,7 @@ export type State = {
   // 캘린더 렌더링 할때 필요한 상태
   base: {
     baseDate: string;
-    basePeriod: 'month'|'week'|'day';
+    basePeriod: "month" | "week" | "day";
   };
 
   // 이벤트 만들기때 필요한 상태
@@ -63,6 +73,9 @@ export type State = {
     isStartDateClick: boolean;
     isEndDateClick: boolean;
   };
+
+  data: any; //search 데이터
+  search: boolean; //search boolean
 
   // 일간 월간 선택할때 필요한 상태
   selector: {
@@ -81,8 +94,8 @@ export type State = {
   eventTodo: {
     isEventClick: boolean;
     position: [0, 0];
-    isEvent:'event'|'todo';
-    event:{
+    isEvent: "event" | "todo";
+    event: {
       id: number;
       startTime: any;
       endTime: any;
@@ -93,9 +106,9 @@ export type State = {
       access: boolean;
       notification: any[];
       calendarId: number;
-      otherCalendarId:number;
-      userId:number;
-    },
+      otherCalendarId: number;
+      userId: number;
+    };
     todo: {
       id: number;
       startTime: string;
@@ -190,6 +203,7 @@ export type State = {
       }
     ];
   };
+
   calCheckArr:{
     myCal:number[];
     otherCal:number[];
@@ -209,6 +223,9 @@ export const initialState: State = {
     isOn: false,
     leftPosition: 900,
   },
+
+  data: {},
+  search: false,
 
   // 캘린더 렌더링시 필요한 상태
   base: {
@@ -253,8 +270,8 @@ export const initialState: State = {
     isEventClick: false,
     position: [0, 0],
 
-    isEvent:'event',
-    event:{
+    isEvent: "event",
+    event: {
       id: 0,
       startTime: "",
       endTime: "",
@@ -265,8 +282,8 @@ export const initialState: State = {
       access: true,
       notification: [],
       calendarId: 0,
-      otherCalendarId:0,
-      userId:0,
+      otherCalendarId: 0,
+      userId: 0,
     },
     todo: {
       id: 0,
@@ -362,6 +379,7 @@ export const initialState: State = {
       },
     ],
   },
+
   calCheckArr:{
     myCal:[],
     otherCal:[],
@@ -369,4 +387,5 @@ export const initialState: State = {
   },
   isSubLoading:false,
   isColorLoading:false
+
 };

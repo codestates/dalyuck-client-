@@ -1,34 +1,58 @@
 // TS Code
-import React, { useState } from 'react'
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "../reducers/index";
+import "../style/_Search.scss";
+import { DateTime } from "luxon";
 
-// 정렬된 리스트를 받아야함
+const SearchTextList = () => {
+  const state = useSelector((state: RootState) => state);
+  const {
+    userReducer: { data },
+  } = state;
 
-const SearchTextList = ({props} : {props : any}) => {
+  let week = new Array("일", "월", "화", "수", "목", "금", "토");
 
-    // SearchText.tsx에서 props는 서버에서 받은 검색 리스트임
-    console.log('props : ',props);
+  let today = new Date().getDay();
+  let todayLabel = week[today];
 
-    return (
-        <>
-        <h1>{
-            props.length >0 ? props.map((ele : any, idx : number) => {
-                return (
-                    <>  {/* map을 돌려서 리스트 나열 CSS작업 필요 */}
-                        <div key = {idx}>
-                            <a >Date : {ele.startTime.slice(0,8)} |</a>
-                            <a >Time : {ele.startTime.slice(8)} ~ {ele.endTime.slice(8)} |</a>
-                            <a >EventName : {ele.eventName}</a>     
-                        </div>
-                    </>
-                )
-            }) : 
-            "No result"
-        }</h1>
-        </>
-    )
-}
+  return (
+    <div className="search-list-form">
+      {data.event.length > 0 ? (
+        data.event.map((ele: any) => {
+          return (
+            <div key={ele.id}>
+              <div className="search-list">
+                <div className="search-month">
+                  {DateTime.fromISO(ele.startTime).toFormat("d")}
+                </div>
+                <div className="search-year">
+                  {DateTime.fromISO(ele.startTime).toFormat(
+                    `yyyy년 MM월, ${todayLabel}`
+                  )}
+                </div>
+                <div
+                  className="search-color"
+                  style={{ backgroundColor: ele.colour }}
+                ></div>
+                <div className="search-time">
+                  {DateTime.fromISO(ele.startTime).toFormat("t")} ~
+                  {DateTime.fromISO(ele.endTime).toFormat("t")}
+                </div>
+                <div className="search-name">{ele.eventName}</div>
+              </div>
+            </div>
+          );
+        })
+      ) : (
+        <div className="search-list-form">
+          <div className="search-list" style={{ border: "none" }}>
+            <div className="search-result">검색결과가 없습니다.</div>
+          </div>
+        </div>
+      )}
+    </div>
+  );
+};
 
-
-
-export default SearchTextList
-
+export default SearchTextList;
