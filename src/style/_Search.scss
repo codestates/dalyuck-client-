@@ -14,6 +14,9 @@
   padding: 10px;
   font-weight: normal;
   // border-bottom: 1px solid #c2c2c5;
+  &:hover{
+    background-color: darken($color: white, $amount: 10)
+  }
 }
 
 .search-color {
@@ -49,6 +52,5 @@
 
 .search-result {
   font-size: 30px;
-  margin-top: 400px;
-  margin-left: 750px;
+  margin-left: 300px;
 }

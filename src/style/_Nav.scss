@@ -52,6 +52,10 @@
   display: flex;
   position: relative;
   top: 2px;
+  height: 30px;
+  width: 75px;
+  margin-left: 23px;
+  cursor: pointer;
 }
 .project-name {
   text-decoration: none;
@@ -217,7 +221,6 @@
 .search-input {
   margin-right: 10px;
   height: 20px;
-  width: 500px;
   padding: 0.5rem;
   border: none;
   border-radius: 3px;
@@ -371,4 +374,8 @@
   width: 25px;
   height: 26px;
   margin-top: 4px;
+}
+
+.search-form{
+  display: flex;
 }

@@ -43,7 +43,7 @@ function UpdateCalendar() {
 
   return (
     <form onSubmit={handleSubmit} className="update-calendar-form">
-      <h2 className="update-calendar-h2">캘린더 설정</h2>
+      <h2 className="update-calendar-h2">캘린더 수정</h2>
       <div className="update-name">
         <input
           className="update-name-input"
@@ -53,10 +53,10 @@ function UpdateCalendar() {
         />
         <textarea
           className="update-name-textarea"
-          placeholder="Enter About your description"
+          placeholder="설명"
           onChange={(e) => setForm({ ...state, explain: e.target.value })}
         />
-        <input className="submit-btn" type="submit" value="Save Task" />
+        <input className="submit-btn" type="submit" value="수정 하기" />
       </div>
     </form>
   );

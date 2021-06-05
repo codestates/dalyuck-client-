@@ -51,12 +51,32 @@ export const getAttendants= async()=>{
     return result
 }
 // 캘린더 겟요청
-export const getCalendar = async()=>{  
-    updateState()
+// export const getCalendar = async()=>{  
+//     updateState()
+//     let result;
+
+//     result = await basicAxios.get(`/calendar/${userState.user.id}`)
+//     .then(res=>{
+//         return res.data
+//     }).catch(error=>{
+//         if(axios.isAxiosError(error)){
+//             console.log('axios error')
+//             console.log(error)
+//         } else{
+//             console.log('unExpected error')
+//         }
+//     })
+//     return result
+// }
+
+export const getCalendar = () => {
     let result;
 
-    result = await basicAxios.get(`/calendar/${userState.user.id}`)
-    .then(res=>{
+    result = axios.get(process.env.REACT_APP_API_URL+`/calendar/${userState.user.id}`,{
+        headers:{
+            authorization:`Bearer ${userState.token}`
+        }
+    }).then(res=>{
         return res.data
     }).catch(error=>{
         if(axios.isAxiosError(error)){
