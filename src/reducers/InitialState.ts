@@ -32,6 +32,7 @@ export const initTodo = {
   description: "",
   todolistId: 0,
 };
+
 export interface EventType {
   id: number;
   startTime: any;
