@@ -24,6 +24,9 @@ export default function AllDay({event}:{event:any}) {
       if(cal.id === event.otherCalendarId) color=cal.colour;
     })
   }
+  if(event.todolistId){
+    color = user.todolist[0].colour;
+  }
 
   const componentRef = useRef<HTMLDivElement>(null);  //  ref타입 설정
   const dispatch = useDispatch();
