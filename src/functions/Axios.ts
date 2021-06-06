@@ -36,8 +36,16 @@ const updateState = () =>{
 export const getAttendants= async()=>{  
     updateState()
     let result;
-
-    result = await basicAxios.get(`/event/attend/${userState.user.id}`)
+    let address = process.env.REACT_APP_API_URL + '/event/attend/';
+    console.log(address)
+    result = axios.post(address, undefined,{
+        headers:{
+            authorization:`Bearer ${userState.token}`
+        },
+        params: {
+            id:userState.user.id,
+        }
+    })
     .then(res=>{
         return res.data
     }).catch(error=>{
@@ -72,11 +80,12 @@ export const getAttendants= async()=>{
 export const getCalendar = () => {
     let result;
 
-    result = axios.get(process.env.REACT_APP_API_URL+`/calendar/${userState.user.id}`,{
+    result = axios.post(process.env.REACT_APP_API_URL+`/calendar/${userState.user.id}`,undefined,{
         headers:{
             authorization:`Bearer ${userState.token}`
         }
-    }).then(res=>{
+    })
+    .then(res=>{
         return res.data
     }).catch(error=>{
         if(axios.isAxiosError(error)){
@@ -315,7 +324,7 @@ export const getTodo= async(toDoListId:number)=>{
     updateState()
     let result;
 
-    result = await basicAxios.get(`/todoList?userId=${userState.user.id}`)
+    result = await basicAxios.post(`/todoList/${userState.user.id}`)
     .then(res=>{
         return res.data
     }).catch(error=>{

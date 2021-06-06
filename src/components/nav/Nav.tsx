@@ -122,7 +122,7 @@ const Nav = () => {
             authorization: `Bearer ${token}`,
           },
         }
-      )
+      ) 
       .then((data: any) => {
         setSearch({
           ...search,

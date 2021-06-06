@@ -19,12 +19,19 @@ export default function MainBody() {
   return (
     <div className="main-body">
       <Sidebar />
-      {search ? <SearchTextList /> : null}
-      {base.basePeriod === "month" ? (
-        <MaincalendarMonth />
-      ) : (
-        <MainCalendarDayWeek />
-      )}
+      {
+        (()=>{
+          if(search){
+            return <SearchTextList />
+          }else{
+            if(base.basePeriod === 'month'){
+            return <MaincalendarMonth />
+            }else{
+            return  <MainCalendarDayWeek />
+            }
+          }
+        })()
+      }
       {colorOption.isOptionClick ? <CalendarOption /> : null}
       {eventTodo.isEventClick ? <EventInfoCon /> : null}
       {makeEventTodo.isMakeBtnClick ? <MakeEventTodo /> : null}
