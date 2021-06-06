@@ -1,0 +1,71 @@
+@import "variables";
+
+.font-setting{
+    color: #70757a;
+    font-size: 10px;
+}
+.hour-box {
+    position: relative;
+    height: $hour-height;
+    padding-right: 8px;
+    text-align: right;
+}
+.time-zone {
+    position: relative;
+    top: -6px;
+    display: block;
+}
+.hour-box:first-child>.time-zone{
+    display: none;
+}
+.time-table {
+    overflow-x: auto;
+//   overflow-y: scroll;  스크롤이 드러나서 거추장스러움
+    display: flex;
+    align-items: flex-start;
+    flex: 1 1 auto;
+}
+.row-grid-day-con{
+    overflow: hidden;
+    align-items: stretch;
+    display: flex;
+    flex: 1 1 auto;
+    position: relative;
+}
+.row-grid{
+    border-top: $grid-line;
+}
+.row-grid-line{
+    height: $hour-height;
+}
+.row-grid ::after{
+    content: '';
+    border-bottom: $grid-line;
+    position: absolute;
+    width: 100%;
+    margin-top: -1px;
+    z-index: 3;
+    pointer-events: none;
+}
+  
+.row-grid-right{
+    width: 8px;
+    border-right: $grid-line;
+}
+.day-container{
+    overflow : hidden;
+    display: flex;
+    flex-direction: row;
+    flex: 1 1 60%;
+}
+.yscale-timetable{
+    display: flex;
+    overflow:hidden;
+}
+.hour-box-con{
+    min-width: 50px;
+}
+.scroll{
+    overflow-y: scroll;
+    height: calc(100% - 125px);
+}

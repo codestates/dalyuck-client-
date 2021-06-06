@@ -1,0 +1,98 @@
+.calendar-option-color{
+    padding: 13px;
+    overflow: auto;
+
+    border-top: 1px solid rgba(0,0,0,0.12);
+}
+.option-colors{
+    white-space: nowrap;
+    display: flex;
+}
+.option-color-con{
+    border-radius: 50%;
+    box-sizing: border-box;
+    display: inline-block;
+    outline: none;
+    width: 18px;
+    height: 18px;
+    margin: 3px;
+    cursor: pointer;
+    position: relative;
+    &:hover{
+        height: 20px;
+        width: 20px;
+    }
+}
+.option-colors__inner{
+    height: 20px;
+    width: 20px;
+    padding: 2px;
+}
+.calendar-option{
+    position: absolute;
+    max-width: 192px;
+    max-height: 267px;
+    left: 205px;
+
+    margin-top: 8px;
+
+    opacity: 1;
+    outline: 1px solid transparent;
+    z-index: 2000;
+
+    box-sizing: border-box;
+
+    background: #ffffff;
+    border: 0;
+    box-shadow: 0 8px 10px 1px #d9d9d9, 0 3px 14px 2px #d9d9d9,
+    0 5px 5px -3px #d9d9d9;
+
+    &__inner{
+        max-width: 192px;
+        max-height: 267px;
+
+        overflow-x: hidden;
+        overflow-y: auto;
+    }
+
+    &__inner-2{
+        width: 192px;
+        height: auto;
+        min-width: 192px;
+
+        padding: 0;
+
+        float: left;
+
+        &:hover{
+            background-color: darken(white,10%);
+        }
+    }
+}
+
+.calendar-option-name{
+    padding: 0 16px;
+
+    color: #222;
+    cursor: pointer;
+    display: block;
+    outline: none;
+    overflow: hidden;
+    position: relative;
+
+    &__inner{
+        font-size: 14px;
+        color: #3c4043;
+
+        display: flex;
+        font-weight: 400;
+        line-height: 40px;
+        height: 40px;
+        position: relative;
+        white-space: nowrap;
+    }
+    &__span{
+        flex-grow: 1;
+        min-width: 0;
+    }
+}

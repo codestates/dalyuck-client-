@@ -1,0 +1,86 @@
+@import 'variables';
+
+.day-con {
+    border-right: $grid-line;
+    position: relative;
+    padding-right: 12px;
+    box-sizing: border-box;
+    flex: 1 1 auto;
+    min-width: 81px;
+}
+.tody-time-line {
+    position: absolute;
+    z-index: 505;
+    border-top: #ea4335 solid 2px;
+    left: 0;
+    right: 0;
+    pointer-events: none;
+}
+.today-time-dot {
+    background: #ea4335;
+    border-radius: 50%;
+    content: "";
+    position: absolute;
+    height: 12px;
+    margin-left: -6.5px;
+    margin-top: -5px;
+    width: 12px;
+    z-index: 505;
+}
+.day-con-1 {
+    position: relative;
+    height: 100%;
+    width: 100%;
+}
+.event-con {
+    position: absolute;
+    border-radius: 4px;
+    margin-left: -1px;
+    margin-top: 1px;
+    outline: none;
+    width: 100%;
+    z-index: 100;
+
+    cursor: pointer;
+}
+.event-text-con{
+    max-height: 100%;
+    overflow: hidden;
+    padding-left: 8px;
+    text-align: left;
+    user-select: none;
+}
+.event-text-title-con{
+    font-weight: 400;
+    letter-spacing: .4px;
+    padding-top: 4px;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+    overflow: hidden;
+    height: 1em;
+    padding-bottom: 4px;
+    margin-bottom: 4px;
+}
+.event-text-title{
+    font-weight: 400;
+    letter-spacing: .4px;
+    white-space: normal;
+    word-wrap: break-word;
+    color: #fff;
+    font-size: 12px;
+    line-height: 15px;
+}
+.event-text-time{
+    max-width: 100%;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    color: #fff;
+    font-size: 12px;
+    letter-spacing: .1px;
+    line-height: 15px;
+    overflow: hidden;
+}

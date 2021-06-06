@@ -1,0 +1,147 @@
+@import "variables";
+
+.main-calender-head {
+    display: flex;
+    flex: none;
+  }
+  
+.head-left-blank {
+    flex: 1 1 auto;
+    max-width: 51px;
+    min-width: 51px;
+  }
+  
+.one-day-info-con {
+    margin-left: -1px;
+    flex:1 1 auto;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    position: relative;
+    // height: 90px;
+}
+.date-info-con {
+    flex: 1 1 auto;
+    display: flex;
+    overflow: hidden;
+    // overflow-x: scroll;     스크롤이 드러나서 거추장스러움
+}
+
+.info-left-blank {
+    min-width: 9px;
+}
+.date-info {
+    flex: 1 0 auto;
+    min-width: 81px;
+    display: flex;
+    overflow: hidden;
+    box-sizing: border-box;
+}
+.date-info-text-box-con {
+    flex: none;
+    margin-right: 8px;
+    text-align: center;
+    width: 100%;
+}
+
+.date-info-text-box {
+    font-weight: 400;
+    text-align: center;
+    width: 100%;
+}
+
+.myuchil {
+    position: relative;
+    z-index: 2;
+    font-size: 26px;
+    letter-spacing: -2.6px;
+    text-indent: -2.6px;
+    font-variant: tabular-nums;
+    font-feature-settings: "tnum" 1;
+    border-radius: 100%;
+    color: #3c4043;
+    font-family: 'Google Sans',Roboto,Arial,sans-serif;
+    line-height: 46px;
+    height: 46px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: -8px;
+    width: 46px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    cursor: pointer;
+    &:hover {
+        background: darken(white, 10%)
+      }
+}
+.yoil {
+    line-height: 32px;
+    position: relative;
+    z-index: 2;
+    color: #70757a;
+    font-size: 11px;
+    font-weight: 500;
+    letter-spacing: .8px;
+    margin-left: 0;
+    margin-top: 8px;
+    text-indent: .8px;
+    text-transform: uppercase;
+}
+
+.info-rigth-box {
+    visibility: hidden;
+    flex:none;
+}
+
+.all-day-event-con {
+    position: relative;
+    font-size: 24px;
+    max-height: 3em;
+    overflow: hidden;
+    display: flex;
+}
+
+.all-day-event-con-1 {
+    display: flex;
+    vertical-align: top;
+    min-width: 100%;
+    position: relative;
+    overflow: hidden;
+    font-size: 24px;
+}
+.all-day-event-con-2 {
+    border-right: 1px solid transparent;
+    flex: 1 0 ;    // 주, 일 에따라서 min-width 가 달라지는데,,, 
+}
+.all-day-event-con-3{
+    display: flex;
+    // justify-content: space-evenly;
+    height: 1em;
+    border-bottom: $grid-line;
+}
+
+.extand-grid-left {
+    border-left: $grid-line;
+    bottom: 0;
+    height: 20px;
+    margin-left: -1px;
+    position: absolute;
+}
+.yoil.yoiltoday{
+    color: $today-color;
+}
+.myuchil.today{
+    color:white;
+    background-color: $today-color;
+}
+
+.main-cal-blank{
+    overflow: scroll;
+    visibility: hidden;
+}
+.all-day-con{
+    flex: 1 1;
+    min-width: 75px;
+}

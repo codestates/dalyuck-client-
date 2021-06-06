@@ -1,0 +1,88 @@
+@import "variables";
+@import "BackgroundGrid","DayWeekHead","Day","Nav","SelectorPeriod","CalendarMonth","UnderDay";
+@import "MiniCalendar","SidebarCalendars","Sidebar","CalendarsList","CalendarOption","CreateEvent","EventInfoCon";
+@import "EventModal","AllDay";
+
+html{
+  height: 100%;
+}
+#root{
+  height: 100%;
+}
+body {
+  font-size: 14px;
+  text-rendering: geometricPrecision;
+  overflow: hidden;
+  height: 100%;
+  background-color: #fff;
+}
+body {
+  margin: 0;
+  -webkit-font-smoothing: antialiased;
+}
+body, html {
+  font-family: Roboto,"Noto Sans KR",Helvetica,Arial,sans-serif;
+}
+
+.main-calendar{
+  height: calc(100% - 64px);
+  flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
+}
+.calendar-month{
+  height: calc(100% - 64px);
+  flex: 1 1 auto;
+  overflow: hidden;
+  position: relative;
+}
+
+.today{
+  background-color: $today-color;
+  border-radius: 50%;
+  color: white;
+  &:hover {
+    background: darken($today-color, 10%) !important
+  }
+}
+
+.main-body{
+  border-top: $grid-line;
+  display: flex;
+  position: relative;
+  width: 100%;
+  box-sizing: border-box;
+  height: 100%;
+}
+.base{
+  background-color: lighten($today-color, 10%);
+  color: white;
+}
+
+.swal2-title{
+  font-size: 19px;
+  height: 44px;
+  padding-top: 20px;
+}
+.swal2-popup{
+  left: 17px;
+}
+.swal2-actions{
+  margin:0;
+}
+
+.make-event-todo__footer{
+  display: flex;
+  align-items: center;
+  & select{
+    margin-left: 14px;
+    margin-right: 20px;
+  }
+}
+a{
+  width: 90px;
+}
+.loading{
+  position: relative;
+  height: 24px;
+}

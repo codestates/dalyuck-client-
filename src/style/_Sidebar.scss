@@ -1,0 +1,48 @@
+.sidebar{
+    display: flex;
+    flex: none;
+    flex-direction: column;
+    width: 242px;
+    overflow: hidden;
+    position: relative;
+
+    &__inner{
+    display: flex;
+    flex-direction: column;
+    box-flex: 1;
+    flex-grow: 1;
+    height: 100%;
+    width: 100%;
+    }
+    &__inner-blank{
+    height: 84px;
+    flex-shrink: 0;
+    }
+}
+
+.sidebar-body{
+    width: 240px;
+    
+    display: flex;
+    box-flex: 1;
+    flex-grow: 1;
+    flex-shrink: 1;
+    flex-direction: column;
+
+    overflow: hidden;
+
+    &-calendar-list{
+
+    border-bottom: 0;
+    min-height: auto;
+    overflow: visible;
+    padding-left: 4px;
+    padding-top: 67px;
+
+    position: relative;
+    &__inner{
+        overflow: hidden;
+        position: relative;
+    }
+    }
+}

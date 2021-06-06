@@ -1,0 +1,57 @@
+.search-list-form {
+  display: flex;
+  flex-direction: column;
+}
+
+.search-list {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  border: none;
+  width: 2000px;
+  padding: 10px;
+  font-weight: normal;
+  // border-bottom: 1px solid #c2c2c5;
+  cursor: pointer;
+  &:hover{
+    background-color: darken($color: white, $amount: 10)
+  }
+}
+
+.search-color {
+  border-radius: 50%;
+  box-sizing: border-box;
+  display: inline-block;
+  outline: none;
+  width: 18px;
+  height: 18px;
+  margin: 3px;
+  position: relative;
+  margin-left: 50px;
+}
+
+.search-month {
+  font-size: 20px;
+}
+
+.search-year {
+  margin-left: 15px;
+  font-size: 15px;
+}
+
+.search-time {
+  font-size: 15px;
+  margin-left: 15px;
+}
+
+.search-name {
+  font-size: 20px;
+  margin-left: 30px;
+}
+
+.search-result {
+  font-size: 30px;
+  margin-left: 300px;
+}
