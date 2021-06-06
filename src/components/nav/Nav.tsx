@@ -124,7 +124,6 @@ const Nav = () => {
         }
       )
       .then((data: any) => {
-        console.log("data.data", data.data);
         setSearch({
           ...search,
           result: data.data,
