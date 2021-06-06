@@ -28,6 +28,7 @@ import {
   SET_SEARCH_DATA,
   SET_IS_SUB_LOADING,
   SET_IS_COLOR_LOADING,
+  SET_SEARCH_VALUE
 } from "../actions/index";
 import { initialState, State } from "./InitialState";
 import { Action } from "../actions";
@@ -252,7 +253,11 @@ const dateReducer = (state: State = initialState, action: Action): State => {
       ...state,
       ...action.payload
     })
-
+    case SET_SEARCH_VALUE:
+      return Object.assign({}, state, {
+        ...state,
+        search: action.payload.search
+    })
     default:
       return state;
   }

@@ -7,6 +7,7 @@ import {
   selectPeriod,
   setIsSidebarOpen,
   selectProfile,
+  setSearchValue,
 } from "../../actions/index";
 import { DateTime } from "luxon";
 import { useRef, useState, useEffect } from "react"; // 레퍼런스 훅스
@@ -26,7 +27,7 @@ const Nav = () => {
   );
   const state = useSelector((state: RootState) => state);
   const {
-    userReducer: { user, token, data },
+    userReducer: { user, token },
   } = state;
   const history = useHistory();
   const dispatch = useDispatch();
@@ -121,9 +122,8 @@ const Nav = () => {
             authorization: `Bearer ${token}`,
           },
         }
-      )
+      ) 
       .then((data: any) => {
-        console.log("data.data", data.data);
         setSearch({
           ...search,
           result: data.data,
@@ -153,6 +153,9 @@ const Nav = () => {
   const handleSidebar = () => {
     dispatch(setIsSidebarOpen(!isSidebarOpen));
   };
+  const homeHandler = ()=>{
+    dispatch(setSearchValue(false));
+  }
   return (
     <div className="nav">
       <Modal
@@ -187,9 +190,9 @@ const Nav = () => {
               </svg>
             </Tooltip>
           </div>
-          <div className="logo-name-con">
+          <div className="logo-name-con" onClick={()=>{homeHandler()}}>
             {/* 로고 사진, 프로젝트명 기입 */}
-            <span className="project-name">달력</span>
+            <span className="project-name">dalyuck</span>
           </div>
         </div>
         <div className="today-direction-search-period-con">
@@ -293,8 +296,8 @@ const Nav = () => {
                   onClick={() => {
                     handleHome();
                   }}
+                  style={{visibility:'hidden'}}
                 >
-                  Home
                 </button>
                 <input
                   type="text"

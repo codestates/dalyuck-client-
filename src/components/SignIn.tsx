@@ -212,7 +212,7 @@ const Signin = (props: SigninProps) => {
                 className="signin__form__submit-btn"
                 onClick={handleNonMember}
               >
-                체험하기
+                체험하기 (비회원 로그인)
               </button>
               <button
                 className="signin__form__submit-btn"

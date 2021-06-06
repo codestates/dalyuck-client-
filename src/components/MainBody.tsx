@@ -16,50 +16,22 @@ export default function MainBody() {
     (state: RootState) => state.userReducer
   );
 
-
-    const {base, colorOption, eventTodo, makeEventTodo} = useSelector((state:RootState) => state.userReducer);
-
-    return(
-        <div className="main-body" >
-            <Sidebar/>
-            {
-                base.basePeriod==='month' ? (
-                    <MaincalendarMonth/>
-                ):(
-                    <MainCalendarDayWeek/>
-                )
-            }
-            {
-                colorOption.isOptionClick ? (
-                    <CalendarOption/>
-                ):(
-                    null
-                )
-
-            }
-            {
-                eventTodo.isEventClick ? (
-                    <EventInfoCon/>
-                ):(
-                    null
-                )
-            }
-            {
-                makeEventTodo.isMakeBtnClick ? (
-                    <MakeEventTodo/>
-                ):(
-                    null
-                )
-
   return (
     <div className="main-body">
       <Sidebar />
-      {search ? <SearchTextList /> : null}
-      {base.basePeriod === "month" ? (
-        <MaincalendarMonth />
-      ) : (
-        <MainCalendarDayWeek />
-      )}
+      {
+        (()=>{
+          if(search){
+            return <SearchTextList />
+          }else{
+            if(base.basePeriod === 'month'){
+            return <MaincalendarMonth />
+            }else{
+            return  <MainCalendarDayWeek />
+            }
+          }
+        })()
+      }
       {colorOption.isOptionClick ? <CalendarOption /> : null}
       {eventTodo.isEventClick ? <EventInfoCon /> : null}
       {makeEventTodo.isMakeBtnClick ? <MakeEventTodo /> : null}

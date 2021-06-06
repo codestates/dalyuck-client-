@@ -34,15 +34,15 @@ function RequestSubCalendar() {
 
   return (
     <form onSubmit={handleSubmit} className="add-calendar-form">
-      <h2 className="add-calendar-h2">캘린더 추가</h2>
+      <h2 className="add-calendar-h2">캘린더 구독</h2>
       <div className="email-form">
         <input
           className="email-div"
           type="text"
-          placeholder="캘린더 추가"
+          placeholder="( 이메일 )"
           onChange={(e) => setForm({ ...state, email: e.target.value })}
         />
-        <input className="email-btn" type="submit" value="Save Task" />
+        <input className="email-btn" type="submit" value="캘린더 추가" />
       </div>
     </form>
   );

@@ -47,10 +47,10 @@ function CreateCalendar() {
         />
         <textarea
           className="create-name-textarea"
-          placeholder="Enter About your description"
+          placeholder="설명"
           onChange={(e) => setForm({ ...state, explain: e.target.value })}
         />
-        <input className="submit-btn" type="submit" value="Save Task" onClick={()=>{createCalendar(state.name);history.push("/")}} />
+        <input className="submit-btn" type="submit" value="캘린더 만들기" onClick={()=>{createCalendar(state.name);history.push("/")}} />
       </div>
     </form>
   );

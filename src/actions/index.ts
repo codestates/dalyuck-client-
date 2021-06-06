@@ -31,7 +31,7 @@ export const SET_SEARCH_DATA = "SET_SEARCH_DATA" as const;
 export const DEL_CAL_CHECK_TODO= "DEL_CAL_CHECK_TODO" as const;
 export const SET_IS_SUB_LOADING= "SET_IS_SUB_LOADING" as const;
 export const SET_IS_COLOR_LOADING= "SET_IS_COLOR_LOADING" as const;
-
+export const SET_SEARCH_VALUE= "SET_SEARCH_VALUE" as const;
 export type Action =
   | ReturnType<typeof signIn>
   | ReturnType<typeof signOut>
@@ -59,7 +59,8 @@ export type Action =
   | ReturnType<typeof setCalCheckTodo>
   | ReturnType<typeof delCalCheckMy>
   | ReturnType<typeof delCalCheckOther>
-  | ReturnType<typeof setSearchData>;
+  | ReturnType<typeof setSearchData>
+  | ReturnType<typeof setSearchValue>
   | ReturnType<typeof setIsSubLoading>
   | ReturnType<typeof setIsColorLoading>;
 
@@ -392,5 +393,12 @@ export const setIsColorLoading = (isColorLoading:boolean) => {
     },
   };
 };
-
+export const setSearchValue = (search:boolean) => {
+  return {
+    type: SET_SEARCH_VALUE,
+    payload: {
+      search,
+    },
+  };
+};
 
