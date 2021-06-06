@@ -58,24 +58,6 @@ export const getAttendants= async()=>{
     })
     return result
 }
-// 캘린더 겟요청
-// export const getCalendar = async()=>{  
-//     updateState()
-//     let result;
-
-//     result = await basicAxios.get(`/calendar/${userState.user.id}`)
-//     .then(res=>{
-//         return res.data
-//     }).catch(error=>{
-//         if(axios.isAxiosError(error)){
-//             console.log('axios error')
-//             console.log(error)
-//         } else{
-//             console.log('unExpected error')
-//         }
-//     })
-//     return result
-// }
 
 export const getCalendar = () => {
     let result;
@@ -187,7 +169,7 @@ export const getEvent = async()=>{
     updateState()
     let result;
 
-    result = await basicAxios.get(`/event/${userState.user.id}`)
+    result = await basicAxios.post(`/event/${userState.user.id}`)
     .then(res=>{
         return res.data
     }).catch(error=>{
