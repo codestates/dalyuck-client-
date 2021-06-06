@@ -36,15 +36,13 @@ const updateState = () =>{
 export const getAttendants= async()=>{  
     updateState()
     let result;
-    let address = process.env.REACT_APP_API_URL + '/event/attend/';
-    console.log(address)
-    result = axios.post(address, undefined,{
+    let address = process.env.REACT_APP_API_URL + '/event/attendant/';
+    result = axios.post(address,{
+        userId:userState.user.id,
+    } ,{
         headers:{
             authorization:`Bearer ${userState.token}`
         },
-        params: {
-            id:userState.user.id,
-        }
     })
     .then(res=>{
         return res.data
@@ -81,7 +79,7 @@ export const getCalendar = () => {
 }
 
 // [ 새 캘린더 만들기]
-export const createCalendar = async(calendarName:string,description?:string)=>{  
+export const createCalendar = async(calendarName:string,color:string,description?:string)=>{  
     updateState()
     let result;
     try{
@@ -89,6 +87,8 @@ export const createCalendar = async(calendarName:string,description?:string)=>{
             calendarName,
             description,
             userId:userState.user.id
+        }).then(res=>{
+            return updateCalendar(res.data.id,undefined,undefined,color)
         }).then(res=>{
             return getCalendar()
         }).then(res=>{
@@ -196,7 +196,7 @@ export const reqEventAttend = async(eventId:string, attandent:string)=>{
         }).then(res=>{
             return getAttendants();
         }).then(res=>{
-            store.dispatch(action.setTodoList(res));
+            // store.dispatch(action.setEventTodo(res));     // 일단
         })
     }catch (error){
         if(axios.isAxiosError(error)){
@@ -437,10 +437,10 @@ export const updateOtherCalendar= async(otherCalendarId:number,calendarName?:str
     let result;
     try{
         result = await basicAxios.patch("/calendar/subscribe",{
-            id:userState.user.id,
+            userId:userState.user.id,
             otherCalendarId,
             calendarName,
-            color
+            colour:color
         }).then(res=>{
             return getCalendar();
         }).then(res=>{
