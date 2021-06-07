@@ -2,7 +2,7 @@ import { DateTime, Interval } from "luxon";
 import { useDispatch, useSelector } from "react-redux";
 import { setBaseDate, setBasePeriod } from "../../actions/index";
 import AllDay from '../AllDay';
-import {EventType}  from '../../fakeData/Events';
+import {EventType}  from '../../reducers/InitialState';
 import { useState, useEffect } from 'react';
 import { RootState } from "../../reducers";
 
