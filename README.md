@@ -29,7 +29,7 @@
 ![](https://i.imgur.com/0txULkv.jpg)
 
 ### Server-Side flow chart
-![](https://i.imgur.com/Nc7EMNc.png)
+![](https://cdn.discordapp.com/attachments/836233229862043648/851451146929569792/My_First_Board_-_Frame_1.jpg)
 
 # 👥 우리를 소개합니다.
 
