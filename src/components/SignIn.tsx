@@ -180,9 +180,9 @@ const Signin = (props: SigninProps) => {
         <div className="signin show">
           <div className="signin__outsider" onClick={handleCloseBtn}></div>
           <div className="signin__wrapper">
-            <button className="signin__close-btn" onClick={handleCloseBtn}>
+            {/* <button className="signin__close-btn" onClick={handleCloseBtn}>
               &times;
-            </button>
+            </button> */}
             <div className="signin__form">
               <div className="signin__form__title">로그인</div>
               <ul className="signin__form__list">
