@@ -222,9 +222,9 @@ const Signup = (props: SignupProps) => {
         <div className="signin show">
           <div className="signup__outsider" onClick={handleCloseBtn}></div>
           <div className="signup__wrapper">
-            <button className="signup__close-btn" onClick={handleCloseBtn}>
+            {/* <button className="signup__close-btn" onClick={handleCloseBtn}>
               &times;
-            </button>
+            </button> */}
             <div className="signup__form">
               <div className="signup__form__title">회원가입</div>
               <ul className="signup__form__list">
