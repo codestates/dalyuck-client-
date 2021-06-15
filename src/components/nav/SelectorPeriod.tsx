@@ -18,7 +18,7 @@ const SelectorPeriodSpanCon = ({kor,eng,clickSelect}:Select)=>{
             <div className="select-list">
                 <div className="select-list__left" >{kor}</div>
                 <div className="select-list__right-div">
-                <span className="select-slist__right">{eng}</span>
+                    <span className="select-slist__right">{eng}</span>
                 </div>
             </div>
         </span>
@@ -45,6 +45,8 @@ export const SelectorPeriod = () =>{
     };
 
     const clickSelect:React.MouseEventHandler<HTMLDivElement> = (e)=>{
+        console.log(e.target);
+        console.log(e.currentTarget);
         let periodText = e.currentTarget.textContent;
         if(periodText) dispatch(setBasePeriod(periodText));
         
